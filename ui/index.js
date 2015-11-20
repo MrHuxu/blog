@@ -1,14 +1,17 @@
 import '../public/css/style.css';
+import '../node_modules/animate.css/animate.min.css';
 
 import React, { Component } from 'react';
 import reactDom from 'react-dom';
 
-class Test extends Component {
+import Menu from './components/Menu';
+
+class App extends Component {
   render () {
     return (
-      <h1 className='test'>{'const { Home, Archives, Projects, Aboutme} = xhu.life'}</h1>
+      <Menu />
     );
   }
 }
 
-reactDom.render(<Test />, document.getElementById('blog'));
+reactDom.render(<App />, document.getElementById('blog'));
