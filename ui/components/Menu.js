@@ -20,7 +20,6 @@ class Menu extends Component {
     $('.menu-item').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {
       if (!animationEnd) {
         animationEnd = true;
-        alert('now start to fetch archives');
       }
     })
   }
