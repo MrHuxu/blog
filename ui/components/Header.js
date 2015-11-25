@@ -17,8 +17,6 @@ class Header extends Component {
         visibility: 'visible'
       }).addClass('animated fadeInUp');
     });
-    $('.home-item').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {
-    })
   }
 
   componentDidMount () {
@@ -41,7 +39,6 @@ class Header extends Component {
           <p>&nbsp;{'}'}&nbsp;</p>
         </div>
         = xhu.life
-        <Link to='/archives/a;dsj'>test article link</Link>
       </div>
     );
   }

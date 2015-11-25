@@ -1,7 +1,15 @@
-import { SGET_ALL_ARTICLE, GET_SINGLE_ARTICLE } from '../actions/ArchiveActions';
+import { GET_ALL_ARTICLES, GET_SINGLE_ARTICLE } from '../actions/ArchiveActions';
 
 export function archive (state = {
   entities: []
 }, action) {
-  return state;
+  switch (action.type) {
+    case GET_ALL_ARTICLES:
+      return Object.assign({}, {
+        entities: action.content
+      });
+
+    default:
+      return state;
+  }
 };

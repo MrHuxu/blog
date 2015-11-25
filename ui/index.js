@@ -12,7 +12,7 @@ import history from './routes/history';
 
 reactDom.render(
   <Provider store={rootStore}>
-    <Router history={history} routes={routes}></Router>
+    <Router routes={routes}></Router>
   </Provider>,
   document.getElementById('blog')
 );

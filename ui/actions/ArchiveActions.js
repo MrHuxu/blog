@@ -1,4 +1,6 @@
-export const SGET_ALL_ARTICLE = 'GET_ALL_ARTICLES';
+import $ from 'jquery';
+
+export const GET_ALL_ARTICLES = 'GET_ALL_ARTICLES';
 export function getAllArticles (data) {
   return {
     type    : GET_ALL_ARTICLES,
@@ -15,6 +17,14 @@ export function getSingleArticle (data) {
 }
 
 // use fetch and return a promise
-export function fetchArticles () {
-  
+export function fetchAllArticles () {
+  return function (dispatch) {
+    $.get('/archives/all_articles', {}, function (data) {
+      dispatch(getAllArticles(data.entities));
+    })
+  }
+}
+
+export function fetchSingleArticle (args) {
+  $
 }
