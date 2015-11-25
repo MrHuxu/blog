@@ -32,7 +32,7 @@ class Header extends Component {
         <p className='left-bracket'>&nbsp;{'{'}&nbsp;</p>
         <Link to='/' className='menu-item home-item'>Home</Link>
         ,&nbsp;
-        <Link to='/archives' className='menu-item'>Archives</Link>
+        <Link to='/archives/' className='menu-item'>Archives</Link>
         ,&nbsp;
         <Link to='/projects' className='menu-item'>Projects</Link>
         ,&nbsp;
@@ -41,7 +41,7 @@ class Header extends Component {
           <p>&nbsp;{'}'}&nbsp;</p>
         </div>
         = xhu.life
-        <Link to='/archives/shasdf121223safasd/show/'>test article link</Link>
+        <Link to='/archives/a;dsj'>test article link</Link>
       </div>
     );
   }

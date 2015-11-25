@@ -18,7 +18,7 @@ export default {
     path        : 'archives',
     component   : Archives,
     childRoutes : [{
-      path      : ':articleName/show',
+      path      : ':articleName',
       component : Article
     }]
   }]
