@@ -1,7 +1,8 @@
 import $ from 'jquery';
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 
-class Menu extends Component {
+class Header extends Component {
   constructor (props) {
     super(props);
 
@@ -9,7 +10,6 @@ class Menu extends Component {
   }
 
   startAnimation () {
-    var animationEnd = false;
     $('.left-bracket').addClass('animated bounceInLeft');
     $('.right-bracket').addClass('animated bounceInRight');
     $('.left-bracket').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {
@@ -17,10 +17,7 @@ class Menu extends Component {
         visibility: 'visible'
       }).addClass('animated fadeInUp');
     });
-    $('.menu-item').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {
-      if (!animationEnd) {
-        animationEnd = true;
-      }
+    $('.home-item').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {
     })
   }
 
@@ -33,20 +30,21 @@ class Menu extends Component {
       <div className='blog-menu'>
         const
         <p className='left-bracket'>&nbsp;{'{'}&nbsp;</p>
-        <p className='menu-item'>Home</p>
+        <Link to='/' className='menu-item home-item'>Home</Link>
         ,&nbsp;
-        <p className='menu-item'>Archives</p>
+        <Link to='/archives' className='menu-item'>Archives</Link>
         ,&nbsp;
-        <p className='menu-item'>Projects</p>
+        <Link to='/projects' className='menu-item'>Projects</Link>
         ,&nbsp;
-        <p className='menu-item'>Aboutme</p>
+        <Link to='/aboutme' className='menu-item'>Aboutme</Link>
         <div className='right-bracket'>
           <p>&nbsp;{'}'}&nbsp;</p>
         </div>
         = xhu.life
+        <Link to='/archives/shasdf121223safasd/show/'>test article link</Link>
       </div>
     );
   }
 }
 
-export default Menu;
+export default Header;

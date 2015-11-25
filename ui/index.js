@@ -3,15 +3,16 @@ import '../node_modules/animate.css/animate.min.css';
 
 import React, { Component } from 'react';
 import reactDom from 'react-dom';
+import { Router } from 'react-router';
+import { Provider } from 'react-redux';
+import { rootStore } from './store';
 
-import Menu from './components/Menu';
+import routes from './routes/routes';
+import history from './routes/history';
 
-class App extends Component {
-  render () {
-    return (
-      <Menu />
-    );
-  }
-}
-
-reactDom.render(<App />, document.getElementById('blog'));
+reactDom.render(
+  <Provider store={rootStore}>
+    <Router history={history} routes={routes}></Router>
+  </Provider>,
+  document.getElementById('blog')
+);

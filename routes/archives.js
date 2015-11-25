@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/multi_articles', (req, res) => {
+router.get('/all_articles', (req, res) => {
   res.send({
     entities: [
     ]
