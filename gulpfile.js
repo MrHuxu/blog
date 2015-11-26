@@ -15,7 +15,12 @@ gulp.task("webpack", function(callback) {
 });
 
 gulp.task("webpack-dev-server", function(callback) {
-  webpackConfig.plugins = [new webpack.HotModuleReplacementPlugin()];
+  webpackConfig.plugins = [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': '"development"'
+    }),
+  ];
   var compiler = webpack(webpackConfig);
   new webpackDevServer(compiler, {
     hot        : true,
@@ -28,6 +33,6 @@ gulp.task("webpack-dev-server", function(callback) {
   });
 });
 
-gulp.task('prd', ['webpack'], shell.task('NODE_ENV=production forever start server/bin/www --harmony'));
+gulp.task('prd', ['webpack'], shell.task('forever start bin/www --harmony'));
 
-gulp.task('dev', ['webpack-dev-server'], shell.task('nodemon server/bin/www --harmony'));
+gulp.task('dev', ['webpack-dev-server'], shell.task('NODE_ENV=development nodemon bin/www --harmony'));
