@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 class Article extends Component {
   render () {
-    return <h1>Article</h1>;
+    return <h1>{this.props.params.articleName}</h1>;
   }
 }
 

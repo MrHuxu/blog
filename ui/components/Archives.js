@@ -2,6 +2,7 @@ import $ from 'jquery';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchAllArticles } from '../actions/ArchiveActions';
+import { Link } from 'react-router';
 
 class Archives extends Component {
   constructor (props) {
@@ -25,16 +26,16 @@ class Archives extends Component {
       return (
         <div className='small card'>
           <div className='content'>
-            <a className='header'
+            <Link to={`/archives/${archive.name}`} className='header'
                style={{
                  font: '15px "Josefin Sans"',
                  fontWeight: '500'
                }}
             >
               {archive.title}
-            </a>
+            </Link>
             <div className='meta'>
-            <span className='date'>@ {`${archive.time.month}/${archive.time.day}/${archive.time.year}`}</span>
+            <span className='date'>@{`${archive.time.month}/${archive.time.day}/${archive.time.year}`}</span>
             </div>
           </div>
           <div className='extra content'>
