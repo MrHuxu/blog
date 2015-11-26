@@ -1,6 +1,7 @@
 import fs from 'fs';
 import marked from 'marked';
 import { Router } from 'express';
+import hljs from 'highlight.js';
 
 var router = Router();
 

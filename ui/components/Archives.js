@@ -21,16 +21,35 @@ class Archives extends Component {
   render () {
     const { archives } = this.props;
 
-    const dom = archives.map(archive => {
+    const records = archives.map(archive => {
       return (
-        <li key={archive.sequence}>
-          {archive.title}
-          <div dangerouslySetInnerHTML={{__html: archive.snippet}} />
-        </li>
+        <div className='small card'>
+          <div className='content'>
+            <a className='header'
+               style={{
+                 font: '15px "Josefin Sans"',
+                 fontWeight: '500'
+               }}
+            >
+              {archive.title}
+            </a>
+            <div className='meta'>
+            <span className='date'>@ {`${archive.time.month}/${archive.time.day}/${archive.time.year}`}</span>
+            </div>
+          </div>
+          <div className='extra content'>
+            <i className='tag icon'></i>
+            {archive.tags.map(tag => <a>{tag}&nbsp;</a>)}
+          </div>
+        </div>
       );
     });
 
-    return this.props.children || <ol>{dom}</ol>;
+    return this.props.children || (
+      <div className='ui cards'>
+        {records}
+      </div>
+    );
   }
 }
 

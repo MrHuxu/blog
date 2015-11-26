@@ -1,5 +1,6 @@
 import '../public/css/style.css';
 import '../node_modules/animate.css/animate.min.css';
+import '../node_modules/highlight.js/styles/github.css';
 
 import React, { Component } from 'react';
 import reactDom from 'react-dom';
