@@ -9,15 +9,26 @@ class Archives extends Component {
   }
 
   componentDidMount () {
-    $('.home-item').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {
+    if ($('.home-item').hasClass('animated')) {
       this.props.dispatch(fetchAllArticles());
-    })
+    } else {
+      $('.home-item').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {
+        this.props.dispatch(fetchAllArticles());
+      })
+    }
   }
 
   render () {
     const { archives } = this.props;
 
-    const dom = archives.map(archive => <li key={archive.sequence}>{archive.title}</li>);
+    const dom = archives.map(archive => {
+      return (
+        <li key={archive.sequence}>
+          {archive.title}
+          <div dangerouslySetInnerHTML={{__html: archive.snippet}} />
+        </li>
+      );
+    });
 
     return this.props.children || <ol>{dom}</ol>;
   }
