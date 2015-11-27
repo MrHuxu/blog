@@ -26,7 +26,9 @@ class Article extends Component {
     const { article } = this.props;
 
     return (
-      <div dangerouslySetInnerHTML={{__html: article ? article.content : '' }} />
+      <div className='ui raised segment'>
+        <div dangerouslySetInnerHTML={{__html: article ? article.content : '' }} />
+      </div>
     );
   }
 }
