@@ -16,15 +16,26 @@ export function getSingleArticle (data) {
   };
 }
 
+export const CLEAR_SELECTION = 'CLEAR_SELECTION';
+export function clearSelection () {
+  return {
+    type: CLEAR_SELECTION
+  };
+}
+
 // use fetch and return a promise
 export function fetchAllArticles () {
   return function (dispatch) {
     $.get('/archives/all_articles', {}, function (data) {
       dispatch(getAllArticles(data.entities));
-    })
+    });
   }
 }
 
 export function fetchSingleArticle (args) {
-  $
+  return function (dispatch) {
+    $.post('/archives/single_article', args, function (data) {
+      dispatch(getSingleArticle(data.article));
+    });
+  }
 }

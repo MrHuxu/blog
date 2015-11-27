@@ -10,7 +10,9 @@ router.get('/all_articles', (req, res) => {
 });
 
 router.post('/single_article', (req, res) => {
-  res.send({});
+  res.send({
+    article: getArticleContent(req.body.name)
+  });
 });
 
 export default router;

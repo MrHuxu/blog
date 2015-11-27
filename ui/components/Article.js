@@ -1,10 +1,34 @@
 import $ from 'jquery';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { fetchSingleArticle, clearSelection } from '../actions/ArchiveActions';
 
 class Article extends Component {
+  constructor (props) {
+    super(props);
+  }
+
+  componentDidMount () {
+    this.props.dispatch(fetchSingleArticle({name: this.props.params.articleName}));
+  }
+
+  componentWillUnmount () {
+    this.props.dispatch(clearSelection());
+  }
+
   render () {
-    return <h1>{this.props.params.articleName}</h1>;
+    const { article } = this.props;
+
+    return (
+      <div dangerouslySetInnerHTML={{__html: article ? article.content : '' }} />
+    );
   }
 }
 
-export default Article;
+var mapStateToProps = function (state) {
+  return {
+    article: state.archive.selectedArticle
+  };
+};
+
+export default connect(mapStateToProps)(Article);
