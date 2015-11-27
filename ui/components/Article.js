@@ -9,7 +9,13 @@ class Article extends Component {
   }
 
   componentDidMount () {
-    this.props.dispatch(fetchSingleArticle({name: this.props.params.articleName}));
+    if ($('.home-item').hasClass('animated')) {
+      this.props.dispatch(fetchSingleArticle({name: this.props.params.articleName}));
+    } else {
+      $('.home-item').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {
+        this.props.dispatch(fetchSingleArticle({name: this.props.params.articleName}));
+      })
+    }
   }
 
   componentWillUnmount () {
