@@ -11,10 +11,13 @@ class App extends Component {
 
   render () {
     return (
-      <div>
-        <Header />
-        {this.props.children || <Home />}
-      </div>
+      <div className="ui stackable grid">
+        <div className="three wide column"></div>
+        <div className="ten wide column">
+          <Header />
+          {this.props.children || <Home />}
+        </div>
+        </div>
     );
   }
 }
