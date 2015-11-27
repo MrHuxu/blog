@@ -1,0 +1,59 @@
+pre code {
+  display: block;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  color: #D1D9E1;
+  line-height: 20px;
+  padding: 10px 0 10px 35px;
+  background: #2d2d2d;
+}
+
+pre {
+  position: relative;
+  padding: 0 0 0 30px;
+  font-family: Monaco, Menlo, "Courier New", monospace;
+  width: 100%;
+}
+
+code {
+  overflow: visible;
+}
+
+pre {
+  overflow: auto;
+}
+
+pre code:text {
+  color: #000;
+}
+
+pre ul.numbering {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 100%;
+  margin: 0;
+  padding: 10px 2px 10px 0;
+  border-right: 1px solid #C3CCD0;
+  border-radius: 3px 0 0 3px;
+  background-color: #EEE;
+  text-align: right;
+  font-family: Menlo, monospace;
+  font-size: 0.8em;
+  color: #888;
+}
+
+code span {
+  white-space: nowrap;
+}
+
+.hljs {
+  white-space: pre;
+  word-wrap: normal;
+}
+
+ul.numbering li {
+  line-height: 20px;
+  text-align: center;
+}

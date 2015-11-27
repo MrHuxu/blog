@@ -17,20 +17,20 @@
 
 4. Ruby里使用简单的```float```存储小数是不精确的，因为二进制表示十进制存在一定的误差。可以使用```BigDecimal```类来声明十进制数。
 
-       require 'bigdecimal'
-       
-       0.3 - 0.2 == 0.1    # => false
-       
-       num1 = BigDecimal('0.3')
-       num2 = BigDecimal('0.2')
-       num3 = BigDecimal('0.1')
-       num1 - num2 == num3    # => true
-      
+        require 'bigdecimal'
+
+        0.3 - 0.2 == 0.1    #//=> false
+
+        num1 = BigDecimal('0.3')
+        num2 = BigDecimal('0.2')
+        num3 = BigDecimal('0.1')
+        num1 - num2 == num3    #//=> true
+
 5. 在Ruby中，哈希作为方法动态参数，应使用```{}```初始化，而数组应该用```*```表示，不能用```[]```初始化，用```[]```初始化表示这是一个数组参数。
 
-       def test_hash(para1, para2 = {})   # right
-       def test_arr(para1, para2 = [])   #wrong
-       def test_arr(para1, *para2)   #right
+        def test_hash(para1, para2 = {})   # right
+        def test_arr(para1, para2 = [])   #wrong
+        def test_arr(para1, *para2)   #right
        
 6. 在Ruby中，方法中出现的异常可以用```raise```抛出，然后在执行方法时，使用```begin...end```语句，并且使用```rescue```捕获这个异常。
 

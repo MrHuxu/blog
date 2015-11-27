@@ -6,12 +6,6 @@ class Header extends Component {
   constructor (props) {
     super(props);
 
-    this.style = {
-      menuItem: {
-        visibility: 'hidden'
-      }
-    };
-
     this.startAnimation = this.startAnimation.bind(this);
   }
 
@@ -34,13 +28,13 @@ class Header extends Component {
       <div className='blog-menu'>
         const
         <p className='left-bracket'>&nbsp;{'{'}&nbsp;</p>
-        <Link to='/' className='menu-item home-item' style={this.style.menuItem}>Home</Link>
+        <Link to='/' className='menu-item home-item'>Home</Link>
         ,&nbsp;
-        <Link to='/archives/' className='menu-item' style={this.style.menuItem}>Archives</Link>
+        <Link to='/archives/' className='menu-item'>Archives</Link>
         ,&nbsp;
-        <Link to='/projects' className='menu-item' style={this.style.menuItem}>Projects</Link>
+        <Link to='/projects' className='menu-item'>Projects</Link>
         ,&nbsp;
-        <Link to='/aboutme' className='menu-item' style={this.style.menuItem}>Aboutme</Link>
+        <Link to='/aboutme' className='menu-item'>Aboutme</Link>
         <div className='right-bracket'>
           <p>&nbsp;{'}'}&nbsp;</p>
         </div>

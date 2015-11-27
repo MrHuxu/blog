@@ -13,8 +13,3 @@ a {
   font-weight: normal;
   font-style: normal;
 }
-
-.blog-menu * {
-  display: inline-block;
-  font: 50px 'Josefin Sans';
-}
