@@ -37,7 +37,7 @@ class Home extends Component {
             </p>
           </div>
 
-          <div dangerouslySetInnerHTML={{__html: archive.snippet}} style={{
+          <div className='ui attached segment' dangerouslySetInnerHTML={{__html: archive.snippet}} style={{
             padding: '15px 15px 10px 15px'
           }}/>
 
