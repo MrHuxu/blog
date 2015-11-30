@@ -11,12 +11,14 @@ class Home extends Component {
   }
 
   componentDidMount () {
-    if ($('.home-item').hasClass('animated')) {
-      this.props.dispatch(fetchAllArticles());
-    } else {
-      $('.home-item').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {
+    if (!this.props.archives.length) {
+      if ($('.home-item').hasClass('animated')) {
         this.props.dispatch(fetchAllArticles());
-      })
+      } else {
+        $('.home-item').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {
+          this.props.dispatch(fetchAllArticles());
+        })
+      }
     }
   }
 

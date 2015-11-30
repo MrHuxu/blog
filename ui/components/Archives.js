@@ -10,12 +10,14 @@ class Archives extends Component {
   }
 
   componentDidMount () {
-    if ($('.home-item').hasClass('animated')) {
-      this.props.dispatch(fetchAllArticles());
-    } else {
-      $('.home-item').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {
+    if (!this.props.archives.length) {
+      if ($('.home-item').hasClass('animated')) {
         this.props.dispatch(fetchAllArticles());
-      })
+      } else {
+        $('.home-item').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {
+          this.props.dispatch(fetchAllArticles());
+        })
+      }
     }
   }
 
@@ -24,7 +26,7 @@ class Archives extends Component {
 
     const records = archives.map(archive => {
       return (
-        <div className='small card'>
+        <div key={archive.sequence} className='small card'>
           <div className='content'>
             <Link to={`/archives/${archive.name}`} className='header'
                style={{
@@ -40,7 +42,7 @@ class Archives extends Component {
           </div>
           <div className='extra content'>
             <i className='tag icon'></i>
-            {archive.tags.map(tag => <a>{tag}&nbsp;</a>)}
+            {archive.tags.map(tag => <a key={tag}>{tag}&nbsp;</a>)}
           </div>
         </div>
       );
