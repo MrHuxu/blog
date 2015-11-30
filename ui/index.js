@@ -1,9 +1,10 @@
+import '../node_modules/animate.css/animate.min.css';
+import '../node_modules/highlight.js/styles/tomorrow-night-eighties.css';
+import '../node_modules/nprogress/nprogress.css';
+
 import '../public/css/common.css';
 import '../public/css/menu.css';
 import '../public/css/code.css';
-
-import '../node_modules/animate.css/animate.min.css';
-import '../node_modules/highlight.js/styles/tomorrow-night-eighties.css';
 
 import React, { Component } from 'react';
 import reactDom from 'react-dom';

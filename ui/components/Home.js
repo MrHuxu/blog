@@ -2,7 +2,8 @@ import $ from 'jquery';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { fetchAllArticles } from '../actions/ArchiveActions';
+import { fetchAllArticles, changePage } from '../actions/ArchiveActions';
+import Pagination from './Pagination';
 
 class Home extends Component {
   constructor (props) {
@@ -20,8 +21,9 @@ class Home extends Component {
   }
 
   render () {
-    const { archives } = this.props;
-    var titleWithSnippet = archives.map((archive) => {
+    const { archives, page, perPage } = this.props;
+
+    var titleWithSnippet = archives.slice(page * perPage, (page + 1) * perPage).map((archive) => {
       return (
         <div className='ui tall stacked segments' key={archive.sequence}>
           <div className='ui top attached segment'>
@@ -54,6 +56,7 @@ class Home extends Component {
 
     return (
       <div>
+        <Pagination />
         {titleWithSnippet}
       </div>
     );
@@ -62,7 +65,9 @@ class Home extends Component {
 
 var mapStateToProps = function (state) {
   return {
-    archives: state.archive.entities
+    archives : state.archive.entities,
+    page     : state.archive.pagination.page,
+    perPage  : state.archive.pagination.perPage
   };
 }
 

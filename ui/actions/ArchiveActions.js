@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import NProgress from 'nprogress';
 
 export const GET_ALL_ARTICLES = 'GET_ALL_ARTICLES';
 export function getAllArticles (data) {
@@ -23,18 +24,30 @@ export function clearSelection () {
   };
 }
 
+export const CHANGE_PAGE = 'CHANGE_PAGE';
+export function changePage (page) {
+  return {
+    type    : CHANGE_PAGE,
+    content : page
+  };
+}
+
 // use fetch and return a promise
 export function fetchAllArticles () {
+  NProgress.set(0.4);
   return function (dispatch) {
     $.get('/archives/all_articles', {}, function (data) {
+      NProgress.set(0.8);
       dispatch(getAllArticles(data.entities));
     });
   }
 }
 
 export function fetchSingleArticle (args) {
+  NProgress.set(0.4);
   return function (dispatch) {
     $.post('/archives/single_article', args, function (data) {
+      NProgress.set(0.8);
       dispatch(getSingleArticle(data.article));
     });
   }
