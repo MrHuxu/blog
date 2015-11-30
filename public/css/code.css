@@ -1,3 +1,11 @@
+p code {
+  padding: 2px 4px;
+  font-size: 90%;
+  color: #c7254e;
+  background-color: #f9f2f4;
+  border-radius: 4px;
+}
+
 pre code {
   display: block;
   border: 1px solid #ccc;
@@ -11,11 +19,12 @@ pre code {
 pre {
   position: relative;
   padding: 0 0 0 30px;
-  font-family: Monaco, Menlo, "Courier New", monospace;
+  font-size: 15px;
   width: 100%;
 }
 
 code {
+  font-family: "Lucida Console","Courier New",Courier,monospace;
   overflow: visible;
 }
 
