@@ -26,7 +26,9 @@ class Article extends Component {
     const { article } = this.props;
 
     return (
-      <div className='ui raised segment'>
+      <div className='ui raised segment' style={{
+        margin: '0 0 0 0'
+      }}>
         <div dangerouslySetInnerHTML={{__html: article ? article.content : '' }} />
       </div>
     );

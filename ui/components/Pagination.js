@@ -52,7 +52,7 @@ class Pagination extends Component {
                style={{position: 'absolute', left: '0'}}
                onClick = {this.handlePrevBtn}
             >
-              {'<< Prev'}
+              <i className="chevron left icon"></i>
             </a>
 
             {pageItems}
@@ -61,7 +61,7 @@ class Pagination extends Component {
                style={{position: 'absolute', right: '0'}}
                onClick={this.handleNextBtn}
             >
-              {'Next >>'}
+              <i className="chevron right icon"></i> 
             </a>
           </div>
         </div>

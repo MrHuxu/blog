@@ -143,6 +143,6 @@ var mapStateToProps = function (state) {
   return {
     archives: state.archive.entities
   };
-}
+};
 
 export default connect(mapStateToProps)(Archives);
