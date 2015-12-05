@@ -7,7 +7,7 @@ window.jQuery = $; // Assure it's available globally.
 require('../public/components/semantic/dist/semantic.min.js');
 
 import '../public/css/common.css';
-import '../public/css/menu.css';
+import '../public/css/header.css';
 import '../public/css/code.css';
 
 import React, { Component } from 'react';

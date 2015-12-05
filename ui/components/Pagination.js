@@ -17,11 +17,15 @@ class Pagination extends Component {
   }
 
   handlePrevBtn () {
-    this.props.dispatch(changePage(this.props.page - 1));
+    if (this.props.page > 0) {
+      this.props.dispatch(changePage(this.props.page - 1));
+    }
   }
 
   handleNextBtn () {
-    this.props.dispatch(changePage(this.props.page + 1));
+    if (this.props.page < this.props.pageCount - 1) {
+      this.props.dispatch(changePage(this.props.page + 1));
+    }
   }
 
   render () {

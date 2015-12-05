@@ -1,3 +1,5 @@
+import '../../public/css/archives.css';
+
 import $ from 'jquery';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -97,30 +99,28 @@ class Archives extends Component {
     var records = [[], [], [], []];
     archives.forEach((archive, index) => {
       records[index % 4].push(
-        <div key={archive.sequence} className='ui small card'>
-          <div className='content'>
-            <Link to={`/archives/${archive.name}`} className='header'
-               style={{
-                 font: '15px "Josefin Sans"',
-                 fontWeight: '500'
-               }}
-            >
+        <div key={archive.sequence} className='ui small card' style={{width: '100%'}}>
+          <div className='content' style={{padding: '10px 10px 2px 10px'}}>
+            <Link to={`/archives/${archive.name}`} className='header' style={{
+              font: '15px "Lucida Grande",Helvetica,Arial,sans-serif',
+              color: '#444'
+            }}>
               {archive.title}
             </Link>
             <div className='meta'>
             <span className='date'>@{`${archive.time.month}/${archive.time.day}/${archive.time.year}`}</span>
             </div>
           </div>
-          <div className='extra content'>
+          <div className='extra content' style={{padding: '2px 10px 2px 10px'}}>
             <i className='tag icon'></i>
-            {archive.tags.map(tag => <a key={tag} onClick={this.updateFilter.bind(null, totalTags, tag)}>{tag}&nbsp;</a>)}
+            {archive.tags.map(tag => <a key={tag} style={{fontSize: '13px'}}onClick={this.updateFilter.bind(null, totalTags, tag)}>{tag}&nbsp;</a>)}
           </div>
         </div>
       );
     });
     const archiveCards = records.map((record, index) => {
       return (
-        <div key={index} className='four wide column'>
+        <div key={index} className='four wide column' style={{padding: '14px 7px 14px 7px'}}>
           {record}
         </div>
       );
@@ -130,8 +130,13 @@ class Archives extends Component {
       <div className='ui segment' style={{
         margin: '0 0 0 0'
       }}>
+        <h4 className='widget-title'>Tags</h4>
         {tagBtns}
-        <div className='ui stackable grid'>
+        <h4 className='widget-title'>Archives</h4>
+        <div className='ui stackable grid' style={{
+          paddingLeft  : '9px',
+          paddingRight : '9px'
+        }}>
           {archiveCards}
         </div>
       </div>
