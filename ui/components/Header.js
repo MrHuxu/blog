@@ -29,8 +29,19 @@ class Header extends Component {
 
   componentDidMount () {
     this.startAnimation();
-    $('.ui.dropdown').dropdown({
-      onChange: (name) => this.handleSearch(name)
+    $('.menu-item').mouseenter((e) => {
+      $(e.target).animate({
+        fontSize: 32
+      }, 150).animate({
+        fontSize: 31
+      }, 150).animate({
+        fontSize: 32
+      }, 150);
+    }).mouseleave((e) => {
+      $(e.target).animate({
+        fontColor: '#777',
+        fontSize: 30
+      }, 100);
     });
   }
 
@@ -60,7 +71,7 @@ class Header extends Component {
         <div className='ten wide column'>
           {menu}
         </div>
-        <div className='six wide right aligned column' style={{fontSize: '25px'}}>
+        <div className='six wide right aligned column' style={{fontSize: '25px', paddingTop: '18px'}}>
           <a target='_blank' href='http://github.com/MrHuxu' style={{color: '#545454'}}>
             <i className='github alternate icon' style={{marginRight: '40px'}}/>
           </a>

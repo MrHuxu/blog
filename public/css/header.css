@@ -1,6 +1,9 @@
 .blog-menu * {
   display: inline-block;
-  font: 30px 'Josefin Sans';
+  color: #777;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 30px;
+  font-weight: 200;
 }
 
 .menu-item {
