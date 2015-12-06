@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 
 import Header from './Header';
 import Home from './Home';
+import Footer from './Footer';
 
 class App extends Component {
   constructor (props) {
@@ -16,6 +17,7 @@ class App extends Component {
         <div className="twelve wide column">
           <Header />
           {this.props.children || <Home />}
+          <Footer />
         </div>
         </div>
     );
