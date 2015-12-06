@@ -2,6 +2,7 @@ import $ from 'jquery';
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
+import Search from './Search';
 
 class Header extends Component {
   constructor (props) {
@@ -54,29 +55,10 @@ class Header extends Component {
       </div>
     );
 
-    var searchItems = archives.map(archive => <option value={archive.name}>{archive.title}</option>)
-    var search = (
-      <div className='four wide column' style={{
-        paddingTop: '8'
-      }}>
-        <div className='ui right aligned segment' style={{
-          padding    : '0',
-          border     : '0',
-          boxShadow  : '0 0 0 0',
-          background : 'transparent'
-        }}>
-          <select className='ui search dropdown'>
-            <option value=''>Search</option>
-            {searchItems}
-          </select>
-        </div>
-      </div>
-    );
-
     return (
       <div className='ui grid'>
         {menu}
-        {search}
+        <Search />
       </div>
     );
   }

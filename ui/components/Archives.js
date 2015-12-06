@@ -130,9 +130,9 @@ class Archives extends Component {
       <div className='ui segment' style={{
         margin: '0 0 0 0'
       }}>
-        <h4 className='widget-title'>Tags</h4>
+        <h3 className='widget-title'>Tags</h3>
         {tagBtns}
-        <h4 className='widget-title'>Archives</h4>
+        <h3 className='widget-title'>Archives</h3>
         <div className='ui stackable grid' style={{
           paddingLeft  : '9px',
           paddingRight : '9px'
