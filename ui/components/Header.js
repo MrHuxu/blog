@@ -56,9 +56,22 @@ class Header extends Component {
     );
 
     return (
-      <div className='ui grid'>
-        {menu}
-        <Search />
+      <div className='ui stackable grid'>
+        <div className='ten wide column'>
+          {menu}
+        </div>
+        <div className='six wide right aligned column' style={{fontSize: '25px'}}>
+          <a target='_blank' href='http://github.com/MrHuxu' style={{color: '#545454'}}>
+            <i className='github alternate icon' style={{marginRight: '40px'}}/>
+          </a>
+          <a target='_blank' href='http://weibo.com/2058722335' style={{color: '#545454'}}>
+            <i className='weibo icon' style={{marginRight: '40px'}}/>
+          </a>
+          <a href='mailto:hxtheone@gmail.com' style={{color: '#545454'}}>
+            <i className='mail outline icon' style={{marginRight: '40px'}}/>
+          </a>
+          <i className='search red icon' style={{marginRight: '15px'}}/>
+        </div>
       </div>
     );
   }

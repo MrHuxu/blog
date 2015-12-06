@@ -18,6 +18,13 @@ class Search extends Component {
     $('.ui.dropdown > .text').addClass('default');
   }
 
+  componentsWillUpdate (nextProps, nextState) {
+    if (nextProps.archives.length !== nextState.records.length)
+      return true;
+    else
+      return false;
+  }
+
   render () {
     const { archives } = this.props;
 
