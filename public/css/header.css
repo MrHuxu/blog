@@ -1,9 +1,10 @@
 .blog-menu * {
   display: inline-block;
-  color: #777;
+  color: #888;
   font-family: 'Open Sans', sans-serif;
-  font-size: 30px;
-  font-weight: 200;
+  font-size: 23px;
+  font-weight: 600;
+  letter-spacing: .02em;
 }
 
 .menu-item {
