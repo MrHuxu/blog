@@ -2,8 +2,9 @@ import $ from 'jquery';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { fetchAllArticles, changePage } from '../actions/ArchiveActions';
+import { fetchAllArticles } from '../actions/ArchiveActions';
 import Pagination from './Pagination';
+import Snippet from './Snippet';
 
 class Home extends Component {
   constructor (props) {
@@ -25,41 +26,14 @@ class Home extends Component {
   render () {
     const { archives, page, perPage } = this.props;
 
-    var titleWithSnippet = archives.slice(page * perPage, (page + 1) * perPage).map((archive) => {
-      return (
-        <div className='ui tall stacked segments' key={archive.sequence}>
-          <div className='ui top attached segment'>
-            <p style={{
-              color: '#777',
-              fontWeight: '700',
-              padding: '0 0 0 5px'
-            }}>
-              {archive.time.month} 月&nbsp;
-              {archive.time.day} 日&nbsp;
-              {archive.time.year}
-              {archive.tags.map(tag => ' · ' + tag).join('')}
-            </p>
-          </div>
-
-          <div className='ui attached segment' dangerouslySetInnerHTML={{__html: archive.snippet}} style={{
-            padding: '15px 15px 10px 15px'
-          }}/>
-
-          <div className='ui bottom attached clearing segment'>
-            <Link to={`/archives/${archive.name}`} className="ui right floated button" style={{
-              backgroundColor: '#ffffff'
-            }}>
-              Continue Reading
-            </Link>
-          </div>
-        </div>
-      );
+    var snippets = archives.slice(page * perPage, (page + 1) * perPage).map((archive) => {
+      return <Snippet archive={archive} />;
     });
 
     return (
       <div>
         <Pagination />
-        {titleWithSnippet}
+        {snippets}
       </div>
     );
   }

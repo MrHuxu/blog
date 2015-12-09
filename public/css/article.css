@@ -1,0 +1,12 @@
+blockquote {
+  background: #dddddd;
+  padding: 6px 0 6px 15px;
+  margin: 0 0 18px;
+  border-left: 5px solid #690069;
+  font-family: Ubuntu Mono, Monaco, Menlo, "Courier New", monospace;
+  font-weight: normal;
+  line-height: 28px;
+  font-size: 15px;
+  color: #696969;
+  border-radius: 4px;
+}
