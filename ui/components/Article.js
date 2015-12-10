@@ -18,6 +18,17 @@ class Article extends Component {
         this.props.dispatch(fetchSingleArticle({name: this.props.params.articleName}));
       })
     }
+    
+    // Disqus Comment System
+    // DON'T EDIT BELOW THIS LINE
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = '//xhu.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
   }
 
   componentWillUnmount () {
@@ -28,10 +39,13 @@ class Article extends Component {
     const { article } = this.props;
 
     return (
-      <div className='ui raised segment' style={{
-        margin: '0 0 0 0'
-      }}>
-        <div dangerouslySetInnerHTML={{__html: article ? article.content : '' }} />
+      <div>
+        <div className='ui raised segment' style={{
+          margin: '0 0 0 0'
+        }}>
+          <div dangerouslySetInnerHTML={{__html: article ? article.content : '' }} />
+        </div>
+        <div className='ui raised segment' id='disqus_thread' />
       </div>
     );
   }
