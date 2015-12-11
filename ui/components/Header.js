@@ -29,19 +29,6 @@ class Header extends Component {
 
   componentDidMount () {
     this.startAnimation();
-    $('.menu-item').mouseenter((e) => {
-      $(e.target).animate({
-        fontSize: 25
-      }, 150).animate({
-        fontSize: 24
-      }, 150).animate({
-        fontSize: 25
-      }, 150);
-    }).mouseleave((e) => {
-      $(e.target).animate({
-        fontSize: 23
-      }, 100);
-    });
   }
 
   render () {
