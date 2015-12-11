@@ -27,7 +27,7 @@ class Home extends Component {
     const { archives, page, perPage } = this.props;
 
     var snippets = archives.slice(page * perPage, (page + 1) * perPage).map((archive) => {
-      return <Snippet archive={archive} />;
+      return <Snippet archive={archive} key={archive.sequence}/>;
     });
 
     return (
