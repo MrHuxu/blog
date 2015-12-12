@@ -10,7 +10,7 @@ export function archive (state = {
   entities   : [],
   pagination : {
     page      : 0,
-    perPage   : 5,
+    perPage   : 8,
     pageCount : 0
   },
   selectedArticle : {}
