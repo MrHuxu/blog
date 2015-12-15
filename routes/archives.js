@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getAllArticles, getArticleContent } from './route-common';
+import { getAllArticles, getArticleContent } from '../lib/get-archives';
 
 var router = Router();
 
