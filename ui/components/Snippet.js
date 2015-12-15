@@ -15,8 +15,8 @@ class Snippet extends Component {
             fontWeight: '700',
             padding: '0 0 0 5px'
           }}>
-            {archive.time.month} 月&nbsp;
-            {archive.time.day} 日&nbsp;
+            {archive.time.month} /&nbsp;
+            {archive.time.day} /&nbsp;
             {archive.time.year}
             {archive.tags.map(tag => ' · ' + tag).join('')}
           </p>

@@ -4,7 +4,9 @@ import React, { Component } from 'react';
 class Aboutme extends Component {
   render () {
     return (
-      <div>
+      <div style={{
+        fontFamily: '"Open Sans","Helvetica Neue",Arial,NanumBarunGothic,"Apple SD Gothic Neo",AppleGothic,"Malgun Gothic",DotumChe,sans-serif'
+      }}>
         <div className='ui stackable grid'>
           <div className='eight wide column'>
             <div className='ui piled segment'>
