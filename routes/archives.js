@@ -4,14 +4,14 @@ import { getAllArticles, getSingleArticle } from '../lib/get-archives';
 var router = Router();
 
 router.get('/all_articles', (req, res) => {
-  res.send({
-    entities: getAllArticles()
+  getAllArticles().then((articles) => {
+    res.send({entities: articles});
   });
 });
 
 router.post('/single_article', (req, res) => {
-  res.send({
-    article: getSingleArticle(req.body.name)
+  getSingleArticle(req.body.name).then((article) => {
+    res.send({article: article});
   });
 });
 
