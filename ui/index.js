@@ -19,12 +19,21 @@ import { rootStore } from './store';
 import routes from './routes/routes';
 import history from './routes/history';
 
+/*
 var devDom = <Router routes={routes}></Router>
 var prdDom = <Router history={history} routes={routes}></Router>
 
 reactDom.render(
   <Provider store={rootStore}>
-    {'development' !== process.env.NODE_ENV ? prdDom : devDom}
+    {'production' === process.env.NODE_ENV ? prdDom : devDom}
+  </Provider>,
+  document.getElementById('blog')
+);
+*/
+
+reactDom.render(
+  <Provider store={rootStore}>
+    <Router routes={routes}></Router>
   </Provider>,
   document.getElementById('blog')
 );

@@ -1,3 +1,4 @@
+import fs from 'fs';
 import express from 'express';
 import path from 'path';
 import favicon from 'serve-favicon';
@@ -15,9 +16,21 @@ app.locals.ENV = env;
 app.locals.ENV_DEVELOPMENT = env == 'development';
 
 // view engine setup
-
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+// log settings
+// output to a file instead of console in production mode
+logger.token('reqBody', function (req) {
+  return ' request: ' + JSON.stringify(req.body);
+});
+if (env === 'production') {
+  if (!fs.existsSync('./log')) fs.mkdirSync('./log');
+  var logFile = fs.createWriteStream('./log/production.log', { flags: 'a' });
+  app.use(logger(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version"  :reqBody :status :res[content-length]', {stream: logFile }));
+} else {
+  app.use(logger(':method :url :reqBody :status :response-time ms - :res[content-length]'));
+}
 
 // app.use(favicon(__dirname + '/public/img/favicon.ico'));
 app.use(logger('dev'));
