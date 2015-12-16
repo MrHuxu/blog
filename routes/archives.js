@@ -5,7 +5,6 @@ var router = Router();
 
 router.get('/all_articles', (req, res) => {
   getAllArticles().then((articles) => {
-    console.log(articles);
     res.send({entities: articles.sort((a1, a2) => a1.sequence < a2.sequence ? 1 : -1)});
   });
 });

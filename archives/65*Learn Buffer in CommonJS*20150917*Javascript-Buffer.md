@@ -1,6 +1,6 @@
 # Learn Buffer in CommonJS
 
-A code snippet used to understan ```Buffer``` in CommonJS:
+A code snippet used to understand ```Buffer``` in CommonJS:
 
     var fs = require('fs');
 
