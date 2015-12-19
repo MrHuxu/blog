@@ -7,7 +7,8 @@ import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 
 import index from './routes/index';
-import archives from './routes/archives';
+import archive from './routes/archive';
+import project from './routes/project';
 
 var app = express();
 
@@ -42,7 +43,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/archives', archives);
+app.use('/archive', archive);
+app.use('/project', project);
 
 /// catch 404 and forward to error handler
 app.use((req, res, next) => {

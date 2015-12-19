@@ -36,19 +36,19 @@ export function changePage (page) {
 export function fetchAllArticles () {
   NProgress.set(0.4);
   return function (dispatch) {
-    $.get('/archives/all_articles', {}, function (data) {
+    $.get('/archive/all_articles', {}, function (data) {
       NProgress.set(0.8);
       dispatch(getAllArticles(data.entities));
     });
-  }
+  };
 }
 
 export function fetchSingleArticle (args) {
   NProgress.set(0.4);
   return function (dispatch) {
-    $.post('/archives/single_article', args, function (data) {
+    $.post('/archive/single_article', args, function (data) {
       NProgress.set(0.8);
       dispatch(getSingleArticle(data.article));
     });
-  }
+  };
 }
