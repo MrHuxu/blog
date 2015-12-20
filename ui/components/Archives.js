@@ -133,15 +133,15 @@ class Archives extends Component {
 
       if (years.indexOf(year) === -1) years.push(year);
 
-      if (countByYear[year])
-        countByYear[year]++;
-      else
+      if (countByYear[year] === undefined)
         countByYear[year] = 0;
+      else
+        ++countByYear[year];
 
       if (!arrByYear[year])
         arrByYear[year] = [[], [], [], []];
 
-      arrByYear[year][index % 4].push(this.generateSingleCard(archive));
+      arrByYear[year][countByYear[year] % 4].push(this.generateSingleCard(archive));
     });
 
     const archiveCards = years.map((year) => {
