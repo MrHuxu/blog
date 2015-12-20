@@ -33,7 +33,7 @@ gulp.task("webpack-dev-server", function(callback) {
   });
 });
 
-gulp.task('cache', shell.task('node lib/cache-archives --harmony'));
+gulp.task('cache', shell.task('node lib/cache-all --harmony'));
 
 gulp.task('prd', ['webpack', 'cache'], shell.task('NODE_ENV=production forever start bin/www --harmony'));
 
