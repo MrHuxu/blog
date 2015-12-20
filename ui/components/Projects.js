@@ -68,7 +68,6 @@ class Projects extends Component {
 
     return (
       <div className='ui segment'>
-        <h3 className='widget-title'>Projects</h3>
         <div className='ui relaxed divided list'>
           {projectItems}
         </div>
