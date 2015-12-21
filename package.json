@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "test" : "mocha"
   },
   "dependencies": {
     "animate.css": "^3.4.0",
