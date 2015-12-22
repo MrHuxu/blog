@@ -14,4 +14,4 @@ WORKDIR /opt/blog
 RUN npm install
 RUN bower install
 
-ENTRYPOINT ['gulp', 'dev']
+#ENTRYPOINT ['gulp', 'dev']
