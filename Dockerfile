@@ -12,6 +12,6 @@ EXPOSE 13109
 
 WORKDIR /opt/blog
 RUN npm install
-RUN bower install
+RUN bower install --allow-root
 
 #ENTRYPOINT ['gulp', 'dev']
