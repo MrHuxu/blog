@@ -14,7 +14,6 @@ export function fetchRepos () {
   return function (dispatch) {
     $.get('/project/repos', {}, function (data) {
       NProgress.set(0.8);
-      console.log(data);
       dispatch(getRepos(data.entities));
     });
   };

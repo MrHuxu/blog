@@ -1,9 +1,19 @@
 import '../../public/css/article.css';
 
+import $ from 'jquery';
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
 class Snippet extends Component {
+  componentDidMount () {
+    $('.snippet-content h1').hide();
+    $('.snippet-title').mouseenter((e) => {
+      $(e.target).css({color: '#444'});
+    }).mouseleave((e) => {
+      $(e.target).css({color: '#666'});
+    });
+  }
+
   render () {
     const { archive } = this.props;
 
@@ -22,9 +32,21 @@ class Snippet extends Component {
           </p>
         </div>
 
-        <div className='ui attached segment' dangerouslySetInnerHTML={{__html: archive.snippet}} style={{
-          padding: '15px 15px 10px 15px'
-        }}/>
+        <div className='ui attached segment snippet-content' style={{
+          padding: '0 15px 10px 15px'
+        }}>
+          <Link className='snippet-title' to={`/archives/${archive.name}`}style={{
+            color      : '#666',
+            minHeight  : '1rem',
+            fontSize   : '2rem',
+            lineHeight : '4rem',
+            fontWeight : '700',
+            fontFamily : "Lato,'Helvetica Neue',Arial,Helvetica,sans-serif"
+          }}>
+            {archive.title}
+          </Link>
+          <div dangerouslySetInnerHTML={{__html: archive.snippet}} />
+        </div>
 
         <div className='ui bottom attached clearing segment'>
           <Link to={`/archives/${archive.name}`} className="ui right floated button" style={{
