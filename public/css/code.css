@@ -65,5 +65,6 @@ code span {
 
 ul.numbering li {
   line-height: 20px;
-  text-align: center;
+  text-align: right;
+  margin-right: 1.5px;
 }
