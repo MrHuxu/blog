@@ -7,6 +7,8 @@ class Aboutme extends Component {
       padding: '10px 0 10px 10px'
     };
 
+    document.title = 'Life of xhu - Aboutme';
+
     return (
       <div style={{
         fontFamily: '"Open Sans","Helvetica Neue",Arial,NanumBarunGothic,"Apple SD Gothic Neo",AppleGothic,"Malgun Gothic",DotumChe,sans-serif'

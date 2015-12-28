@@ -38,7 +38,7 @@ class Archives extends Component {
       return (
         <button 
           key       = {tag}
-          className = {`ui basic button tagBtn`}
+          className = {`ui basic button tagBtn ${this.state.selectedTags.indexOf(tag) === -1 ? '' : 'active'}`}
           onClick   = {this.updateFilter.bind(null, tag)}
           style     = {{
             margin: '3px 5px 2px 0'
@@ -176,6 +176,8 @@ class Archives extends Component {
   render () {
     const archives = this.filterArchive(this.props.archives);
     this.state.totalTags = this.collectTags(this.props.archives);
+
+    document.title = 'Life of xhu - Archives';
 
     return this.props.children || (
       <div className='ui segment' style={{

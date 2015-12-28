@@ -2,7 +2,8 @@ import {
   GET_ALL_ARTICLES,
   GET_SINGLE_ARTICLE,
   CLEAR_SELECTION,
-  CHANGE_PAGE
+  CHANGE_PAGE,
+  RESET_PAGE
 } from '../actions/ArchiveActions';
 import NProgress from 'nprogress';
 
@@ -48,6 +49,17 @@ export function archive (state = {
         entities   : state.entities,
         pagination : Object.assign({}, {
           page      : action.content,
+          perPage   : state.pagination.perPage,
+          pageCount : state.pagination.pageCount
+        }),
+        selectedArticle : state.selectedArticle
+      })
+
+    case RESET_PAGE:
+      return Object.assign({}, {
+        entities   : state.entities,
+        pagination : Object.assign({}, {
+          page      : 0,
           perPage   : state.pagination.perPage,
           pageCount : state.pagination.pageCount
         }),

@@ -37,6 +37,9 @@ class Article extends Component {
 
   render () {
     const { article } = this.props;
+    
+    var title = this.props.params.articleName.split('*')[1];
+    document.title = `Life of xhu - ${title}`;
 
     return (
       <div>

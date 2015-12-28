@@ -63,6 +63,7 @@ class Projects extends Component {
 
   render () {
     const { projects } = this.props;
+    document.title = 'Life of xhu - Projects';
 
     var projectItems = projects.map(project => this.generateItem(project));
 
