@@ -1,30 +1,24 @@
 import $ from 'jquery';
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { changePage } from '../actions/ArchiveActions';
 
 class Pagination extends Component {
   constructor (props) {
     super(props);
 
-    this.handleChangePage = this.handleChangePage.bind(this);
+    this.changePage = this.props.changePage;
     this.handlePrevBtn = this.handlePrevBtn.bind(this);
     this.handleNextBtn = this.handleNextBtn.bind(this);
   }
 
-  handleChangePage (page) {
-    this.props.dispatch(changePage(page));
-  }
-
   handlePrevBtn () {
     if (this.props.page > 0) {
-      this.props.dispatch(changePage(this.props.page - 1));
+      this.changePage(this.props.page - 1);
     }
   }
 
   handleNextBtn () {
     if (this.props.page < this.props.pageCount - 1) {
-      this.props.dispatch(changePage(this.props.page + 1));
+      this.changePage(this.props.page + 1);
     }
   }
 
@@ -36,7 +30,7 @@ class Pagination extends Component {
       pageItems.push(
         <a key       = {i}
            className = {i === page ? 'item active' : 'item'}
-           onClick   = {this.handleChangePage.bind(null, i)}
+           onClick   = {this.changePage.bind(null, i)}
         >
           {i}
         </a>
@@ -74,11 +68,4 @@ class Pagination extends Component {
   }
 }
 
-var mapStateToProps = function (state) {
-  return {
-    page      : state.archive.pagination.page,
-    pageCount : state.archive.pagination.pageCount
-  };
-}
-
-export default connect(mapStateToProps)(Pagination);
+export default Pagination;

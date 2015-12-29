@@ -2,13 +2,24 @@ import $ from 'jquery';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { fetchAllArticles, resetPage } from '../actions/ArchiveActions';
+import { fetchAllArticles } from '../actions/ArchiveActions';
 import Pagination from './Pagination';
 import Snippet from './Snippet';
 
 class Home extends Component {
   constructor (props) {
     super(props);
+    this.state = {
+      page      : 0,
+      perPage   : 8,
+      pageCount : 0
+    };
+
+    this.handleChangePage = this.handleChangePage.bind(this);
+  }
+
+  handleChangePage (page) {
+    this.setState({page: page});
   }
 
   componentDidMount () {
@@ -23,12 +34,11 @@ class Home extends Component {
     }
   }
 
-  componentWillUnmount () {
-    this.props.dispatch(resetPage());
-  }
-
   render () {
-    const { archives, page, perPage } = this.props;
+    const { archives } = this.props;
+
+    this.state.pageCount = Math.ceil(archives.length / this.state.perPage);
+    const { page, perPage, pageCount } = this.state;
 
     document.title = 'Life of xhu - Home';
 
@@ -38,7 +48,11 @@ class Home extends Component {
 
     return (
       <div>
-        <Pagination />
+        <Pagination
+          page = {this.state.page}
+          pageCount = {this.state.pageCount}
+          changePage = {this.handleChangePage}
+        />
         {snippets}
       </div>
     );
@@ -47,9 +61,7 @@ class Home extends Component {
 
 var mapStateToProps = function (state) {
   return {
-    archives : state.archive.entities,
-    page     : state.archive.pagination.page,
-    perPage  : state.archive.pagination.perPage
+    archives : state.archive.entities
   };
 }
 

@@ -24,19 +24,6 @@ export function clearSelection () {
   };
 }
 
-export const CHANGE_PAGE = 'CHANGE_PAGE';
-export function changePage (page) {
-  return {
-    type    : CHANGE_PAGE,
-    content : page
-  };
-}
-
-export const RESET_PAGE = 'RESET_PAGE';
-export function resetPage () {
-  return { type: RESET_PAGE };
-}
-
 // use fetch and return a promise
 export function fetchAllArticles () {
   NProgress.set(0.4);
