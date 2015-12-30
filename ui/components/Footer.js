@@ -24,7 +24,7 @@ class Footer extends Component {
       <div className='ui grid'>
         <div className='sixteen center aligned column'>
           <h5 className='ui horizontal divider header' style={footerStyles.divider}>
-            <i className='copyright icon'></i>
+            &nbsp;<i className='copyright icon'></i>
           </h5>
           <p style={footerStyles.label}>
             Copyright © 2015 - xhu - Powered by&nbsp;

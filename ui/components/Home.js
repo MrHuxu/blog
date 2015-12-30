@@ -5,6 +5,7 @@ import { Link } from 'react-router';
 import { fetchAllArticles } from '../actions/ArchiveActions';
 import Pagination from './Pagination';
 import Snippet from './Snippet';
+import PrevNextBtn from './PrevNextBtn';
 
 class Home extends Component {
   constructor (props) {
@@ -54,6 +55,11 @@ class Home extends Component {
           changePage = {this.handleChangePage}
         />
         {snippets}
+        <PrevNextBtn
+          page = {this.state.page}
+          pageCount = {this.state.pageCount}
+          changePage = {this.handleChangePage}
+        />
       </div>
     );
   }
