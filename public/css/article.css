@@ -10,3 +10,14 @@ blockquote {
   color: #696969;
   border-radius: 4px;
 }
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 14px;
+}
+
+hr {
+  border: 0;
+  color: #ddd;
+  background-color: #ddd;
+  height: 2px;
+}

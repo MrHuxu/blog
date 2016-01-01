@@ -46,6 +46,18 @@ class Article extends Component {
         <div className='ui raised segment' style={{
           margin: '0 0 0 0'
         }}>
+          <span className='ui top attached label'>
+            <p style={{
+              color: '#777',
+              fontWeight: '700',
+              padding: '0 0 0 5px'
+            }}>
+              {article.time && article.time.month} /&nbsp;
+              {article.time && article.time.day} /&nbsp;
+              {article.time && article.time.year}
+              {article.tags && article.tags.map(tag => ' · ' + tag).join('')}
+            </p>
+          </span>
           <div dangerouslySetInnerHTML={{__html: article ? article.content : '' }} />
         </div>
         <div className='ui raised segment' id='disqus_thread' />
