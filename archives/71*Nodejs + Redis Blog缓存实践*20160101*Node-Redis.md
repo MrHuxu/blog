@@ -13,6 +13,8 @@ Redis是一个运行在内存中的数据库，支持一些常用的数据结构
 
 这就是这个Blog使用缓存的原因了，使用数据库显得太重，而Redis轻量并且非常易于上手，所以果断选择用Redis进行缓存了。
 
+---
+
 ## 第三方库 3rd Part Library
 
 Node的第三方Redis库主要有
@@ -23,6 +25,8 @@ Node的第三方Redis库主要有
 支持Promise还有一个好处，就是需要执行多个查询操作的时候，回调的方式很容易陷入回调地狱，但是用Promise的话，就可以避免这个问题(参考[这篇文章](http://blog.xhu.me/#/archives/67*ES6: 回调将死, Promise永生*20151018*JavaScript-Promise.md?_k=mhw2ck))。
 
 所以我在这里就毫不犹豫选择ioredis了:)
+
+---
 
 ## 基本操作 Basic Operation
 
@@ -40,6 +44,8 @@ Redis的基本操作可以看这个页面 [Redis: Commands](http://redis.io/comm
 在这段代码中，我们先使用Redis初始化了一个redis对象，然后调用了```ping```这个方法，这个方法对应Redis里的[PING](http://redis.io/commands/ping)命令，这个命令在Redis中被用来检测客户端是否成功连接，然后对返回的promise调用then方法，打印出结果```PONG```。
 
 当我们在上面的代码中初始化redis对象的时候，其实可以看作是在终端中执行```redis-cli```命令，输入命令并且获得输出，所以当操作完成的时候，需要手动调用```end```方法来结束这个进程，否则程序将会hang住。
+
+---
 
 ## 存 Save
 
@@ -64,6 +70,8 @@ Redis的基本操作可以看这个页面 [Redis: Commands](http://redis.io/comm
     
 这样我们就把一个repo的信息存到了Redis里。
 
+---
+
 ## 取 Read
 
 取数据话使用[HGETALL](http://redis.io/commands/hgetall)指令就可以一次性获得一个散列中的所有字段，并且redis的```hgetall```方法直接返回的就是一个JS对象了:
@@ -81,6 +89,8 @@ Redis的基本操作可以看这个页面 [Redis: Commands](http://redis.io/comm
       ...
     });
     
+---
+
 ## 过期时间 Expiration
 
 在文章开头提到的两个使用缓存的场景，第一个生成缓存后就不需要改变了，但是对于从GitHub上获取的repo信息，是需要更新的，所以我们需要对缓存做过期时间设置，在这里我并不是对每个repo的信息都做过期设置，而是存储一个名为```repo:count```的键并让它兼职作为过期标志:
@@ -105,7 +115,9 @@ Redis的基本操作可以看这个页面 [Redis: Commands](http://redis.io/comm
 Redis还有一个[TTL](http://redis.io/commands/ttl)命令来差看一个键还有多久过期:
 
     redis.ttl('repo:count').then(val => console.log(val));   // => 1718
-    
+
+---
+
 ## 总结
 
 这个Blog对于Redis的使用还是比较简单的，基本上就只用到了上面所述的操作，不过在使用的过程中我深深感受到，简单和强大这两个词在Redis身上得到了统一，而且配合ioredis和Promise，多个键并行存取也是易如反掌，Blog的访问速度也有了很大的提高（目前瓶颈应该就是网络问题了，万恶的GFW），缓存的使用也为我今后的编程开发提供了一个良好的优化思路，我也会努力在今后的学习中去探索Redis的更多高级特性。
