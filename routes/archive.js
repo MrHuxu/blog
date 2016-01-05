@@ -1,3 +1,4 @@
+require("babel-core/register");
 import { Router } from 'express';
 import { getAllArticles, getSingleArticle } from '../lib/get-archives';
 
