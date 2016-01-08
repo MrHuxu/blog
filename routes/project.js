@@ -1,3 +1,4 @@
+require("babel-core/register");
 import { Router } from 'express';
 import { getRepos } from '../lib/get-repos';
 
