@@ -1,7 +1,5 @@
 #!/usr/bin/env node
-require("babel-core/register");
 var app = require('../app');
-
 app.set('port', process.env.PORT || 13109);
 
 var server = app.listen(app.get('port'), () => {

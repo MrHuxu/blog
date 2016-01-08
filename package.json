@@ -11,12 +11,12 @@
     "babel-core": "^6.3.26",
     "babel-loader": "^6.2.1",
     "babel-plugin-dev-expression": "^0.1.0",
+    "babel-polyfill": "^6.3.14",
     "babel-preset-es2015-node5": "^1.1.1",
     "babel-preset-react": "^6.3.13",
     "babel-preset-stage-0": "^6.3.13",
     "babel-register": "^6.3.13",
     "body-parser": "^1.14.2",
-    "chai": "^3.4.1",
     "cheerio": "^0.19.0",
     "cookie-parser": "^1.4.0",
     "css-loader": "^0.23.1",
@@ -32,7 +32,6 @@
     "ioredis": "^1.14.0",
     "jquery": "^2.1.4",
     "marked": "^0.3.5",
-    "mocha": "^2.3.4",
     "morgan": "^1.6.1",
     "nprogress": "^0.2.0",
     "react": "^0.14.5",
@@ -50,9 +49,11 @@
     "webpack-dev-server": "^1.14.0"
   },
   "devDependencies": {
+    "chai": "^3.4.1",
     "gulp": "^3.9.0",
     "gulp-nodemon": "^2.0.6",
     "gulp-livereload": "^3.8.1",
-    "gulp-plumber": "^1.0.1"
+    "gulp-plumber": "^1.0.1",
+    "mocha": "^2.3.4"
   }
 }
