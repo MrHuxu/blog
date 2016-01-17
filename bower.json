@@ -7,6 +7,6 @@
     "components"
   ],
   "dependencies": {
-    "semantic": "semantic-ui#~2.1.6"
+    "semantic": "semantic-ui#~2.1.8"
   }
 }

@@ -22,7 +22,7 @@ app.set('view engine', 'ejs');
 
 // log settings
 // output to a file instead of console in production mode
-logger.token('reqBody', function (req) {
+logger.token('reqBody', (req) => {
   return ' request: ' + JSON.stringify(req.body);
 });
 if (env === 'production') {
@@ -42,9 +42,14 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
 app.use('/archive', archive);
 app.use('/project', project);
+
+// handle every other route with index.html, which will contain
+// a script tag to your application's JavaScript file(s).
+app.get('*', (req, res) => {
+  res.render(path.resolve(__dirname, 'views', 'index.ejs'), { title: 'Life of xhu' });
+})
 
 /// catch 404 and forward to error handler
 app.use((req, res, next) => {

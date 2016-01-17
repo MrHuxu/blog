@@ -12,12 +12,11 @@ import '../public/css/code.css';
 
 import React, { Component } from 'react';
 import reactDom from 'react-dom';
-import { Router } from 'react-router';
+import { browserHistory, Router } from 'react-router';
 import { Provider } from 'react-redux';
 import { rootStore } from './store';
 
 import routes from './routes/routes';
-import history from './routes/history';
 
 /*
 var devDom = <Router routes={routes}></Router>
@@ -33,7 +32,7 @@ reactDom.render(
 
 reactDom.render(
   <Provider store={rootStore}>
-    <Router routes={routes}></Router>
+    <Router routes={routes}  history={browserHistory}></Router>
   </Provider>,
   document.getElementById('blog')
 );
