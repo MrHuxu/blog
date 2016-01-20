@@ -1,6 +1,6 @@
 p code, li code {
   padding: 2px 4px;
-  font-size: 80%;
+  font-size: 90%;
   color: #c7254e;
   background-color: #f9f2f4;
   border-radius: 4px;
@@ -9,9 +9,10 @@ p code, li code {
 pre code {
   display: block;
   border: 1px solid #ccc;
-  font-size: 14px;
-  color: #D1D9E1;
+  font-size: 12px;
   line-height: 20px;
+  font-weight: 12px;
+  letter-spacing: .5px;
   padding: 10px 0 10px 35px;
   background: #2d2d2d;
 }
@@ -24,7 +25,7 @@ pre {
 }
 
 code {
-  font-family: "Lucida Console","Courier New",Courier,monospace;
+  font-family: Monaco, 'MonacoRegular', 'Courier New', monospace !important;
   overflow: visible;
 }
 
@@ -45,7 +46,7 @@ pre ul.numbering {
   height: 100%;
   margin: 0;
   padding: 8px 2px 10px 0;
-  border-right: 1px solid #C3CCD0;
+  border-right: 0px solid #C3CCD0;
   border-radius: 3px 0 0 3px;
   background-color: #EEE;
   text-align: right;

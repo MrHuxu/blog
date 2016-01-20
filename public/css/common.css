@@ -1,10 +1,18 @@
+html {
+  overflow-y: auto;
+}
+
 body {
   padding: 50px;
-  font-size: 16px;
-  font-family: Georgia,"Times New Roman",serif;
-  color: #545454;
+  font-size: 15px;
+  font-family: "Avenir Next",Helvetica,Arial,"Lantinghei SC","Microsoft YaHei",sans-serif;
+  color: #444!important;
   line-height: 25px;
-  background-image: url('/imgs/b16.png');
+  background-image: url('/imgs/background-sea.jpg');
+  background-attachement: fixed;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% auto;
 }
 
 a {
