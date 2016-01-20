@@ -11,14 +11,14 @@ class PrevNextBtn extends Component {
 
   handlePrevBtn () {
     if (this.props.page > 0) {
-      document.body.scrollTop = 0;
+      $('html').scrollTop();
       this.props.changePage(this.props.page - 1);
     }
   }
 
   handleNextBtn () {
     if (this.props.page < this.props.pageCount - 1) {
-      document.body.scrollTop = 0;
+      $('html').scrollTop();
       this.props.changePage(this.props.page + 1);
     }
   }
