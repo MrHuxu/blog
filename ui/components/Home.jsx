@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { fetchAllArticles } from '../actions/ArchiveActions';
-import Pagination from './Pagination';
-import Snippet from './Snippet';
-import PrevNextBtn from './PrevNextBtn';
+import Pagination from './Pagination.jsx';
+import Snippet from './Snippet.jsx';
+import PrevNextBtn from './PrevNextBtn.jsx';
 
 class Home extends Component {
   constructor (props) {

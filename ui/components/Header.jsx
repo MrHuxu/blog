@@ -2,7 +2,7 @@ import $ from 'jquery';
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import Search from './Search';
+import Search from './Search.jsx';
 
 class Header extends Component {
   constructor (props) {

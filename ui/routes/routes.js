@@ -1,9 +1,9 @@
-import App from '../components/App';
-import Home from '../components/Home';
-import Archives from '../components/Archives';
-import Article from '../components/Article';
-import Projects from '../components/Projects';
-import Aboutme from '../components/Aboutme';
+import App from '../components/App.jsx';
+import Home from '../components/Home.jsx';
+import Archives from '../components/Archives.jsx';
+import Article from '../components/Article.jsx';
+import Projects from '../components/Projects.jsx';
+import Aboutme from '../components/Aboutme.jsx';
 
 export default {
   path: '/',
