@@ -9,6 +9,14 @@ export function getAllArticles (data) {
   };
 }
 
+export const CLEAR_ALL_ARTICLES = 'CLEAR_ALL_ARTICLES';
+export function clearAllArticles (data) {
+  return {
+    type    : CLEAR_ALL_ARTICLES,
+    content : data
+  };
+}
+
 export const GET_SINGLE_ARTICLE = 'GET_SINGLE_ARTICLE';
 export function getSingleArticle (data) {
   return {
@@ -29,7 +37,7 @@ export function fetchAllArticles (args) {
   NProgress.start();
   return function (dispatch) {
     NProgress.set(0.4);
-    $.get(`/archive/all_articles?page=${args.page}`, {}, function (data) {
+    $.get(`/archive/all_articles`, args, function (data) {
       NProgress.set(0.8);
       dispatch(getAllArticles(data.content));
     });

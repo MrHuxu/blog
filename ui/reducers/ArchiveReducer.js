@@ -1,5 +1,6 @@
 import {
   GET_ALL_ARTICLES,
+  CLEAR_ALL_ARTICLES,
   GET_SINGLE_ARTICLE,
   CLEAR_SELECTION
 } from '../actions/ArchiveActions';
@@ -22,6 +23,14 @@ export function archive (state = {
         perPage   : action.content.perPage,
         pageCount : action.content.pageCount,
         entities  : action.content.articles
+      });
+
+    case CLEAR_ALL_ARTICLES:
+      return Object.assign(copy, {
+        page      : 0,
+        perPage   : 0,
+        pageCount : 0,
+        entities  : []
       });
 
     case GET_SINGLE_ARTICLE:

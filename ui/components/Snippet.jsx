@@ -36,11 +36,11 @@ class Snippet extends Component {
           padding: '0 15px 10px 15px'
         }}>
 
-          <div className='ui inactive inverted dimmer'>
+          <div className='ui inactive inverted dimmer snippet-loader'>
             <div className='ui text loader'>Loading</div>
           </div>
 
-          <Link className='snippet-title' to={`/archives/${archive.name}`}style={{
+          <Link className='snippet-title' to={`/post/${archive.name}`}style={{
             color      : '#666',
             minHeight  : '1rem',
             fontSize   : '2rem',
@@ -54,7 +54,7 @@ class Snippet extends Component {
         </div>
 
         <div className='ui bottom attached clearing segment'>
-          <Link to={`/archives/${archive.name}`} className="ui right floated button" style={{
+          <Link to={`/post/${archive.name}`} className="ui right floated button" style={{
             backgroundColor: '#ffffff'
           }}>
             Continue Reading

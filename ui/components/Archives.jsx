@@ -3,7 +3,7 @@ import '../../public/css/archives.css';
 import $ from 'jquery';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchAllArticles } from '../actions/ArchiveActions';
+import { fetchAllArticles, clearAllArticles } from '../actions/ArchiveActions';
 import { Link } from 'react-router';
 
 class Archives extends Component {
@@ -92,7 +92,7 @@ class Archives extends Component {
     return (
       <div key={archive.sequence} className='ui small card' style={{width: '100%'}}>
         <div className='content' style={{padding: '10px 10px 2px 10px'}}>
-          <Link to={`/archives/${archive.name}`} className='header' style={{
+          <Link to={`/post/${archive.name}`} className='header' style={{
             font: '15px "Lucida Grande",Helvetica,Arial,sans-serif',
             color: '#444'
           }}>
@@ -162,15 +162,29 @@ class Archives extends Component {
   }
 
   componentDidMount () {
-    if (!this.props.archives.length) {
+    if (!this.props.params.articleName) {
       if ($('.home-item').hasClass('animated')) {
-        this.props.dispatch(fetchAllArticles());
+        this.props.dispatch(fetchAllArticles({
+           page     : 0,
+           fetchAll : true
+         }));
       } else {
         $('.home-item').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {
-          this.props.dispatch(fetchAllArticles());
+          this.props.dispatch(fetchAllArticles({
+            page     : 0,
+            fetchAll : true
+          }));
         })
       }
     }
+  }
+
+  componentWillMount () {
+    this.props.dispatch(clearAllArticles());
+  }
+
+  componentWillUnmount () {
+    this.props.dispatch(clearAllArticles());
   }
 
   render () {
@@ -179,7 +193,7 @@ class Archives extends Component {
 
     document.title = 'Life of xhu - Archives';
 
-    return this.props.children || (
+    return (
       <div className='ui segment' style={{
         margin: '0 0 0 0'
       }}>

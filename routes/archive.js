@@ -4,7 +4,7 @@ import { getAllArticles, getSingleArticle } from '../lib/get-archives';
 var router = Router();
 
 router.get('/all_articles', (req, res) => {
-  getAllArticles(req.query.page).then((articlesContent) => {
+  getAllArticles(req.query).then((articlesContent) => {
     res.send({content: articlesContent});
   });
 });

@@ -15,24 +15,16 @@ class Home extends Component {
   componentDidMount () {
     const currentPage = this.props.params ? this.props.params.page : 0;
 
-    if (!this.props.archives.length) {
-      if ($('.home-item').hasClass('animated')) {
-        this.props.dispatch(fetchAllArticles({page: currentPage}));
-      } else {
-        $('.home-item').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {
-          this.props.dispatch(fetchAllArticles({page: currentPage}));
-        })
-      }
-    }
+    this.props.dispatch(fetchAllArticles({page: currentPage}));
   }
 
   componentDidUpdate () {
     const currentPage = this.props.params ? this.props.params.page : 0;
     if (currentPage != this.props.page){
-      $('.ui.inverted.dimmer').removeClass('inactive').addClass('active');
+      $('.snippet-loader').removeClass('inactive').addClass('active');
       this.props.dispatch(fetchAllArticles({page: currentPage}));
     } else {
-      $('.ui.inverted.dimmer').removeClass('active').addClass('inactive');
+      $('.snippet-loader').removeClass('active').addClass('inactive');
     }
   }
 

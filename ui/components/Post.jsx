@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchSingleArticle, clearSelection } from '../actions/ArchiveActions';
 
-class Article extends Component {
+class Post extends Component {
   constructor (props) {
     super(props);
   }
@@ -16,7 +16,7 @@ class Article extends Component {
     } else {
       $('.home-item').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {
         this.props.dispatch(fetchSingleArticle({name: this.props.params.articleName}));
-      })
+      });
     }
     
     // Disqus Comment System
@@ -72,4 +72,4 @@ var mapStateToProps = function (state) {
   };
 };
 
-export default connect(mapStateToProps)(Article);
+export default connect(mapStateToProps)(Post);
