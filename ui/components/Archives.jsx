@@ -162,6 +162,7 @@ class Archives extends Component {
   }
 
   componentDidMount () {
+    $('.archives-loader').removeClass('inactive').addClass('active');
     if (!this.props.params.articleName) {
       if ($('.home-item').hasClass('animated')) {
         this.props.dispatch(fetchAllArticles({
@@ -176,6 +177,12 @@ class Archives extends Component {
           }));
         })
       }
+    }
+  }
+
+  componentDidUpdate () {
+    if (this.props.archives.length) {
+      $('.archives-loader').removeClass('active').addClass('inactive');
     }
   }
 
@@ -197,6 +204,11 @@ class Archives extends Component {
       <div className='ui segment' style={{
         margin: '0 0 0 0'
       }}>
+
+        <div className='ui inactive inverted dimmer archives-loader'>
+          <div className='ui text loader'></div>
+        </div>
+
         <h3 className='widget-title'>Tags</h3>
         {this.generateAllTags()}
         {this.generateAllCards()}

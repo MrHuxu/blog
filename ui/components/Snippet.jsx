@@ -37,7 +37,7 @@ class Snippet extends Component {
         }}>
 
           <div className='ui inactive inverted dimmer snippet-loader'>
-            <div className='ui text loader'>Loading</div>
+            <div className='ui text loader'></div>
           </div>
 
           <Link className='snippet-title' to={`/post/${archive.name}`}style={{
