@@ -9,6 +9,9 @@ export default {
   path: '/',
   component: App,
   childRoutes: [{
+    path      : 'page/:page',
+    component : Home
+  } ,{
     path      : 'projects',
     component : Projects
   }, {

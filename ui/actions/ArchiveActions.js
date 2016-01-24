@@ -38,7 +38,7 @@ export function fetchAllArticles () {
 export function fetchSingleArticle (args) {
   NProgress.set(0.4);
   return function (dispatch) {
-    $.post('/archive/single_article', args, function (data) {
+    $.get(`/archive/single_article?name=${args.name}`, {}, function (data) {
       NProgress.set(0.8);
       dispatch(getSingleArticle(data.article));
     });

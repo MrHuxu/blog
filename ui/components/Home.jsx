@@ -24,12 +24,14 @@ class Home extends Component {
   }
 
   componentDidMount () {
+    const page = this.props.params ? this.props.params.page : 1;
+
     if (!this.props.archives.length) {
       if ($('.home-item').hasClass('animated')) {
-        this.props.dispatch(fetchAllArticles());
+        this.props.dispatch(fetchAllArticles({page: 1}));
       } else {
         $('.home-item').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {
-          this.props.dispatch(fetchAllArticles());
+          this.props.dispatch(fetchAllArticles({page: 1}));
         })
       }
     }

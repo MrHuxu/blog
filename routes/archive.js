@@ -9,8 +9,8 @@ router.get('/all_articles', (req, res) => {
   });
 });
 
-router.post('/single_article', (req, res) => {
-  getSingleArticle(req.body.name).then((article) => {
+router.get('/single_article', (req, res) => {
+  getSingleArticle(req.query.name).then((article) => {
     res.send({article: article});
   });
 });
