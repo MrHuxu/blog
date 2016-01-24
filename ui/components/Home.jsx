@@ -28,7 +28,12 @@ class Home extends Component {
 
   componentDidUpdate () {
     const currentPage = this.props.params ? this.props.params.page : 0;
-    if (currentPage != this.props.page) this.props.dispatch(fetchAllArticles({page: currentPage}));
+    if (currentPage != this.props.page){
+      $('.ui.inverted.dimmer').removeClass('inactive').addClass('active');
+      this.props.dispatch(fetchAllArticles({page: currentPage}));
+    } else {
+      $('.ui.inverted.dimmer').removeClass('active').addClass('inactive');
+    }
   }
 
   render () {

@@ -26,8 +26,9 @@ export function clearSelection () {
 
 // use fetch and return a promise
 export function fetchAllArticles (args) {
-  NProgress.set(0.4);
+  NProgress.start();
   return function (dispatch) {
+    NProgress.set(0.4);
     $.get(`/archive/all_articles?page=${args.page}`, {}, function (data) {
       NProgress.set(0.8);
       dispatch(getAllArticles(data.content));
@@ -36,8 +37,9 @@ export function fetchAllArticles (args) {
 }
 
 export function fetchSingleArticle (args) {
-  NProgress.set(0.4);
+  NProgress.start();
   return function (dispatch) {
+    NProgress.set(0.4);
     $.post(`/archive/single_article`, args, function (data) {
       NProgress.set(0.8);
       dispatch(getSingleArticle(data.article));
