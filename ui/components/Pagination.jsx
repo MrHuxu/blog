@@ -1,25 +1,10 @@
 import $ from 'jquery';
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 
 class Pagination extends Component {
   constructor (props) {
     super(props);
-
-    this.changePage = this.props.changePage;
-    this.handlePrevBtn = this.handlePrevBtn.bind(this);
-    this.handleNextBtn = this.handleNextBtn.bind(this);
-  }
-
-  handlePrevBtn () {
-    if (this.props.page > 0) {
-      this.changePage(this.props.page - 1);
-    }
-  }
-
-  handleNextBtn () {
-    if (this.props.page < this.props.pageCount - 1) {
-      this.changePage(this.props.page + 1);
-    }
   }
 
   render () {
@@ -28,12 +13,13 @@ class Pagination extends Component {
     var pageItems = [];
     for (let i = 0; i < pageCount; ++i) {
       pageItems.push(
-        <a key       = {i}
-           className = {i === page ? 'item active' : 'item'}
-           onClick   = {this.changePage.bind(null, i)}
+        <Link 
+          key       = {i}
+          to        = {`/page/${i}`}
+          className = {i === page ? 'item active' : 'item'}
         >
           {i}
-        </a>
+        </Link>
       );
     }
 
@@ -46,21 +32,23 @@ class Pagination extends Component {
           position: 'relative'
         }}>
           <div className='ui pagination menu' style={{border: '0'}}>
-            <a className={`item ${page > 0 ? '' : 'disabled'}`}
-               style={{position: 'absolute', left: '0'}}
-               onClick = {this.handlePrevBtn}
+            <Link
+              to        = {page > 0 ? `/page/${page - 1}` : `/page/${page}`}
+              style     = {{position: 'absolute', left: '0'}}
+              className = {`item ${page > 0 ? '' : 'disabled'}`}
             >
               <i className="chevron left icon"></i>
-            </a>
+            </Link>
 
             {pageItems}
 
-            <a className={`item ${page + 1 < pageCount ? '' : 'disabled'}`}
-               style={{position: 'absolute', right: '0'}}
-               onClick={this.handleNextBtn}
+            <Link
+              to        = {page + 1 < pageCount ? `/page/${page + 1}` : `/page/${page}`}
+              style     = {{position: 'absolute', right: '0'}}
+              className = {`item ${page + 1 < pageCount ? '' : 'disabled'}`}
             >
               <i className="chevron right icon"></i> 
-            </a>
+            </Link>
           </div>
         </div>
       </div>

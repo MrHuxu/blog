@@ -6,29 +6,32 @@ import {
 import NProgress from 'nprogress';
 
 export function archive (state = {
-  entities   : [],
+  page            : 0,
+  perPage         : 0,
+  pageCount       : 0,
+  entities        : [],
   selectedArticle : {}
 }, action) {
+  var copy = Object.assign({}, state);
+
   switch (action.type) {
     case GET_ALL_ARTICLES:
       NProgress.done();
-      return Object.assign({}, {
-        entities   : action.content,
-        selectedArticle : state.selectedArticle
+      return Object.assign(copy, {
+        page      : action.content.page,
+        perPage   : action.content.perPage,
+        pageCount : action.content.pageCount,
+        entities  : action.content.articles
       });
 
     case GET_SINGLE_ARTICLE:
       NProgress.done();
-      return Object.assign({}, {
-        entities        : state.entities,
-        selectedArticle : action.content
-      });
+      copy.selectedArticle = action.content;
+      return copy;
 
     case CLEAR_SELECTION:
-      return Object.assign({}, {
-        entities        : state.entities,
-        selectedArticle : {}
-      });
+      copy.selectedArticle = {};
+      return copy;
 
     default:
       return state;

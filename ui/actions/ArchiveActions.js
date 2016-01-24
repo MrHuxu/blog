@@ -25,12 +25,12 @@ export function clearSelection () {
 }
 
 // use fetch and return a promise
-export function fetchAllArticles () {
+export function fetchAllArticles (args) {
   NProgress.set(0.4);
   return function (dispatch) {
-    $.get('/archive/all_articles', {}, function (data) {
+    $.get(`/archive/all_articles?page=${args.page}`, {}, function (data) {
       NProgress.set(0.8);
-      dispatch(getAllArticles(data.entities));
+      dispatch(getAllArticles(data.content));
     });
   };
 }
@@ -38,7 +38,7 @@ export function fetchAllArticles () {
 export function fetchSingleArticle (args) {
   NProgress.set(0.4);
   return function (dispatch) {
-    $.get(`/archive/single_article?name=${args.name}`, {}, function (data) {
+    $.post(`/archive/single_article`, args, function (data) {
       NProgress.set(0.8);
       dispatch(getSingleArticle(data.article));
     });

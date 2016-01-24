@@ -10,57 +10,47 @@ import PrevNextBtn from './PrevNextBtn.jsx';
 class Home extends Component {
   constructor (props) {
     super(props);
-    this.state = {
-      page      : 0,
-      perPage   : 8,
-      pageCount : 0
-    };
-
-    this.handleChangePage = this.handleChangePage.bind(this);
-  }
-
-  handleChangePage (page) {
-    this.setState({page: page});
   }
 
   componentDidMount () {
-    const page = this.props.params ? this.props.params.page : 1;
+    const currentPage = this.props.params ? this.props.params.page : 0;
 
     if (!this.props.archives.length) {
       if ($('.home-item').hasClass('animated')) {
-        this.props.dispatch(fetchAllArticles({page: 1}));
+        this.props.dispatch(fetchAllArticles({page: currentPage}));
       } else {
         $('.home-item').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {
-          this.props.dispatch(fetchAllArticles({page: 1}));
+          this.props.dispatch(fetchAllArticles({page: currentPage}));
         })
       }
     }
   }
 
+  componentDidUpdate () {
+    const currentPage = this.props.params ? this.props.params.page : 0;
+    if (currentPage != this.props.page) this.props.dispatch(fetchAllArticles({page: currentPage}));
+  }
+
   render () {
     const { archives } = this.props;
+    const { page, pageCount } = this.props;
 
-    this.state.pageCount = Math.ceil(archives.length / this.state.perPage);
-    const { page, perPage, pageCount } = this.state;
-
-    document.title = 'Life of xhu - Home';
-
-    var snippets = archives.slice(page * perPage, (page + 1) * perPage).map((archive) => {
+    var snippets = archives.map((archive) => {
       return <Snippet archive={archive} key={archive.sequence}/>;
     });
+
+    document.title = 'Life of xhu - Home';
 
     return (
       <div>
         <Pagination
-          page = {this.state.page}
-          pageCount = {this.state.pageCount}
-          changePage = {this.handleChangePage}
+          page = {page}
+          pageCount = {pageCount}
         />
         {snippets}
         <PrevNextBtn
-          page = {this.state.page}
-          pageCount = {this.state.pageCount}
-          changePage = {this.handleChangePage}
+          page = {page}
+          pageCount = {pageCount}
         />
       </div>
     );
@@ -69,7 +59,10 @@ class Home extends Component {
 
 var mapStateToProps = function (state) {
   return {
-    archives : state.archive.entities
+    page      : state.archive.page,
+    perPage   : state.archive.perPage,
+    pageCount : state.archive.pageCount,
+    archives  : state.archive.entities
   };
 }
 
