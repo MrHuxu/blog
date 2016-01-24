@@ -175,7 +175,7 @@ class Archives extends Component {
             page     : 0,
             fetchAll : true
           }));
-        })
+        });
       }
     }
   }
