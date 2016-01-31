@@ -1,7 +1,7 @@
 FROM daocloud.io/node:latest
 MAINTAINER Xu Hu 'hxtheone@gmail.com'
 
-RUN npm install gulp bower forever webpack webpack-dev-server -g
+RUN npm install gulp bower forever nodemon webpack webpack-dev-server -g
 
 COPY . /opt/blog
 
