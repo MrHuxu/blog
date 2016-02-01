@@ -15,6 +15,12 @@ gulp.task("webpack", function(callback) {
 });
 
 gulp.task("webpack-dev-server", function(callback) {
+  webpackConfig.entry = [
+    'webpack-dev-server/client?http://0.0.0.0:6789', // WebpackDevServer host and port
+    'webpack/hot/dev-server', // "only" prevents reload on syntax errors
+    './ui/index' // Your appʼs entry point
+  ];
+
   webpackConfig.plugins = [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({

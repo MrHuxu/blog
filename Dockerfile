@@ -1,6 +1,8 @@
 FROM daocloud.io/node:latest
 MAINTAINER Xu Hu 'hxtheone@gmail.com'
 
+RUN apt-get update
+RUN apt-get -y install redis-tools tmux
 RUN npm install gulp bower forever nodemon webpack webpack-dev-server -g
 
 COPY . /opt/blog
