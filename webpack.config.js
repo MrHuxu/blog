@@ -22,6 +22,10 @@ module.exports = {
     ]
   },
 
+  watchOptions: {
+    poll: true
+  },
+
   plugins: [
     new webpack.optimize.UglifyJsPlugin({minimize: true}),
     new webpack.HotModuleReplacementPlugin(),
