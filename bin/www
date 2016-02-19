@@ -1,5 +1,8 @@
 #!/usr/bin/env node
-var app = require('../app');
+require('babel-register')({
+  presets: ['es2015-node5', 'react', 'stage-0']
+});
+var app = require('../app').default;
 app.set('port', process.env.PORT || 13109);
 
 var server = app.listen(app.get('port'), () => {
