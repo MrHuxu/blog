@@ -112,6 +112,8 @@
 更新之后的配置文件如下:
 
     // in server.js for webpack-dev-server
+    config.output.publicPath = '/assets/';
+
     new WebpackDevServer(webpack(config), {
       publicPath         : config.output.publicPath,
       hot                : true,
@@ -120,12 +122,20 @@
 
     // in webpack.config.js for webpack
     output: {
-      path: path.join(__dirname, 'vendor', 'dist', 'assets'),
-      filename: 'bundle.js',
-      publicPath: '/assets/'
-    }
+      path: path.join(__dirname, 'vendor', 'dist'),
+      filename: 'bundle.js'
+    },
 
 关于这两个参数的解析就到这里了. 按照惯例, 写个总结:
 
+首先, ```output.publicPath```的值有几种情况:
+1. 不设值, 那么资源文件会从相对的根目录加载, electron是html文件的同级, 网页的话则是```/```
+2. 值是路径形式
+    - 通过```file://```打开网页, 是通过绝对根目录```/```往下寻找路径
+    - 通过```http(s)://```打开网页, 是通过网页的```/```往下寻找路径
+3. 值是```http(s)://```这样的URL路径, 会直接去该路径下加载文件
+
+然后是一些感想:
+
 1. webpack打包之后的文件其实并不复杂, 除开一些特有的语法, 基本上还是CommonJS的那一套, 只要没做Uglify, 追溯某些问题也是很容易从打包之后的js文件里看出线索的.
-2.  ```output```里的```publicPath```是访问资源文件的位置, 外面的那个是webpack-dev-server打包文件的访问位置, 这个配置其实还有一个更实用的地方, 就是很容易和CDN结合起来, 只要设置为CDN的URL, 那么通过```file-loader```转译的资源文件就都会从CDN加载了.
+2. ```output```里的```publicPath```是访问资源文件的位置, 外面的那个是webpack-dev-server打包文件的访问位置, 这个配置其实还有一个更实用的地方, 就是很容易和CDN结合起来, 也就是上面的第三种情况, 只要把这个值设置为CDN的URL, 那么通过```file-loader```转译的资源文件就都会从CDN加载了.
