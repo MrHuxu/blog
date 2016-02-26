@@ -4,10 +4,10 @@ import '../node_modules/nprogress/nprogress.css';
 
 import $ from 'jquery';
 window.jQuery = $; // Assure it's available globally.
-require('../public/components/semantic/dist/semantic.min.js');
 
 import '../public/css/common.css';
 import '../public/css/header.css';
+import '../public/css/timeline.css';
 import '../public/css/code.css';
 
 import React, { Component } from 'react';

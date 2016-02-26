@@ -1,7 +1,20 @@
 import $ from 'jquery';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Card from 'material-ui/lib/card/card';
+import CardHeader from 'material-ui/lib/card/card-header';
+import CardText from 'material-ui/lib/card/card-text';
 import { fetchRepos } from '../actions/ProjectActions';
+
+const style={
+  projects: {
+    padding: '0 0 20px 0'
+  },
+
+  card: {
+    margin: '15px 0 0 0'
+  }
+};
 
 class Projects extends Component {
   constructor (props) {
@@ -11,41 +24,18 @@ class Projects extends Component {
   }
 
   generateItem (project) {
-    const projectStyle = {
-      description: {
-        marginTop    : '3px',
-        marginBottom : '0',
-        fontSize     : '15px',
-        color        : '#666',
-        fontFamily   : '"Open Sans","Helvetica Neue",Arial,NanumBarunGothic,"Apple SD Gothic Neo",AppleGothic,"Malgun Gothic",DotumChe,sans-serif'
-      },
-
-      time: {
-        marginTop  : '5px',
-        fontSize   : '13px',
-        color      : '#888',
-        fontFamily : '"Open Sans","Helvetica Neue",Arial,NanumBarunGothic,"Apple SD Gothic Neo",AppleGothic,"Malgun Gothic",DotumChe,sans-serif'
-      }
-    };
-
     return (
-      <div key={project.name} className='item'>
-        <i className='large github middle aligned icon'></i>
-        <div className='content'  style={{width: '100%'}}>
-          <div className='ui grid'>
-            <div className='eight wide column'>
-              <a target='_blank' href={project.url} className='header'>{project.fullName}</a>
-            </div>
-            <div className='eight wide right aligned column' style={{paddingRight: '45px'}}>
-              <i className="star icon">
-                <span style={projectStyle.description}>&nbsp;{project.star}</span>
-              </i>
-            </div>
-          </div>
-          <div style={projectStyle.description}>{project.description}</div>
-          <div style={projectStyle.time}>Updated at {project.updatedAt}</div>
-        </div>
-      </div>
+      <Card style={style.card}>
+        <CardHeader
+        title = {<a target='_blank' href={project.url} className='header'>{project.fullName}</a>}
+          subtitle={project.updatedAt}
+          actAsExpander={true}
+          showExpandableButton={true}
+        />
+        <CardText expandable={true}>
+          {project.description}
+        </CardText>
+      </Card>
     );
   }
 
@@ -68,10 +58,8 @@ class Projects extends Component {
     var projectItems = projects.map(project => this.generateItem(project));
 
     return (
-      <div className='ui segment'>
-        <div className='ui relaxed divided list'>
-          {projectItems}
-        </div>
+      <div style={style.projects}>
+        {projectItems}
       </div>
     );
   }

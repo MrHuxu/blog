@@ -5,6 +5,23 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchSingleArticle, clearSelection } from '../actions/ArchiveActions';
 
+const style = {
+  post: {
+    padding: '40px 2.5% 0 2.5%'
+  },
+
+  postContent: {
+    padding: '0 0 20px 0'
+  },
+
+  timeAndTag: {
+    fontSize      : '1rem',
+    letterSpacing : '1px',
+    margin        : '20px 0 0 0',
+    color         : '#aaa'
+  }
+};
+
 class Post extends Component {
   constructor (props) {
     super(props);
@@ -42,25 +59,17 @@ class Post extends Component {
     document.title = `Life of xhu - ${title}`;
 
     return (
-      <div>
-        <div className='ui raised segment' style={{
-          margin: '0 0 0 0'
-        }}>
-          <span className='ui top attached label'>
-            <p style={{
-              color: '#777',
-              fontWeight: '700',
-              padding: '0 0 0 5px'
-            }}>
-              {article.time && article.time.month} /&nbsp;
-              {article.time && article.time.day} /&nbsp;
-              {article.time && article.time.year}
-              {article.tags && article.tags.map(tag => ' · ' + tag).join('')}
-            </p>
-          </span>
+      <div style={style.post}>
+        <div style={style.postContent}>
           <div dangerouslySetInnerHTML={{__html: article ? article.content : '' }} />
+          <div style={style.timeAndTag}>
+            {article.time && article.time.month} /&nbsp;
+            {article.time && article.time.day} /&nbsp;
+            {article.time && article.time.year}
+            {article.tags && article.tags.map(tag => ' · ' + tag).join('')}
+          </div>
         </div>
-        <div className='ui raised segment' id='disqus_thread' />
+        <div id='disqus_thread' />
       </div>
     );
   }

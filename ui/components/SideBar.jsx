@@ -6,7 +6,25 @@ import Search from './Search.jsx';
 
 const style = {
   sideBar: {
-    margin: '40%'
+    margin: '45% 0 0 10%'
+  },
+
+  menu: {
+    width: '100%'
+  },
+
+  menuItem: {
+    fontSize: '12px'
+  },
+
+  icons: {
+    margin   : '18px 0 0 -10px',
+    fontSize : '22px'
+  },
+
+  iconLink: {
+    color  : '#545454',
+    margin : '0 0 0 10px'
   }
 };
 
@@ -41,13 +59,13 @@ class Header extends Component {
     const { archives } = this.props;
 
     var menu = (
-      <div className='twelve wide column blog-menu'>
+      <div className='blog-menu' style={style.menuItem}>
         const
         <p className='left-bracket'>&nbsp;{'{'}&nbsp;</p>
-        <Link to='/' className='menu-item home-item'>Home</Link>
+        <Link to='/' className='menu-item home-item' style={{display: 'inline-block'}}>Home</Link>
         ,&nbsp;
         <Link to='/archives/' className='menu-item'>Archives</Link>
-        ,&nbsp;
+        ,&nbsp;<br />
         <Link to='/projects' className='menu-item'>Projects</Link>
         ,&nbsp;
         <Link to='/aboutme' className='menu-item'>Aboutme</Link>
@@ -59,21 +77,20 @@ class Header extends Component {
     );
 
     return (
-      <div className='ui stackable grid' style={style.sideBar}>
-        <div className='twelve wide column'>
+      <div style={style.sideBar}>
+        <div style={style.menu}>
           {menu}
         </div>
-        <div className='four wide right aligned column' style={{fontSize: '25px', paddingTop: '16px'}}>
-          <a target='_blank' href='http://github.com/MrHuxu' style={{color: '#545454'}}>
-            <i className='github alternate icon' style={{marginRight: '23px'}}/>
+        <div style={style.icons}>
+          <a target='_blank' href='http://github.com/MrHuxu' style={style.iconLink}>
+            <i className='github alternate icon'/>
           </a>
-          <a target='_blank' href='http://weibo.com/2058722335' style={{color: '#545454'}}>
-            <i className='weibo icon' style={{marginRight: '23px'}}/>
+          <a target='_blank' href='http://weibo.com/2058722335' style={style.iconLink}>
+            <i className='weibo icon'/>
           </a>
-          <a href='mailto:hxtheone@gmail.com' style={{color: '#545454'}}>
-            <i className='mail outline icon' style={{marginRight: '23px'}}/>
+          <a href='mailto:hxtheone@gmail.com' style={style.iconLink}>
+            <i className='mail outline icon'/>
           </a>
-          <i className='search red icon' style={{marginRight: '15px'}}/>
         </div>
       </div>
     );
