@@ -13,9 +13,11 @@ const style = {
   },
 
   pageLabel: {
-    color    : '#777',
-    fontSize : '0.9em',
-    display  : 'inline-block'
+    color         : '#777',
+    fontSize      : '0.9em',
+    display       : 'inline-block',
+    margin        : '12px 0 0 0',
+    verticalAlign : 'top'
   }
 };
 

@@ -5,6 +5,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchAllArticles, clearAllArticles } from '../actions/ArchiveActions';
 import { Link } from 'react-router';
+import RaisedButton from 'material-ui/lib/raised-button';
+import Card from 'material-ui/lib/card/card';
+import CardActions from 'material-ui/lib/card/card-actions';
+import CardHeader from 'material-ui/lib/card/card-header';
+import CardText from 'material-ui/lib/card/card-text';
+
+const style = {
+  tagBtn: {
+    margin: '5px'
+  }
+};
 
 class Archives extends Component {
   constructor (props) {
@@ -36,16 +47,13 @@ class Archives extends Component {
   generateAllTags (totalTags) {
     return this.state.totalTags.map((tag) => {
       return (
-        <button 
+        <RaisedButton
+          label     = {tag}
           key       = {tag}
-          className = {`ui basic button tagBtn ${this.state.selectedTags.indexOf(tag) === -1 ? '' : 'active'}`}
           onClick   = {this.updateFilter.bind(null, tag)}
-          style     = {{
-            margin: '3px 5px 2px 0'
-          }}
+          style     = {style.tagBtn}
         >
-          {tag}
-        </button>
+        </RaisedButton>
       );
     });
   }
@@ -90,30 +98,22 @@ class Archives extends Component {
 
   generateSingleCard (archive) {
     return (
-      <div key={archive.sequence} className='ui small card' style={{width: '100%'}}>
-        <div className='content' style={{padding: '10px 10px 2px 10px'}}>
-          <Link to={`/post/${archive.name}`} className='header' style={{
-            font: '15px "Lucida Grande",Helvetica,Arial,sans-serif',
-            color: '#444'
-          }}>
-            {archive.title}
-          </Link>
-          <div className='meta'>
-          <span className='date'>@{`${archive.time.month}/${archive.time.day}/${archive.time.year}`}</span>
-          </div>
-        </div>
-        <div className='extra content' style={{padding: '2px 10px 2px 10px'}}>
-          <i className='tag icon'></i>
+      <Card key={archive.sequence}>
+        <CardHeader
+          title    = {archive.title}
+          subtitle = {`${archive.time.month}/${archive.time.day}/${archive.time.year}`}
+        />
+        <CardText>
           {archive.tags.map(tag => <a key={tag} style={{fontSize: '13px'}}onClick={this.updateFilter.bind(null, tag)}>{tag}&nbsp;</a>)}
-        </div>
-      </div>
+        </CardText>
+      </Card>
     );
   }
 
   generateSingleYear (arr) {
     return arr.map((record, index) => {
       return (
-        <div key={index} className='four wide column' style={{padding: '14px 7px 14px 7px'}}>
+        <div key={index} style={{width: '25%', display: 'inline-block', verticalAlign: 'top'}}>
           {record}
         </div>
       );
@@ -148,10 +148,7 @@ class Archives extends Component {
       return (
         <div key={year}>
           <h3 className='widget-title' style={{marginTop: '15px'}}>{year}</h3>
-          <div className='ui stackable grid' style={{
-            paddingLeft  : '9px',
-            paddingRight : '9px'
-          }}>
+          <div>
             {this.generateSingleYear(arrByYear[year])}
           </div>
         </div>
@@ -201,14 +198,7 @@ class Archives extends Component {
     document.title = 'Life of xhu - Archives';
 
     return (
-      <div className='ui segment' style={{
-        margin: '0 0 0 0'
-      }}>
-
-        <div className='ui inactive inverted dimmer archives-loader'>
-          <div className='ui text loader'></div>
-        </div>
-
+      <div>
         <h3 className='widget-title'>Tags</h3>
         {this.generateAllTags()}
         {this.generateAllCards()}
