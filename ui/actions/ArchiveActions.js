@@ -39,7 +39,7 @@ export function fetchAllArticles (args) {
     NProgress.set(0.4);
     $.get(`/archive/all_articles`, args, function (data) {
       NProgress.set(0.8);
-      location.href = '#';
+      document.body.scrollTop = 0
       dispatch(getAllArticles(data.content));
     });
   };
