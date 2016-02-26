@@ -1,6 +1,25 @@
 import $ from 'jquery';
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import FlatButton from 'material-ui/lib/flat-button';
+import IconButton from 'material-ui/lib/icon-button';
+import FontIcon from 'material-ui/lib/font-icon';
+import LeftArrow from 'material-ui/lib/svg-icons/hardware/keyboard-arrow-left';
+import RightArror from 'material-ui/lib/svg-icons/hardware/keyboard-arrow-right';
+
+const style = {
+  prevNextBtn: {
+    margin: '9px 0 7px 0'
+  },
+
+  pageLabel: {
+    color         : '#777',
+    fontSize      : '0.9em',
+    display       : 'inline-block',
+    margin        : '12px 0 0 0',
+    verticalAlign : 'top'
+  }
+};
 
 class PrevNextBtn extends Component {
   constructor (props) {
@@ -9,23 +28,33 @@ class PrevNextBtn extends Component {
 
   render () {
     const { page, pageCount } = this.props;
+    const newerLink = <Link to={page > 0 ? `/page/${page - 1}` : `/page/${page}`} />;
+    const olderLink = <Link to={page + 1 < pageCount ? `/page/${page + 1}` : `/page/${page}`} />;
 
     return (
-      <div style={{textAlign: 'center'}}>
-        <div className='ui buttons'>
-          <Link
-            to        = {page > 0 ? `/page/${page - 1}` : `/page/${page}`}
-            className = {`ui button circular ${this.props.page > 0 ? '' : 'disabled'}`}
+      <div style={style.prevNextBtn}>
+        <div style={{display: 'inline-block'}}>
+          <IconButton
+            label            = "Newer"
+            disabled         = {this.props.page <= 0}
+            linkButton       = {true}
+            containerElement = {newerLink}
           >
-            <i className='caret left arrow icon'/>Prev&nbsp;
-          </Link>
-          <div className='or'></div>
-          <Link
-            to        = {page + 1 < pageCount ? `/page/${page + 1}` : `/page/${page}`}
-            className = {`ui button circular ${this.props.page < this.props.pageCount - 1 ? '' : 'disabled'}`}
+            <LeftArrow />
+          </IconButton>
+        </div>
+
+        <div style={style.pageLabel}>Page {page} of {pageCount}</div>
+
+        <div style={{display: 'inline-block'}}>
+          <IconButton
+            label            = "Older"
+            disabled         = {this.props.page >= this.props.pageCount}
+            linkButton       = {true}
+            containerElement = {olderLink}
           >
-            &nbsp;Next<i className='caret right arrow icon'/>
-          </Link>
+            <RightArror />
+          </IconButton>
         </div>
       </div>
     );

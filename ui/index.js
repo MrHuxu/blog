@@ -4,10 +4,10 @@ import '../node_modules/nprogress/nprogress.css';
 
 import $ from 'jquery';
 window.jQuery = $; // Assure it's available globally.
-require('../public/components/semantic/dist/semantic.min.js');
 
 import '../public/css/common.css';
 import '../public/css/header.css';
+import '../public/css/timeline.css';
 import '../public/css/code.css';
 
 import React, { Component } from 'react';
@@ -15,20 +15,10 @@ import reactDom from 'react-dom';
 import { browserHistory, Router } from 'react-router';
 import { Provider } from 'react-redux';
 import { rootStore } from './store';
-
 import routes from './routes/routes';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 
-/*
-var devDom = <Router routes={routes}></Router>
-var prdDom = <Router history={history} routes={routes}></Router>
-
-reactDom.render(
-  <Provider store={rootStore}>
-    {'production' === process.env.NODE_ENV ? prdDom : devDom}
-  </Provider>,
-  document.getElementById('blog')
-);
-*/
+injectTapEventPlugin();
 
 reactDom.render(
   <Provider store={rootStore}>

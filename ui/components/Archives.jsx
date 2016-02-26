@@ -1,10 +1,48 @@
-import '../../public/css/archives.css';
-
 import $ from 'jquery';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchAllArticles, clearAllArticles } from '../actions/ArchiveActions';
 import { Link } from 'react-router';
+import RaisedButton from 'material-ui/lib/raised-button';
+import Colors from 'material-ui/lib/styles/colors';
+
+const style = {
+  archives: {
+    margin: '15px 0 0 0'
+  },
+
+  tagBtn: {
+    margin: '5px'
+  },
+
+  linksArea: {
+    margin: '15px 0 0 8px'
+  },
+
+  archiveTime: {
+    fontSize : '12px',
+    color    : '#888',
+    display  : 'inline-block'
+  },
+
+  archiveTitle: {
+    margin    : '0 0 0 10px',
+    display   : 'inline-block',
+    font      : '15px "Lucida Grande",Helvetica,Arial,sans-serif',
+    color     : '#777'
+  },
+
+  archiveTags: {
+    display: 'inline-block'
+  },
+
+  tagLinks: {
+    margin   : '0 0 0 6px',
+    color    : '#aaa',
+    fontSize : '13px',
+    cursor   : 'pointer'
+  }
+};
 
 class Archives extends Component {
   constructor (props) {
@@ -18,9 +56,9 @@ class Archives extends Component {
     this.generateAllTags = this.generateAllTags.bind(this);
     this.updateFilter = this.updateFilter.bind(this);
     this.filterArchive = this.filterArchive.bind(this);
-    this.generateSingleCard = this.generateSingleCard.bind(this);
+    this.generateSingleItem = this.generateSingleItem.bind(this);
     this.generateSingleYear = this.generateSingleYear.bind(this);
-    this.generateAllCards = this.generateAllCards.bind(this);
+    this.generateAllItems = this.generateAllItems.bind(this);
   }
 
   collectTags (archives) {
@@ -36,16 +74,13 @@ class Archives extends Component {
   generateAllTags (totalTags) {
     return this.state.totalTags.map((tag) => {
       return (
-        <button 
+        <RaisedButton
+          label     = {tag}
           key       = {tag}
-          className = {`ui basic button tagBtn ${this.state.selectedTags.indexOf(tag) === -1 ? '' : 'active'}`}
           onClick   = {this.updateFilter.bind(null, tag)}
-          style     = {{
-            margin: '3px 5px 2px 0'
-          }}
+          style     = {style.tagBtn}
         >
-          {tag}
-        </button>
+        </RaisedButton>
       );
     });
   }
@@ -88,24 +123,14 @@ class Archives extends Component {
   }
 
 
-  generateSingleCard (archive) {
+  generateSingleItem (archive) {
     return (
-      <div key={archive.sequence} className='ui small card' style={{width: '100%'}}>
-        <div className='content' style={{padding: '10px 10px 2px 10px'}}>
-          <Link to={`/post/${archive.name}`} className='header' style={{
-            font: '15px "Lucida Grande",Helvetica,Arial,sans-serif',
-            color: '#444'
-          }}>
-            {archive.title}
-          </Link>
-          <div className='meta'>
-          <span className='date'>@{`${archive.time.month}/${archive.time.day}/${archive.time.year}`}</span>
-          </div>
-        </div>
-        <div className='extra content' style={{padding: '2px 10px 2px 10px'}}>
-          <i className='tag icon'></i>
-          {archive.tags.map(tag => <a key={tag} style={{fontSize: '13px'}}onClick={this.updateFilter.bind(null, tag)}>{tag}&nbsp;</a>)}
-        </div>
+      <div className='timeline-item' key={archive.sequence} style={style.archiveItem}>
+        <div style={style.archiveTime}>{`${archive.time.month}/${archive.time.day}`}</div>
+        <Link to={`/post/${archive.name}`} style={style.archiveTitle}>
+          {archive.title}
+        </Link>
+        <div style={style.archiveTags}>{archive.tags.map(tag => <a key={tag} onClick={this.updateFilter.bind(null, tag)} style={style.tagLinks}>· {tag}&nbsp;</a>)}</div>
       </div>
     );
   }
@@ -113,52 +138,36 @@ class Archives extends Component {
   generateSingleYear (arr) {
     return arr.map((record, index) => {
       return (
-        <div key={index} className='four wide column' style={{padding: '14px 7px 14px 7px'}}>
+        <div key={index}>
           {record}
         </div>
       );
     });
   }
 
-  generateAllCards () {
+  generateAllItems () {
     const archives = this.filterArchive(this.props.archives);
-
     var years = [];
-    var countByYear = {};
     var arrByYear = {};
-
-    var records = [[], [], [], []];
     archives.forEach((archive, index) => {
       var year = archive.time.year;
-
       if (years.indexOf(year) === -1) years.push(year);
-
-      if (countByYear[year] === undefined)
-        countByYear[year] = 0;
-      else
-        ++countByYear[year];
-
-      if (!arrByYear[year])
-        arrByYear[year] = [[], [], [], []];
-
-      arrByYear[year][countByYear[year] % 4].push(this.generateSingleCard(archive));
+      if (!arrByYear[year]) arrByYear[year] = [];
+      arrByYear[year].push(this.generateSingleItem(archive));
     });
 
-    const archiveCards = years.map((year) => {
+    const archiveItems = years.map((year) => {
       return (
         <div key={year}>
-          <h3 className='widget-title' style={{marginTop: '15px'}}>{year}</h3>
-          <div className='ui stackable grid' style={{
-            paddingLeft  : '9px',
-            paddingRight : '9px'
-          }}>
+          <div className='timeline-title' style={style.yearItem}>{year}</div>
+          <div>
             {this.generateSingleYear(arrByYear[year])}
           </div>
         </div>
       );
     });
 
-    return archiveCards;
+    return archiveItems;
   }
 
   componentDidMount () {
@@ -201,17 +210,11 @@ class Archives extends Component {
     document.title = 'Life of xhu - Archives';
 
     return (
-      <div className='ui segment' style={{
-        margin: '0 0 0 0'
-      }}>
-
-        <div className='ui inactive inverted dimmer archives-loader'>
-          <div className='ui text loader'></div>
-        </div>
-
-        <h3 className='widget-title'>Tags</h3>
+      <div style={style.archives}>
         {this.generateAllTags()}
-        {this.generateAllCards()}
+        <div style={style.linksArea} className='timeline-container'>
+          {this.generateAllItems()}
+        </div>
       </div>
     );
   }

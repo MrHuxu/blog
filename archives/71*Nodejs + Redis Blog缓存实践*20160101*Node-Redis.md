@@ -15,7 +15,7 @@ Redis是一个运行在内存中的数据库，支持一些常用的数据结构
 
 ---
 
-## 第三方库 3rd Part Library
+### 第三方库 3rd Part Library
 
 Node的第三方Redis库主要有
 
@@ -28,7 +28,7 @@ Node的第三方Redis库主要有
 
 ---
 
-## 基本操作 Basic Operation
+### 基本操作 Basic Operation
 
 Redis的基本操作可以看这个页面 [Redis: Commands](http://redis.io/commands), 每一个基本操作都对应一个输出，在ioredis里，每一个基本操作都被封装成了一个方法并返回一个promise，函数的输出会作为resolve的参数。
 
@@ -47,7 +47,7 @@ Redis的基本操作可以看这个页面 [Redis: Commands](http://redis.io/comm
 
 ---
 
-## 存 Save
+### 存 Save
 
 熟悉了基本操作之后，就是要把数据给存到Redis里了，首先我们通过GitHub的API获得repo的信息，得到的应该是这样的一个JS对象:
 
@@ -72,7 +72,7 @@ Redis的基本操作可以看这个页面 [Redis: Commands](http://redis.io/comm
 
 ---
 
-## 取 Read
+### 取 Read
 
 取数据话使用[HGETALL](http://redis.io/commands/hgetall)指令就可以一次性获得一个散列中的所有字段，并且redis的```hgetall```方法直接返回的就是一个JS对象了:
 
@@ -91,7 +91,7 @@ Redis的基本操作可以看这个页面 [Redis: Commands](http://redis.io/comm
     
 ---
 
-## 过期时间 Expiration
+### 过期时间 Expiration
 
 在文章开头提到的两个使用缓存的场景，第一个生成缓存后就不需要改变了，但是对于从GitHub上获取的repo信息，是需要更新的，所以我们需要对缓存做过期时间设置，在这里我并不是对每个repo的信息都做过期设置，而是存储一个名为```repo:count```的键并让它兼职作为过期标志:
 
@@ -118,6 +118,6 @@ Redis还有一个[TTL](http://redis.io/commands/ttl)命令来差看一个键还�
 
 ---
 
-## 总结
+### 总结
 
 这个Blog对于Redis的使用还是比较简单的，基本上就只用到了上面所述的操作，不过在使用的过程中我深深感受到，简单和强大这两个词在Redis身上得到了统一，而且配合ioredis和Promise，多个键并行存取也是易如反掌，Blog的访问速度也有了很大的提高（目前瓶颈应该就是网络问题了，万恶的GFW），缓存的使用也为我今后的编程开发提供了一个良好的优化思路，我也会努力在今后的学习中去探索Redis的更多高级特性。

@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { fetchAllArticles } from '../actions/ArchiveActions';
-import Pagination from './Pagination.jsx';
 import Snippet from './Snippet.jsx';
 import PrevNextBtn from './PrevNextBtn.jsx';
 
@@ -46,10 +45,6 @@ class Home extends Component {
 
     return (
       <div>
-        <Pagination
-          page = {page}
-          pageCount = {pageCount}
-        />
         {snippets}
         <PrevNextBtn
           page = {page}
