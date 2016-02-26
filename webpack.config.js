@@ -12,6 +12,14 @@ module.exports = {
     publicPath: 'http://localhost:6789/assets/'
   },
 
+  resolve: {
+    extensions: ['', '.jsx', '.scss', '.js', '.json'],  // along the way, subsequent file(s) to be consumed by webpack
+    modulesDirectories: [
+      'node_modules',
+      path.resolve(__dirname, './node_modules')
+    ]
+  },
+
   module: {
     loaders: [
       { test: /\.(js|jsx)$/, exclude: /node_modules/, loader: 'react-hot!babel-loader' },

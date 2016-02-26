@@ -4,6 +4,12 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import Search from './Search.jsx';
 
+const style = {
+  sideBar: {
+    margin: '40%'
+  }
+};
+
 class Header extends Component {
   constructor (props) {
     super(props);
@@ -53,7 +59,7 @@ class Header extends Component {
     );
 
     return (
-      <div className='ui stackable grid'>
+      <div className='ui stackable grid' style={style.sideBar}>
         <div className='twelve wide column'>
           {menu}
         </div>
