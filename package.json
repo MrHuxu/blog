@@ -30,7 +30,7 @@
     "ioredis": "^1.15.1",
     "jquery": "^2.2.1",
     "marked": "^0.3.5",
-    "material-ui": "^0.14.4",
+    "material-ui": "^0.15.0-alpha.1",
     "morgan": "^1.7.0",
     "nprogress": "^0.2.0",
     "react": "^0.14.7",
