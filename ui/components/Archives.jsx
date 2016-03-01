@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { fetchAllArticles, clearAllArticles } from '../actions/ArchiveActions';
 import { Link } from 'react-router';
 import RaisedButton from 'material-ui/lib/raised-button';
-import Colors from 'material-ui/lib/styles/colors';
+import * as Colors from 'material-ui/lib/styles/colors';
 
 const style = {
   archives: {
@@ -79,7 +79,7 @@ class Archives extends Component {
           key       = {tag}
           onClick   = {this.updateFilter.bind(null, tag)}
           style     = {style.tagBtn}
-          backgroundColor = {this.state.selectedTags.indexOf(tag) === -1 ? Colors.grey50 : Colors.lightBlue200}
+          secondary = {this.state.selectedTags.includes(tag)}
         >
         </RaisedButton>
       );
