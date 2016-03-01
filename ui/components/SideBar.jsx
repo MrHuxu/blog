@@ -15,7 +15,7 @@ const style = {
 
   menuItem: {
     fontSize   : '12px',
-    lineHeight : '45px'
+    lineHeight : '50px'
   },
 
   icons: {
