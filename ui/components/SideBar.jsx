@@ -14,7 +14,8 @@ const style = {
   },
 
   menuItem: {
-    fontSize: '12px'
+    fontSize   : '12px',
+    lineHeight : '45px'
   },
 
   icons: {
@@ -62,7 +63,7 @@ class Header extends Component {
       <div className='blog-menu' style={style.menuItem}>
         const
         <p className='left-bracket'>&nbsp;{'{'}&nbsp;</p>
-        <Link to='/' className='menu-item home-item' style={{display: 'inline-block'}}>Home</Link>
+        <Link to='/' className='menu-item home-item'>Home</Link>
         ,&nbsp;
         <Link to='/archives/' className='menu-item'>Archives</Link>
         ,&nbsp;<br />

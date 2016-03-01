@@ -79,6 +79,7 @@ class Archives extends Component {
           key       = {tag}
           onClick   = {this.updateFilter.bind(null, tag)}
           style     = {style.tagBtn}
+          backgroundColor = {this.state.selectedTags.indexOf(tag) === -1 ? Colors.grey50 : Colors.lightBlue200}
         >
         </RaisedButton>
       );
