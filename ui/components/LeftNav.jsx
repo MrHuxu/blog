@@ -9,12 +9,11 @@ const style = {
   navBtn: {
     position : 'fixed',
     top      : '10',
-    right    : '10',
-    display  : 'none'
+    right    : '10'
   },
 
   navPanel: {
-    margin: '20px 0 0 0'
+    padding: '20px 0 0 0'
   },
 
   pureText: {

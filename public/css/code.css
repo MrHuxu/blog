@@ -1,9 +1,16 @@
 p code, li code {
-  padding: 2px 4px;
-  font-size: 90%;
-  color: #c7254e;
-  background-color: #f9f2f4;
-  border-radius: 4px;
+  display: inline;
+  word-wrap: break-word;
+  background: #fff;
+  font-size: .8em;
+  line-height: 1.5em;
+  color: #555;
+  border: 1px solid #ddd;
+  -moz-border-radius: 0.4em;
+  -webkit-border-radius: 0.4em;
+  border-radius: 0.4em;
+  padding: 0 .3em;
+  margin: -1px 5px 0 5px;
 }
 
 pre code {
@@ -21,7 +28,6 @@ pre {
   position: relative;
   padding: 0 0 0 30px;
   font-size: 15px;
-  width: 100%;
 }
 
 code {

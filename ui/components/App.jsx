@@ -18,10 +18,12 @@ const style = {
   },
 
   content: {
-    width   : '65%',
+    width   : '59%',
     display : 'inline-block',
     margin  : '0 0 0 35%',
-    padding : '10px 40px 0 10px'
+    paddingTop: '10px',
+    paddingLeft: '3%',
+    paddingRight: '3%'
   }
 }
 

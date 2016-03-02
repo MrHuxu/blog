@@ -1,13 +1,14 @@
 body {
-  font-size: 15px;
-  font-family: "Avenir Next",Helvetica,Arial,"Lantinghei SC","Microsoft YaHei",sans-serif;
-  color: #444!important;
-  line-height: 25px;
-  background-attachement: fixed;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 100% auto;
-  position: relative;
+  margin                 : 0;
+  font-size              : 15px;
+  font-family            : "Avenir Next",Helvetica,Arial,"Lantinghei SC","Microsoft YaHei",sans-serif;
+  color                  : #444!important;
+  line-height            : 25px;
+  background-attachement : fixed;
+  background-repeat      : no-repeat;
+  background-position    : center;
+  background-size        : 100% auto;
+  position               : relative;
 }
 
 html, body, .full-height {
@@ -15,7 +16,8 @@ html, body, .full-height {
 }
 
 a {
-  color: #00B7FF;
+  color           : #00B7FF;
+  text-decoration : none
 }
 
 @font-face {

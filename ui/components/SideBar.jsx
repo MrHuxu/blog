@@ -6,7 +6,7 @@ import Search from './Search.jsx';
 
 const style = {
   sideBar: {
-    margin: '45% 0 0 10%'
+    margin: '40% 0 0 10%'
   },
 
   menu: {
@@ -15,7 +15,7 @@ const style = {
 
   menuItem: {
     fontSize   : '12px',
-    lineHeight : '50px'
+    lineHeight : '15px'
   },
 
   icons: {
