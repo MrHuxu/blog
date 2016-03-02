@@ -26,6 +26,17 @@ const style = {
   linkItem: {
     padding : '0 0 0 43px',
     color   : '#666'
+  },
+
+  icons: {
+    margin: '45px 0 0 10px'
+  },
+
+  iconLink: {
+    width   : '25px',
+    color   : '#545454',
+    opacity : '0.8',
+    margin  : '0 0 0 12px'
   }
 };
 
@@ -102,6 +113,18 @@ class MyLeftNav extends Component {
 
             <div style={style.pureText}>
               {'} = xhu.life'}
+            </div>
+
+            <div style={style.icons}>
+              <a target='_blank' href='http://github.com/MrHuxu' style={style.iconLink}>
+                <img style={style.iconLink} src='/imgs/github.svg' />
+              </a>
+              <a target='_blank' href='http://weibo.com/2058722335' style={style.iconLink}>
+                <img style={style.iconLink} src='/imgs/weibo.svg' />
+              </a>
+              <a href='mailto:hxtheone@gmail.com' style={style.iconLink}>
+                <img style={style.iconLink} src='/imgs/email.svg' />
+              </a>
             </div>
           </div>
         </LeftNav>

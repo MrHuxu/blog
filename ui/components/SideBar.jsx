@@ -6,7 +6,7 @@ import Search from './Search.jsx';
 
 const style = {
   sideBar: {
-    margin: '40% 0 0 10%'
+    margin: '38% 0 0 10%'
   },
 
   menu: {
@@ -15,17 +15,18 @@ const style = {
 
   menuItem: {
     fontSize   : '12px',
-    lineHeight : '15px'
+    lineHeight : '25px'
   },
 
   icons: {
-    margin   : '18px 0 0 -10px',
-    fontSize : '22px'
+    margin: '15px 0 0 -20px'
   },
 
   iconLink: {
-    color  : '#545454',
-    margin : '0 0 0 10px'
+    width   : '25px',
+    color   : '#545454',
+    opacity : '0.8',
+    margin  : '0 0 0 12px'
   }
 };
 
@@ -84,13 +85,13 @@ class Header extends Component {
         </div>
         <div style={style.icons}>
           <a target='_blank' href='http://github.com/MrHuxu' style={style.iconLink}>
-            <i className='github alternate icon'/>
+            <img style={style.iconLink} src='/imgs/github.svg' />
           </a>
           <a target='_blank' href='http://weibo.com/2058722335' style={style.iconLink}>
-            <i className='weibo icon'/>
+            <img style={style.iconLink} src='/imgs/weibo.svg' />
           </a>
           <a href='mailto:hxtheone@gmail.com' style={style.iconLink}>
-            <i className='mail outline icon'/>
+            <img style={style.iconLink} src='/imgs/email.svg' />
           </a>
         </div>
       </div>
