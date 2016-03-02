@@ -1,9 +1,10 @@
 import $ from 'jquery';
 import React, { Component } from 'react';
 
-import Home from './Home.jsx';
-import Footer from './Footer.jsx';
+import Home from './Home';
+import Footer from './Footer';
 import SideBar from './SideBar';
+import LeftNav from './LeftNav';
 
 const style = {
   sideBar: {
@@ -14,11 +15,11 @@ const style = {
     backgroundRepeat   : 'no-repeat',
     backgroundPosition : 'center',
     backgroundSize     : "cover"
-
   },
 
   content: {
     width   : '65%',
+    display : 'inline-block',
     margin  : '0 0 0 35%',
     padding : '10px 40px 0 10px'
   }
@@ -31,7 +32,8 @@ class App extends Component {
 
   render () {
     return (
-      <div className="ui stackable grid">
+      <div>
+        <LeftNav />
         <span style={style.sideBar}>
           <SideBar />
         </span>
