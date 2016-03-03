@@ -9,6 +9,7 @@ import '../public/css/common.css';
 import '../public/css/header.css';
 import '../public/css/timeline.css';
 import '../public/css/code.css';
+import '../public/css/responsive.css';
 
 import React, { Component } from 'react';
 import reactDom from 'react-dom';

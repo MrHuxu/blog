@@ -1,29 +1,16 @@
 import $ from 'jquery';
 import React, { Component } from 'react';
 
-const style = {
-  aboutmeLeft: {
-    width: '50%',
-    display: 'inline-block'
-  },
-
-  aboutmeRight: {
-    width: '50%',
-    display: 'inline-block',
-    verticalAlign : 'top'
-  }
-};
-
 class Aboutme extends Component {
   render () {
     document.title = 'Life of xhu - Aboutme';
 
     return (
-      <div style={style.aboutme}>
-        <div style={style.aboutmeLeft} className='timeline-container'>
+      <div>
+        <div className='timeline-container aboutme-left'>
           <div className='timeline-title'>Me</div>
           <div className='timeline-item'>
-            <img className='ui small left rounded image' src='https://raw.githubusercontent.com/MrHuxu/img-repo/master/blog/1.pic.jpg'/>
+            <img className='aboutme-img' src='https://raw.githubusercontent.com/MrHuxu/img-repo/master/blog/1.pic.jpg'/>
           </div>
           <div className='timeline-item'>Born on 1992/05/07.</div>
           <div className='timeline-item'>Programmer, or accurately a Web Developer.</div>
@@ -31,7 +18,7 @@ class Aboutme extends Component {
           <div className='timeline-item'>Not outstanding, but on the way to be outstanding.</div>
         </div>
 
-        <div style={style.aboutmeRight} className='timeline-container'>
+        <div className='timeline-container aboutme-right'>
           <div className='timeline-title'>Name</div>
           <div className='timeline-item'>
               ( xhu || hxtheone || Xu Hu || TDFJ || 跳大飞机 ) => 胡旭

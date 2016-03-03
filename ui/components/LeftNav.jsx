@@ -59,7 +59,7 @@ class MyLeftNav extends Component {
 
   render () {
     return (
-      <div>
+      <div className='left-nav'>
         <IconButton
           style      = {style.navBtn}
           onTouchTap = {this.handleToggle}

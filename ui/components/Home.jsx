@@ -14,7 +14,7 @@ class Home extends Component {
   componentDidMount () {
     const currentPage = this.props.params ? this.props.params.page : 0;
 
-    if ($('.home-item').hasClass('animated')) {
+    if ($('.blog-sidebar').css('display') === 'none' || $('.home-item').hasClass('animated')) {
       this.props.dispatch(fetchAllArticles({page: currentPage}));
     } else {
       $('.home-item').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {

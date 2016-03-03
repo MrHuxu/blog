@@ -174,7 +174,7 @@ class Archives extends Component {
   componentDidMount () {
     $('.archives-loader').removeClass('inactive').addClass('active');
     if (!this.props.params.articleName) {
-      if ($('.home-item').hasClass('animated')) {
+      if ($('.blog-sidebar').css('display') === 'none' || $('.home-item').hasClass('animated')) {
         this.props.dispatch(fetchAllArticles({
            page     : 0,
            fetchAll : true

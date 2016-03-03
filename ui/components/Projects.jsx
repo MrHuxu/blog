@@ -41,7 +41,7 @@ class Projects extends Component {
 
   componentDidMount () {
     if (!this.props.projects.length) {
-      if ($('.home-item').hasClass('animated')) {
+      if ($('.blog-sidebar').css('display') === 'none' || $('.home-item').hasClass('animated')) {
         this.props.dispatch(fetchRepos());
       } else {
         $('.home-item').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {

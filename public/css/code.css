@@ -52,7 +52,8 @@ pre ul.numbering {
   height: 100%;
   margin: 0;
   padding: 8px 2px 10px 0;
-  border-right: 0px solid #C3CCD0;
+  border-top: 1px solid #C3CCD0;
+  border-left: 1px solid #C3CCD0;
   border-radius: 3px 0 0 3px;
   background-color: #EEE;
   text-align: right;
