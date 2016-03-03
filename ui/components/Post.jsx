@@ -28,7 +28,7 @@ class Post extends Component {
   }
 
   componentDidMount () {
-    if ($('.home-item').hasClass('animated')) {
+    if ($('.blog-sidebar').css('display') === 'none' || $('.home-item').hasClass('animated')) {
       this.props.dispatch(fetchSingleArticle({name: this.props.params.articleName}));
     } else {
       $('.home-item').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {
