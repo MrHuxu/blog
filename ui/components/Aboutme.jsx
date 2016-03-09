@@ -1,7 +1,13 @@
 import $ from 'jquery';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { clearAllArticles } from '../actions/ArchiveActions';
 
 class Aboutme extends Component {
+  componentWillMount () {
+    this.props.dispatch(clearAllArticles());
+  }
+
   render () {
     document.title = 'Life of xhu - Aboutme';
 
@@ -39,4 +45,4 @@ class Aboutme extends Component {
   }
 }
 
-export default Aboutme;
+export default connect()(Aboutme);

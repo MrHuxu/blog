@@ -13,13 +13,16 @@ class Home extends Component {
 
   componentDidMount () {
     const currentPage = this.props.params ? this.props.params.page : 0;
+    const { archives } = this.props;
 
-    if ($('.blog-sidebar').css('display') === 'none' || $('.home-item').hasClass('animated')) {
-      this.props.dispatch(fetchAllArticles({page: currentPage}));
-    } else {
-      $('.home-item').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {
+    if (!archives.length) {
+      if ($('.blog-sidebar').css('display') === 'none' || $('.home-item').hasClass('animated')) {
         this.props.dispatch(fetchAllArticles({page: currentPage}));
-      });
+      } else {
+        $('.home-item').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {
+          this.props.dispatch(fetchAllArticles({page: currentPage}));
+        });
+      }
     }
   }
 

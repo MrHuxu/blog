@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Card from 'material-ui/lib/card/card';
 import CardHeader from 'material-ui/lib/card/card-header';
 import CardText from 'material-ui/lib/card/card-text';
+import { clearAllArticles } from '../actions/ArchiveActions';
 import { fetchRepos } from '../actions/ProjectActions';
 
 const style={
@@ -37,6 +38,10 @@ class Projects extends Component {
         </CardText>
       </Card>
     );
+  }
+
+  componentWillMount () {
+    this.props.dispatch(clearAllArticles());
   }
 
   componentDidMount () {
