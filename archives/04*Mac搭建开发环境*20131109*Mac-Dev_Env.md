@@ -1,6 +1,6 @@
 # Mac下搭建开发环境
-===
-###Ruby开发环境
+
+### Ruby开发环境
 
 1. 显示Mac隐藏文件的命令:  
 ```
@@ -46,7 +46,7 @@ RVM 是干什么的这里就不解释了，后面你将会慢慢搞明白。
  
 		$ rvm -v  
 		rvm 1.17.3 (stable) by Wayne E. 	Seguin<wayneeseguin@gmail.com>,  ... 
-######用 RVM 安装 Ruby 环境  
+###### 用 RVM 安装 Ruby 环境
    - 替换 Ruby 下载地址到国内淘宝镜像服务器  
 	for Mac  
 ```$ sed -i .bak 's!ftp.ruby-lang.org/pub/ruby!ruby.taobao.org/mirrors/ruby!' $rvm_path/config/db```  
@@ -68,16 +68,16 @@ RVM 装好以后，需要执行下面的命令将指定版本的 Ruby 设置为�
 ```$ gem install sinatra slim shotgun heroku heroku-api thin pry yajl-ruby```  
 然后测试安装是否正确
 
-###Java开发环境
+### Java开发环境
 Intellij IDEA在安装好JDK后还要下载一个蛋疼的java 6 SE运行环境，妈蛋，JDK默认安装路径：  
 ```Mac系统盘/资源库/java/JavaVirtualMachines/jdk1.7.0_40.jdk```
 
-###安装fish-shell
+### 安装fish-shell
 1. 安装fish-shell  
 ```brew install fish```
 2. 安装oh-my-fish  
 ```curl -L https://github.com/bpinto/oh-my-fish/raw/master/tools/install.sh | sh```
-3. 安装rvm for fish  
+3. 安装rvm for fish
 ```curl --create-dirs -o ~/.config/fish/functions/rvm.fish https://raw.github.com/lunks/fish-nuggets/master/functions/rvm.fish```
 4. 接下来就是iTerm2的字体设置，进入Preferences->Profiles->Text，将```Non-ASCII Font```改为任意一个已经patch过的字体。  
 然后进入Terminal标签下，修改```Report terminal type```为```xterm-256color```，再勾选最下方的```Set local variables automaticly```。
