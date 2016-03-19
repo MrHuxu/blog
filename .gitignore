@@ -4,3 +4,4 @@ public/built
 .sass-cache
 log/
 public/imgs/.DS_Store
+npm-debug.log
