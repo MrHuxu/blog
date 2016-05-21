@@ -1,9 +1,7 @@
 import $ from 'jquery';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Card from 'material-ui/lib/card/card';
-import CardHeader from 'material-ui/lib/card/card-header';
-import CardText from 'material-ui/lib/card/card-text';
+import { Card, CardHeader, CardText } from 'material-ui/Card';
 import { clearAllArticles } from '../actions/ArchiveActions';
 import { fetchRepos } from '../actions/ProjectActions';
 

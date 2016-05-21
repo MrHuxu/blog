@@ -1,11 +1,11 @@
 import $ from 'jquery';
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-import FlatButton from 'material-ui/lib/flat-button';
-import IconButton from 'material-ui/lib/icon-button';
-import FontIcon from 'material-ui/lib/font-icon';
-import LeftArrow from 'material-ui/lib/svg-icons/hardware/keyboard-arrow-left';
-import RightArror from 'material-ui/lib/svg-icons/hardware/keyboard-arrow-right';
+import FlatButton from 'material-ui/FlatButton';
+import IconButton from 'material-ui/IconButton';
+import FontIcon from 'material-ui/FontIcon';
+import LeftArrow from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
+import RightArror from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
 
 const style = {
   prevNextBtn: {

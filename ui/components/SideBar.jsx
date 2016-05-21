@@ -62,7 +62,7 @@ class Header extends Component {
 
     var menu = (
       <div className='blog-menu' style={style.menuItem}>
-        const
+        <p>const</p>
         <p className='left-bracket'>&nbsp;{'{'}&nbsp;</p>
         <Link to='/' className='menu-item home-item'>Home</Link>
         ,&nbsp;
@@ -74,7 +74,7 @@ class Header extends Component {
         <div className='right-bracket'>
           <p>&nbsp;{'}'}&nbsp;</p>
         </div>
-        = xhu.life
+        <p>= xhu.life</p>
       </div>
     );
 

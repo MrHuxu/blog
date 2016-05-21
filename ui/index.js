@@ -19,11 +19,16 @@ import { rootStore } from './store';
 import routes from './routes/routes';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+
 injectTapEventPlugin();
 
 reactDom.render(
-  <Provider store={rootStore}>
-    <Router routes={routes}  history={browserHistory}></Router>
-  </Provider>,
+  <MuiThemeProvider muiTheme={getMuiTheme()}>
+    <Provider store={rootStore}>
+      <Router routes={routes}  history={browserHistory}></Router>
+    </Provider>
+  </MuiThemeProvider>,
   document.getElementById('blog')
 );

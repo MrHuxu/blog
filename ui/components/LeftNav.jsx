@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-import LeftNav from 'material-ui/lib/left-nav';
-import MenuItem from 'material-ui/lib/menus/menu-item';
-import IconButton from 'material-ui/lib/icon-button';
-import ActionList from 'material-ui/lib/svg-icons/action/list';
+import Drawer from 'material-ui/Drawer';
+import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton';
+import ActionList from 'material-ui/svg-icons/action/list';
 
 const style = {
   navBtn: {
@@ -40,7 +40,7 @@ const style = {
   }
 };
 
-class MyLeftNav extends Component {
+class LeftNav extends Component {
   constructor (props) {
     super(props);
     this.state = {open: false};
@@ -67,7 +67,7 @@ class MyLeftNav extends Component {
           <ActionList />
         </IconButton>
 
-        <LeftNav
+        <Drawer
           docked          = {false}
           width           = {200}
           open            = {this.state.open}
@@ -127,11 +127,11 @@ class MyLeftNav extends Component {
               </a>
             </div>
           </div>
-        </LeftNav>
+        </Drawer>
 
       </div>
     );
   }
 }
 
-export default MyLeftNav;
+export default LeftNav;
