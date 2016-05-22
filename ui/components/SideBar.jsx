@@ -65,11 +65,11 @@ class Header extends Component {
         <p>const</p>
         <p className='left-bracket'>&nbsp;{'{'}&nbsp;</p>
         <Link to='/' className='menu-item home-item'>Home</Link>
-        ,&nbsp;
+        <p>,&nbsp;</p>
         <Link to='/archives/' className='menu-item'>Archives</Link>
-        ,&nbsp;<br />
+        <p>,&nbsp;</p><br />
         <Link to='/projects' className='menu-item'>Projects</Link>
-        ,&nbsp;
+        <p>,&nbsp;</p>
         <Link to='/aboutme' className='menu-item'>Aboutme</Link>
         <div className='right-bracket'>
           <p>&nbsp;{'}'}&nbsp;</p>
