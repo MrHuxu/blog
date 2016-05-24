@@ -10,47 +10,52 @@
 ### 示例
 
     function chainAnimationsPromise(elem, animations) {
-      let ret = null;
-      let p = currentPromise;
-      for(const anim of animations) {
-        p = p.then(function(val) {
-          ret = val;
-          return anim(elem);
-        })
-      }
-      return p.catch(function(e) {
-        /* ignore and keep going */
-      }).then(function() {
-        return ret;
-      });
+        let ret = null;
+        let p = currentPromise;
+        for(const anim of animations) {
+            p = p.then(function(val) {
+                ret = val;
+                return anim(elem);
+            })
+        }
+        return p.catch(function(e) {
+            /* ignore and keep going */
+        }).then(function() {
+            return ret;
+        });
     }
     
-首先是Promise, 在这个例子里, 在for循环内部形成了Promise链, 这要求```animations```内部的每一个```anim```函数的返回值都是Promise, 最后结果的获取也是通过Promise进行的, 这样就对传统的代码编写方式进行了很大改动, 而且代码量也多了不少.
+首先是Promise, 在这个例子里, 在for循环内部形成了Promise链, 而不像同步编程里,for循环里每一次结构都是等价的,最后结果的获取也是通过Promise进行的, 这样就对传统的代码编写方式进行了很大改动, 而且代码量也多了不少.
 
     function chainAnimationsGenerator(elem, animations) {
-      return spawn(function*() {
-        let ret = null;
-        try {
-          for(const anim of animations) {
-            ret = yield anim(elem);
-          }
-        } catch(e) { /* ignore and keep going */ }
-        return ret;
-      });
+        return spawn(function*() {
+            let ret = null;
+            try {
+                for(const anim of animations) {
+                    ret = yield anim(elem);
+                }
+            } catch(e) { /* ignore and keep going */ }
+            return ret;
+        });
     }
 
 然后是```Generator```的方式, 这个例子在返回一个generator函数后, 虽然代码少了不少, 但是在调用的时候我们需要手动执行```next```方法, 并且一般使用Generator还需要在真正的星号函数外面加一个wrapper层, 这样一来, 还是不算简便.
 
     async function chainAnimationsAsync(elem, animations) {
-      let ret = null;
-      try {
-        for(const anim of animations) {
-          ret = await anim(elem);
-        }
-      } catch(e) { /* ignore and keep going */ }
-      return ret;
+        let ret = null;
+        try {
+            for(const anim of animations) {
+                ret = await anim(elem);
+            }
+        } catch(e) { /* ignore and keep going */ }
+        return ret;
     }
 
 最后就是```async/await```方案了, 使用起来非常简单, 就是在声明有异步过程的函数的时候, 加上```async```关键字, 在执行异步操作的地方加上```await```关键字, 这样基本就可以用同步的写法来处理JS里的异步过程了.
 
+### 语法
+
+1. 在使用async/await的时候, 应该用async来声明函数/方法/箭头函数
+2. await只能用在async函数里
+3. await后面应该接一个promise, 表示会等待这个promise的返回值, 当然也可以接同步方法, 不过就没有意义了
 
