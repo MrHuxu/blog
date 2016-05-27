@@ -1,4 +1,4 @@
-p code, li code {
+p code, li > code {
   display: inline;
   word-wrap: break-word;
   background: #fff;
