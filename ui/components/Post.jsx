@@ -2,6 +2,7 @@ import '../../public/css/article.css';
 
 import $ from 'jquery';
 import React, { Component } from 'react';
+import ReactDisqusThread from 'react-disqus-thread';
 import { connect } from 'react-redux';
 import { fetchSingleArticle, clearSelection } from '../actions/ArchiveActions';
 
@@ -35,17 +36,6 @@ class Post extends Component {
         this.props.dispatch(fetchSingleArticle({name: this.props.params.articleName}));
       });
     }
-    
-    // Disqus Comment System
-    // DON'T EDIT BELOW THIS LINE
-    (function() {
-      var d = document, s = d.createElement('script');
-
-      s.src = '//xhu.disqus.com/embed.js';
-
-      s.setAttribute('data-timestamp', +new Date());
-      (d.head || d.body).appendChild(s);
-    })();
   }
 
   componentWillUnmount () {
@@ -69,7 +59,10 @@ class Post extends Component {
             {article.tags && article.tags.map(tag => ' · ' + tag).join('')}
           </div>
         </div>
-        <div id='disqus_thread' />
+        <ReactDisqusThread
+          shortname  = 'xhu'
+          identifier = 'xhu-blog'
+        />
       </div>
     );
   }

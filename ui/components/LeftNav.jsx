@@ -8,8 +8,8 @@ import ActionList from 'material-ui/svg-icons/action/list';
 const style = {
   navBtn: {
     position : 'fixed',
-    top      : '10',
-    right    : '10'
+    top      : '10px',
+    right    : '10px'
   },
 
   navPanel: {
