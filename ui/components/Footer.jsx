@@ -30,7 +30,7 @@ class Footer extends Component {
           ,&nbsp;
           <a target='_blank' style={style.footerLink} href='https://github.com/rackt/redux'>Redux</a>
           ,&nbsp;&&nbsp;
-          <a target='_blank' style={style.footerLink} href='https://github.com/Semantic-Org/Semantic-UI'>Semantic-UI</a>
+          <a target='_blank' style={style.footerLink} href='https://github.com/callemall/material-ui'>Material UI</a>
         </p>
       </div>
     );

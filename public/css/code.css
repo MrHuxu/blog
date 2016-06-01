@@ -15,12 +15,11 @@ p code, li > code {
 
 pre code {
   display: block;
-  border: 1px solid #ccc;
   font-size: 12px;
   line-height: 20px;
   font-weight: 12px;
   letter-spacing: .5px;
-  padding: 10px 0 10px 35px;
+  padding: 10px 0 10px 12px !important;
   background: #2d2d2d;
 }
 
