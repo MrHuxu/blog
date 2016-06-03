@@ -28,6 +28,13 @@ class Post extends Component {
     super(props);
   }
 
+  _initDisqus () {
+    var d = document, s = d.createElement('script');
+    s.src = '//xhu.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+
   componentDidMount () {
     if ($('.blog-sidebar').css('display') === 'none' || $('.home-item').hasClass('animated')) {
       this.props.dispatch(fetchSingleArticle({name: this.props.params.articleName}));
@@ -36,6 +43,8 @@ class Post extends Component {
         this.props.dispatch(fetchSingleArticle({name: this.props.params.articleName}));
       });
     }
+
+    this._initDisqus();
   }
 
   componentWillUnmount () {
@@ -59,10 +68,7 @@ class Post extends Component {
             {article.tags && article.tags.map(tag => ' · ' + tag).join('')}
           </div>
         </div>
-        <ReactDisqusThread
-          shortname  = 'xhu'
-          identifier = 'xhu-blog'
-        />
+        <div id='disqus_thread'/>
       </div>
     );
   }
