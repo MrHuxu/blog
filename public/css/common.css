@@ -19,10 +19,3 @@ a {
   color           : #00B7FF;
   text-decoration : none
 }
-
-@font-face {
-  font-family: 'Josefin Sans';
-  src: url(/fonts/JosefinSans-Regular.ttf) format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
