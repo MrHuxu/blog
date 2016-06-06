@@ -2,7 +2,6 @@ import '../../public/css/article.css';
 
 import $ from 'jquery';
 import React, { Component } from 'react';
-import ReactDisqusThread from 'react-disqus-thread';
 import { connect } from 'react-redux';
 import { fetchSingleArticle, clearSelection } from '../actions/ArchiveActions';
 
