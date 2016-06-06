@@ -1,0 +1,38 @@
+
+{
+  "parser"  : "babel-eslint",
+  "extends" : [
+    "standard",
+    "standard-react"
+  ],
+  "env"     : {
+    "browser" : true
+  },
+  "globals" : {
+    "__DEV__"      : false,
+    "__PROD__"     : false,
+    "__DEBUG__"    : false,
+    "__COVERAGE__" : false,
+    "__BASENAME__" : false
+  },
+  "rules": {
+    "semi": [2, "always"],
+    "max-len": [2, 200, 2],
+    "key-spacing": [2, {
+      "singleLine": {
+        "beforeColon" : false,
+        "afterColon"  : true
+      },
+      "multiLine": {
+        "align"       : "colon",
+        "beforeColon" : true,
+        "afterColon"  : true
+      }
+    }],
+    "no-multi-spaces": ["error", {
+      "exceptions": {
+        "VariableDeclarator": true
+      }
+    }]
+  }
+}
