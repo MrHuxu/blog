@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "test": "./node_modules/mocha/bin/mocha --compilers js:babel-register",
-    "lint": "./node_modules/eslint/bin/eslint.js .",
+    "lint": "./node_modules/eslint/bin/eslint.js . --ignore-path .gitignore; exit 0",
     "webpack-dev-server": "node ./lib/serve-assets.js",
     "dev-server": "NODE_ENV=development ./node_modules/nodemon/bin/nodemon.js bin/www",
     "dev": "./node_modules/concurrently/src/main.js 'npm run serve-assets' 'npm run webpack-dev-server'",
