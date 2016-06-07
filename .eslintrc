@@ -6,7 +6,9 @@
     "standard-react"
   ],
   "env"     : {
-    "browser" : true
+    "browser" : true,
+    "node"    : true,
+    "mocha"   : true
   },
   "globals" : {
     "__DEV__"      : false,
