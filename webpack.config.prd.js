@@ -3,11 +3,11 @@ var webpack = require('webpack');
 
 module.exports = {
   entry: [
-    './ui/index' // Your appʼs entry point
+    './client/index' // Your appʼs entry point
   ],
 
   output: {
-    path: path.join(__dirname, 'public', 'built'),
+    path: path.join(__dirname, 'server', 'public', 'built'),
     filename: 'bundle.js',
     publicPath: 'http://localhost:6789/assets/'
   },

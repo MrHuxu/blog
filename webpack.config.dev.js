@@ -5,7 +5,7 @@ module.exports = {
   entry: [
     'webpack-dev-server/client?http://0.0.0.0:6789', // WebpackDevServer host and port
     'webpack/hot/dev-server', // "only" prevents reload on syntax errors
-    './ui/index' // Your appʼs entry point
+    './client/index' // Your appʼs entry point
   ],
 
   output: {

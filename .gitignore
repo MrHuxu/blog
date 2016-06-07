@@ -1,8 +1,8 @@
 node_modules/
-public/components
-public/built
+server/public/components
+server/public/built
 .sass-cache
 log/
-public/imgs/.DS_Store
+server/public/imgs/.DS_Store
 npm-debug.log
 dump.rdb

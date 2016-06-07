@@ -5,11 +5,11 @@ import '../node_modules/nprogress/nprogress.css';
 import $ from 'jquery';
 window.jQuery = $; // Assure it's available globally.
 
-import '../public/css/common.css';
-import '../public/css/header.css';
-import '../public/css/timeline.css';
-import '../public/css/code.css';
-import '../public/css/responsive.css';
+import './styles/common.css';
+import './styles/header.css';
+import './styles/timeline.css';
+import './styles/code.css';
+import './styles/responsive.css';
 
 import React, { Component } from 'react';
 import reactDom from 'react-dom';

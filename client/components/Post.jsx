@@ -1,4 +1,4 @@
-import '../../public/css/article.css';
+import '../styles/post.css';
 
 import $ from 'jquery';
 import React, { Component } from 'react';

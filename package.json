@@ -7,11 +7,11 @@
     "test": "./node_modules/mocha/bin/mocha --compilers js:babel-register",
     "lint": "./node_modules/eslint/bin/eslint.js . --ignore-path .gitignore; exit 0",
     "webpack-dev-server": "node ./lib/serve-assets.js",
-    "dev-server": "NODE_ENV=development ./node_modules/nodemon/bin/nodemon.js bin/www",
+    "dev-server": "NODE_ENV=development ./node_modules/nodemon/bin/nodemon.js ./server",
     "dev": "./node_modules/concurrently/src/main.js 'npm run webpack-dev-server' 'npm run dev-server'",
     "cache": "node lib/cache-all",
     "webpack": "./node_modules/webpack/bin/webpack.js --config webpack.config.prd.js",
-    "prd-server": "NODE_ENV=production forever start bin/www",
+    "prd-server": "NODE_ENV=production forever start ./server",
     "prd": "npm run cache && npm run webpack && npm run prd-server"
   },
   "dependencies": {
