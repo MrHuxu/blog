@@ -27,9 +27,7 @@ export function getSingleArticle (data) {
 
 export const CLEAR_SELECTION = 'CLEAR_SELECTION';
 export function clearSelection () {
-  return {
-    type: CLEAR_SELECTION
-  };
+  return { type: CLEAR_SELECTION };
 }
 
 // use fetch and return a promise
@@ -37,9 +35,9 @@ export function fetchAllArticles (args) {
   NProgress.start();
   return function (dispatch) {
     NProgress.set(0.4);
-    $.get(`/archive/all_articles`, args, function (data) {
+    $.get('/archive/all_articles', args, function (data) {
       NProgress.set(0.8);
-      document.body.scrollTop = 0
+      document.body.scrollTop = 0;
       dispatch(getAllArticles(data.content));
     });
   };
@@ -49,7 +47,7 @@ export function fetchSingleArticle (args) {
   NProgress.start();
   return function (dispatch) {
     NProgress.set(0.4);
-    $.post(`/archive/single_article`, args, function (data) {
+    $.post('/archive/single_article', args, function (data) {
       NProgress.set(0.8);
       dispatch(getSingleArticle(data.article));
     });
