@@ -4,8 +4,8 @@ import NProgress from 'nprogress';
 export const GET_REPOS = 'GET_REPOS';
 export function getRepos (data) {
   return {
-    type: GET_REPOS,
-    content: data
+    type    : GET_REPOS,
+    content : data
   };
 };
 

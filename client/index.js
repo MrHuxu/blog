@@ -11,7 +11,7 @@ import './styles/timeline.css';
 import './styles/code.css';
 import './styles/responsive.css';
 
-import React, { Component } from 'react';
+import React from 'react';
 import reactDom from 'react-dom';
 import { browserHistory, Router } from 'react-router';
 import { Provider } from 'react-redux';
@@ -27,7 +27,7 @@ injectTapEventPlugin();
 reactDom.render(
   <MuiThemeProvider muiTheme={getMuiTheme()}>
     <Provider store={rootStore}>
-      <Router routes={routes}  history={browserHistory}></Router>
+      <Router routes={routes} history={browserHistory} />
     </Provider>
   </MuiThemeProvider>,
   document.getElementById('blog')

@@ -16,22 +16,23 @@
     "__BASENAME__" : false
   },
   "rules": {
-    "semi": [2, "always"],
-    "max-len": [2, 200, 2],
-    "key-spacing": [2, {
-      "singleLine": {
+    "yoda" : ["error", "always", { "onlyEquality": true }],
+    "semi" : [2, "always"],
+    "max-len" : [2, 500, 2],
+    "key-spacing" : [2, {
+      "singleLine" : {
         "beforeColon" : false,
         "afterColon"  : true
       },
-      "multiLine": {
+      "multiLine" : {
         "align"       : "colon",
         "beforeColon" : true,
         "afterColon"  : true
       }
     }],
-    "no-multi-spaces": ["error", {
-      "exceptions": {
-        "VariableDeclarator": true
+    "no-multi-spaces" : ["error", {
+      "exceptions" : {
+        "VariableDeclarator" : true
       }
     }]
   }

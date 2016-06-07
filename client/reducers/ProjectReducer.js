@@ -2,13 +2,13 @@ import { GET_REPOS } from '../actions/ProjectActions';
 import NProgress from 'nprogress';
 
 export function project (state = {
-  entities   : []
+  entities : []
 }, action) {
   switch (action.type) {
     case GET_REPOS:
       NProgress.done();
       return Object.assign({}, {
-        entities: action.content
+        entities : action.content
       });
 
     default:

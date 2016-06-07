@@ -6,12 +6,12 @@ import Projects from '../components/Projects.jsx';
 import Aboutme from '../components/Aboutme.jsx';
 
 export default {
-  path: '/',
-  component: App,
-  childRoutes: [{
+  path        : '/',
+  component   : App,
+  childRoutes : [{
     path      : 'page/:page',
     component : Home
-  } ,{
+  }, {
     path      : 'projects',
     component : Projects
   }, {
@@ -24,4 +24,4 @@ export default {
     path      : 'post/:articleName',
     component : Post
   }]
-}
+};

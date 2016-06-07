@@ -24,7 +24,7 @@ describe('Test primary functions in lib/common.js', () => {
 describe('Test get infos from a file name', () => {
   var nameArr;
 
-  beforeEach(()=> {
+  beforeEach(() => {
     nameArr = ['67', '当Promise遇上闭包', '20151220', 'JavaScript-Promise-Closuer.md'];
   });
 

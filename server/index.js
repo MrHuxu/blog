@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 require('babel-register')({
-  presets: ['es2015', 'react']
+  presets : ['es2015', 'react']
 });
 var app = require('./app').default;
 app.set('port', process.env.PORT || 13109);
