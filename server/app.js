@@ -6,9 +6,9 @@ import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 
-import index from '../routes/index';
-import archive from '../routes/archive';
-import project from '../routes/project';
+import index from './routes/index';
+import archive from './routes/archive';
+import project from './routes/project';
 
 var app = express();
 

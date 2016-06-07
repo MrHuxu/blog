@@ -1,7 +1,7 @@
 require("babel-core/register");
 import { Router } from 'express';
-import { getRepos } from '../lib/get-repos';
-import { clearEmptyObjItems } from '../lib/common';
+import { getRepos } from '../../lib/get-repos';
+import { clearEmptyObjItems } from '../../lib/common';
 
 var router = Router();
 
