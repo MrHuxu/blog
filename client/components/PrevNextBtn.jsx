@@ -8,11 +8,11 @@ import LeftArrow from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
 import RightArror from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
 
 const style = {
-  prevNextBtn: {
-    margin: '9px 0 7px 0'
+  prevNextBtn : {
+    margin : '9px 0 7px 0'
   },
 
-  pageLabel: {
+  pageLabel : {
     color         : '#777',
     fontSize      : '0.9em',
     display       : 'inline-block',
@@ -28,29 +28,29 @@ class PrevNextBtn extends Component {
 
   render () {
     const { page, pageCount } = this.props;
-    const newerLink = <Link to={page > 0 ? `/page/${page - 1}` : `/page/${page}`} />;
-    const olderLink = <Link to={page + 1 < pageCount ? `/page/${page + 1}` : `/page/${page}`} />;
+    const newerLink = <Link to = {page > 0 ? `/page/${page - 1}` : `/page/${page}`} />;
+    const olderLink = <Link to = {page + 1 < pageCount ? `/page/${page + 1}` : `/page/${page}`} />;
 
     return (
-      <div style={style.prevNextBtn}>
-        <div style={{display: 'inline-block'}}>
+      <div style = {style.prevNextBtn}>
+        <div style = {{display: 'inline-block'}}>
           <IconButton
-            label            = "Newer"
-            disabled         = {this.props.page <= 0}
-            linkButton       = {true}
+            label = 'Newer'
+            disabled = {this.props.page <= 0}
+            linkButton
             containerElement = {newerLink}
           >
             <LeftArrow />
           </IconButton>
         </div>
 
-        <div style={style.pageLabel}>Page {page} of {pageCount}</div>
+        <div style = {style.pageLabel}>Page {page} of {pageCount}</div>
 
-        <div style={{display: 'inline-block'}}>
+        <div style = {{display: 'inline-block'}}>
           <IconButton
-            label            = "Older"
-            disabled         = {this.props.page >= this.props.pageCount}
-            linkButton       = {true}
+            label = 'Older'
+            disabled = {this.props.page >= this.props.pageCount}
+            linkButton
             containerElement = {olderLink}
           >
             <RightArror />

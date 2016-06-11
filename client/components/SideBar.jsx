@@ -5,24 +5,24 @@ import { connect } from 'react-redux';
 import Search from './Search.jsx';
 
 const style = {
-  sideBar: {
-    margin: '38% 0 0 10%'
+  sideBar : {
+    margin : '38% 0 0 10%'
   },
 
-  menu: {
-    width: '100%'
+  menu : {
+    width : '100%'
   },
 
-  menuItem: {
+  menuItem : {
     fontSize   : '12px',
     lineHeight : '25px'
   },
 
-  icons: {
-    margin: '15px 0 0 -20px'
+  icons : {
+    margin : '15px 0 0 -20px'
   },
 
-  iconLink: {
+  iconLink : {
     width   : '25px',
     color   : '#545454',
     opacity : '0.8',
@@ -43,7 +43,7 @@ class Header extends Component {
     $('.right-bracket').addClass('animated bounceInRight');
     $('.left-bracket').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {
       $('.menu-item').css({
-        visibility: 'visible'
+        visibility : 'visible'
       }).addClass('animated fadeInUp');
     });
   }
@@ -61,17 +61,17 @@ class Header extends Component {
     const { archives } = this.props;
 
     var menu = (
-      <div className='blog-menu' style={style.menuItem}>
+      <div className = 'blog-menu' style = {style.menuItem}>
         <p>const</p>
-        <p className='left-bracket'>&nbsp;{'{'}&nbsp;</p>
-        <Link to='/' className='menu-item home-item'>Home</Link>
+        <p className = 'left-bracket'>&nbsp;{'{'}&nbsp;</p>
+        <Link to = '/' className = 'menu-item home-item'>Home</Link>
         <p>,&nbsp;</p>
-        <Link to='/archives/' className='menu-item'>Archives</Link>
+        <Link to = '/archives/' className = 'menu-item'>Archives</Link>
         <p>,&nbsp;</p><br />
-        <Link to='/projects' className='menu-item'>Projects</Link>
+        <Link to = '/projects' className = 'menu-item'>Projects</Link>
         <p>,&nbsp;</p>
-        <Link to='/aboutme' className='menu-item'>Aboutme</Link>
-        <div className='right-bracket'>
+        <Link to = '/aboutme' className = 'menu-item'>Aboutme</Link>
+        <div className = 'right-bracket'>
           <p>&nbsp;{'}'}&nbsp;</p>
         </div>
         <p>= xhu.life</p>
@@ -79,19 +79,19 @@ class Header extends Component {
     );
 
     return (
-      <div style={style.sideBar}>
-        <div style={style.menu}>
+      <div style = {style.sideBar}>
+        <div style = {style.menu}>
           {menu}
         </div>
-        <div style={style.icons}>
-          <a target='_blank' href='http://github.com/MrHuxu' style={style.iconLink}>
-            <img style={style.iconLink} src='/imgs/github.svg' />
+        <div style = {style.icons}>
+          <a target = '_blank' href = 'http://github.com/MrHuxu' style = {style.iconLink}>
+            <img style = {style.iconLink} src = '/imgs/github.svg' />
           </a>
-          <a target='_blank' href='http://weibo.com/2058722335' style={style.iconLink}>
-            <img style={style.iconLink} src='/imgs/weibo.svg' />
+          <a target = '_blank' href = 'http://weibo.com/2058722335' style = {style.iconLink}>
+            <img style = {style.iconLink} src = '/imgs/weibo.svg' />
           </a>
-          <a href='mailto:hxtheone@gmail.com' style={style.iconLink}>
-            <img style={style.iconLink} src='/imgs/email.svg' />
+          <a href = 'mailto:hxtheone@gmail.com' style = {style.iconLink}>
+            <img style = {style.iconLink} src = '/imgs/email.svg' />
           </a>
         </div>
       </div>
@@ -101,7 +101,7 @@ class Header extends Component {
 
 var mapStateToProps = function (state) {
   return {
-    archives: state.archive.entities
+    archives : state.archive.entities
   };
 };
 

@@ -25,9 +25,9 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 injectTapEventPlugin();
 
 reactDom.render(
-  <MuiThemeProvider muiTheme={getMuiTheme()}>
-    <Provider store={rootStore}>
-      <Router routes={routes} history={browserHistory} />
+  <MuiThemeProvider muiTheme = {getMuiTheme()}>
+    <Provider store = {rootStore}>
+      <Router routes = {routes} history = {browserHistory} />
     </Provider>
   </MuiThemeProvider>,
   document.getElementById('blog')

@@ -7,22 +7,22 @@ import SideBar from './SideBar';
 import LeftNav from './LeftNav';
 
 const style = {
-  sideBar: {
+  sideBar : {
     height             : '110%',
     position           : 'fixed',
     backgroundImage    : "url('/imgs/background-sea.jpg')",
     backgroundRepeat   : 'no-repeat',
     backgroundPosition : 'center',
-    backgroundSize     : "cover"
+    backgroundSize     : 'cover'
   },
 
-  content: {
-    display : 'inline-block',
-    paddingTop: '10px',
-    paddingLeft: '3%',
-    paddingRight: '3%'
+  content : {
+    display      : 'inline-block',
+    paddingTop   : '10px',
+    paddingLeft  : '3%',
+    paddingRight : '3%'
   }
-}
+};
 
 class App extends Component {
   constructor (props) {
@@ -33,10 +33,10 @@ class App extends Component {
     return (
       <div>
         <LeftNav />
-        <span style={style.sideBar} className='blog-sidebar'>
+        <span style = {style.sideBar} className = 'blog-sidebar'>
           <SideBar />
         </span>
-        <span style={style.content} className='blog-content'>
+        <span style = {style.content} className = 'blog-content'>
           {this.props.children || <Home />}
           <Footer />
         </span>

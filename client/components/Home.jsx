@@ -28,7 +28,7 @@ class Home extends Component {
 
   componentDidUpdate () {
     const currentPage = this.props.params ? this.props.params.page : 0;
-    if (currentPage != this.props.page){
+    if (currentPage != this.props.page) {
       $('.snippet-loader').removeClass('inactive').addClass('active');
       this.props.dispatch(fetchAllArticles({page: currentPage}));
     } else {
@@ -41,7 +41,7 @@ class Home extends Component {
     const { page, pageCount } = this.props;
 
     var snippets = archives.map((archive) => {
-      return <Snippet archive={archive} key={archive.sequence}/>;
+      return <Snippet archive = {archive} key = {archive.sequence} />;
     });
 
     document.title = 'Life of xhu - Home';
@@ -65,6 +65,6 @@ var mapStateToProps = function (state) {
     pageCount : state.archive.pageCount,
     archives  : state.archive.entities
   };
-}
+};
 
 export default connect(mapStateToProps)(Home);

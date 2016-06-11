@@ -7,36 +7,36 @@ import RaisedButton from 'material-ui/RaisedButton';
 import * as Colors from 'material-ui/styles/colors';
 
 const style = {
-  archives: {
-    margin: '15px 0 0 0'
+  archives : {
+    margin : '15px 0 0 0'
   },
 
-  tagBtn: {
-    margin: '5px'
+  tagBtn : {
+    margin : '5px'
   },
 
-  linksArea: {
-    margin: '15px 0 0 8px'
+  linksArea : {
+    margin : '15px 0 0 8px'
   },
 
-  archiveTime: {
+  archiveTime : {
     fontSize : '12px',
     color    : '#888',
     display  : 'inline-block'
   },
 
-  archiveTitle: {
-    margin    : '0 0 0 10px',
-    display   : 'inline-block',
-    font      : '15px "Lucida Grande",Helvetica,Arial,sans-serif',
-    color     : '#777'
+  archiveTitle : {
+    margin  : '0 0 0 10px',
+    display : 'inline-block',
+    font    : '15px "Lucida Grande",Helvetica,Arial,sans-serif',
+    color   : '#777'
   },
 
-  archiveTags: {
-    display: 'inline-block'
+  archiveTags : {
+    display : 'inline-block'
   },
 
-  tagLinks: {
+  tagLinks : {
     margin   : '0 0 0 6px',
     color    : '#aaa',
     fontSize : '13px',
@@ -66,8 +66,8 @@ class Archives extends Component {
     archives.forEach((archive) => {
       archive.tags.forEach((tag) => {
         if (tags.indexOf(tag) === -1) tags.push(tag);
-      })
-    })
+      });
+    });
     return tags;
   }
 
@@ -75,10 +75,10 @@ class Archives extends Component {
     return this.state.totalTags.map((tag) => {
       return (
         <RaisedButton
-          label     = {tag}
-          key       = {tag}
-          onClick   = {this.updateFilter.bind(null, tag)}
-          style     = {style.tagBtn}
+          label = {tag}
+          key = {tag}
+          onClick = {this.updateFilter.bind(null, tag)}
+          style = {style.tagBtn}
           secondary = {this.state.selectedTags.includes(tag)}
         >
         </RaisedButton>
@@ -102,7 +102,7 @@ class Archives extends Component {
     }
 
     this.setState({
-      selectedTags: newTags
+      selectedTags : newTags
     });
   }
 
@@ -126,12 +126,12 @@ class Archives extends Component {
 
   generateSingleItem (archive) {
     return (
-      <div className='timeline-item' key={archive.sequence} style={style.archiveItem}>
-        <div style={style.archiveTime}>{`${archive.time.month}/${archive.time.day}`}</div>
-        <Link to={`/post/${archive.name}`} style={style.archiveTitle}>
+      <div className = 'timeline-item' key = {archive.sequence} style = {style.archiveItem}>
+        <div style = {style.archiveTime}>{`${archive.time.month}/${archive.time.day}`}</div>
+        <Link to = {`/post/${archive.name}`} style = {style.archiveTitle}>
           {archive.title}
         </Link>
-        <div style={style.archiveTags}>{archive.tags.map(tag => <a key={tag} onClick={this.updateFilter.bind(null, tag)} style={style.tagLinks}>· {tag}&nbsp;</a>)}</div>
+        <div style = {style.archiveTags}>{archive.tags.map(tag => <a key = {tag} onClick = {this.updateFilter.bind(null, tag)} style = {style.tagLinks}>· {tag}&nbsp;</a>)}</div>
       </div>
     );
   }
@@ -139,7 +139,7 @@ class Archives extends Component {
   generateSingleYear (arr) {
     return arr.map((record, index) => {
       return (
-        <div key={index}>
+        <div key = {index}>
           {record}
         </div>
       );
@@ -159,8 +159,8 @@ class Archives extends Component {
 
     const archiveItems = years.map((year) => {
       return (
-        <div key={year}>
-          <div className='timeline-title' style={style.yearItem}>{year}</div>
+        <div key = {year}>
+          <div className = 'timeline-title' style = {style.yearItem}>{year}</div>
           <div>
             {this.generateSingleYear(arrByYear[year])}
           </div>
@@ -176,9 +176,9 @@ class Archives extends Component {
     if (!this.props.params.articleName) {
       if ($('.blog-sidebar').css('display') === 'none' || $('.home-item').hasClass('animated')) {
         this.props.dispatch(fetchAllArticles({
-           page     : 0,
-           fetchAll : true
-         }));
+          page     : 0,
+          fetchAll : true
+        }));
       } else {
         $('.home-item').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {
           this.props.dispatch(fetchAllArticles({
@@ -211,9 +211,9 @@ class Archives extends Component {
     document.title = 'Life of xhu - Archives';
 
     return (
-      <div style={style.archives}>
+      <div style = {style.archives}>
         {this.generateAllTags()}
-        <div style={style.linksArea} className='timeline-container'>
+        <div style = {style.linksArea} className = 'timeline-container'>
           {this.generateAllItems()}
         </div>
       </div>
@@ -223,7 +223,7 @@ class Archives extends Component {
 
 var mapStateToProps = function (state) {
   return {
-    archives: state.archive.entities
+    archives : state.archive.entities
   };
 };
 

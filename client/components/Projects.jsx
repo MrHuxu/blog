@@ -5,13 +5,13 @@ import { Card, CardHeader, CardText } from 'material-ui/Card';
 import { clearAllArticles } from '../actions/ArchiveActions';
 import { fetchRepos } from '../actions/ProjectActions';
 
-const style={
-  projects: {
-    padding: '0 0 20px 0'
+const style = {
+  projects : {
+    padding : '0 0 20px 0'
   },
 
-  card: {
-    margin: '15px 0 0 0'
+  card : {
+    margin : '15px 0 0 0'
   }
 };
 
@@ -24,14 +24,14 @@ class Projects extends Component {
 
   generateItem (project) {
     return (
-      <Card style={style.card}>
+      <Card style = {style.card}>
         <CardHeader
-        title = {<a target='_blank' href={project.url} className='header'>{project.fullName}</a>}
-          subtitle={project.updatedAt}
-          actAsExpander={true}
-          showExpandableButton={true}
+          title = {<a target = '_blank' href = {project.url} className = 'header'>{project.fullName}</a>}
+          subtitle = {project.updatedAt}
+          actAsExpander
+          showExpandableButton
         />
-        <CardText expandable={true}>
+        <CardText expandable>
           {project.description}
         </CardText>
       </Card>
@@ -49,7 +49,7 @@ class Projects extends Component {
       } else {
         $('.home-item').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {
           this.props.dispatch(fetchRepos());
-        })
+        });
       }
     }
   }
@@ -61,7 +61,7 @@ class Projects extends Component {
     var projectItems = projects.map(project => this.generateItem(project));
 
     return (
-      <div style={style.projects}>
+      <div style = {style.projects}>
         {projectItems}
       </div>
     );
@@ -72,6 +72,6 @@ var mapStateToProps = function (state) {
   return {
     projects : state.project.entities
   };
-}
+};
 
 export default connect(mapStateToProps)(Projects);

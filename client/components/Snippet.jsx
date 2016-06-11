@@ -3,13 +3,13 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 
 const style = {
-  snippet: {
+  snippet : {
     margin       : '0 0 0 0',
     padding      : '20px 0 33px 0',
     borderBottom : '1.2px solid #ddd'
   },
 
-  snippetTitle: {
+  snippetTitle : {
     color      : '#666',
     margin     : '0 0 5px 0',
     minHeight  : '1rem',
@@ -18,7 +18,7 @@ const style = {
     fontFamily : "Lato,'Helvetica Neue',Arial,Helvetica,sans-serif"
   },
 
-  snippetTime: {
+  snippetTime : {
     fontSize      : '1rem',
     letterSpacing : '1px',
     margin        : '20px 0 0 0',
@@ -40,17 +40,17 @@ class Snippet extends Component {
     const { archive } = this.props;
 
     return (
-      <div key={archive.sequence} style={style.snippet}>
+      <div key = {archive.sequence} style = {style.snippet}>
         <div>
-          <div className='ui text loader'></div>
+          <div className = 'ui text loader'></div>
         </div>
 
-        <Link className='snippet-title' to={`/post/${archive.name}`} style={style.snippetTitle}>
+        <Link className = 'snippet-title' to = {`/post/${archive.name}`} style = {style.snippetTitle}>
           {archive.title}
         </Link>
-        <div className='snippet-content' dangerouslySetInnerHTML={{__html: archive.snippet}} />
+        <div className = 'snippet-content' dangerouslySetInnerHTML = {{__html: archive.snippet}} />
 
-        <div style={style.snippetTime}>
+        <div style = {style.snippetTime}>
           <p>
             {archive.time.month} /&nbsp;
             {archive.time.day} /&nbsp;

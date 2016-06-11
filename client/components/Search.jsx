@@ -7,7 +7,7 @@ class Search extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      records: []
+      records : []
     };
 
     this.handleSearch = this.handleSearch.bind(this);
@@ -28,19 +28,19 @@ class Search extends Component {
   render () {
     const { archives } = this.props;
 
-    var searchItems = archives.map(archive => <option value={archive.name}>{archive.title}</option>)
+    var searchItems = archives.map(archive => <option value = {archive.name}>{archive.title}</option>);
     var search = (
-      <div className='four wide column' style={{
-        paddingTop: '8'
+      <div className = 'four wide column' style = {{
+        paddingTop : '8'
       }}>
-        <div className='ui right aligned segment' style={{
+        <div className = 'ui right aligned segment' style = {{
           padding    : '0',
           border     : '0',
           boxShadow  : '0 0 0 0',
           background : 'transparent'
         }}>
-          <select className='ui search dropdown'>
-            <option value=''>Search</option>
+          <select className = 'ui search dropdown'>
+            <option value = ''>Search</option>
             {searchItems}
           </select>
         </div>
@@ -53,7 +53,7 @@ class Search extends Component {
 
 var mapStateToProps = function (state) {
   return {
-    archives: state.archive.entities
+    archives : state.archive.entities
   };
 };
 
