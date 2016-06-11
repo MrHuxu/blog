@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import React, { Component } from 'react';
 
 import Home from './Home';
@@ -25,10 +24,6 @@ const style = {
 };
 
 class App extends Component {
-  constructor (props) {
-    super(props);
-  }
-
   render () {
     return (
       <div>
@@ -40,9 +35,13 @@ class App extends Component {
           {this.props.children || <Home />}
           <Footer />
         </span>
-        </div>
+      </div>
     );
   }
 }
+
+App.propTypes = {
+  children : React.PropTypes.node
+};
 
 export default App;

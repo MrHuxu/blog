@@ -2,7 +2,6 @@ import $ from 'jquery';
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import Search from './Search.jsx';
 
 const style = {
   sideBar : {
@@ -38,6 +37,15 @@ class Header extends Component {
     this.handleSearch = this.handleSearch.bind(this);
   }
 
+  componentDidMount () {
+    this.startAnimation();
+  }
+
+  handleSearch (name) {
+    $('.ui.dropdown').dropdown('set text', 'Search');
+    $('.ui.dropdown > .text').addClass('default');
+  }
+
   startAnimation () {
     $('.left-bracket').addClass('animated bounceInLeft');
     $('.right-bracket').addClass('animated bounceInRight');
@@ -48,18 +56,7 @@ class Header extends Component {
     });
   }
 
-  handleSearch (name) {
-    $('.ui.dropdown').dropdown('set text', 'Search');
-    $('.ui.dropdown > .text').addClass('default');
-  }
-
-  componentDidMount () {
-    this.startAnimation();
-  }
-
   render () {
-    const { archives } = this.props;
-
     var menu = (
       <div className = 'blog-menu' style = {style.menuItem}>
         <p>const</p>
@@ -100,9 +97,7 @@ class Header extends Component {
 }
 
 var mapStateToProps = function (state) {
-  return {
-    archives : state.archive.entities
-  };
+  return {};
 };
 
 export default connect(mapStateToProps)(Header);

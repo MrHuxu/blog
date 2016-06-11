@@ -63,4 +63,20 @@ class Snippet extends Component {
   }
 }
 
+Snippet.propTypes = {
+  archive : React.PropTypes.shape({
+    name      : React.PropTypes.string.isRequired,
+    sequence  : React.PropTypes.number.isRequired,
+    shortName : React.PropTypes.string.isRequired,
+    title     : React.PropTypes.string.isRequired,
+    snippet   : React.PropTypes.string.isRequired,
+    time      : React.PropTypes.shape({
+      year  : React.PropTypes.string.isRequired,
+      month : React.PropTypes.string.isRequired,
+      day   : React.PropTypes.string.isRequired
+    }).isRequired,
+    tags : React.PropTypes.arrayOf(React.PropTypes.string).isRequired
+  }).isRequired
+};
+
 export default Snippet;

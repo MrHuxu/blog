@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { clearAllArticles } from '../actions/ArchiveActions';
@@ -44,5 +43,9 @@ class Aboutme extends Component {
     );
   }
 }
+
+Aboutme.propTypes = {
+  dispatch : React.PropTypes.func.isRequired
+};
 
 export default connect()(Aboutme);
