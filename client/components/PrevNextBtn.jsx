@@ -1,9 +1,6 @@
-import $ from 'jquery';
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
-import FontIcon from 'material-ui/FontIcon';
 import LeftArrow from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
 import RightArror from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
 
@@ -22,9 +19,10 @@ const style = {
 };
 
 class PrevNextBtn extends Component {
-  constructor (props) {
-    super(props);
-  }
+  static propTypes = {
+    page      : React.PropTypes.number.isRequired,
+    pageCount : React.PropTypes.number.isRequired
+  };
 
   render () {
     const { page, pageCount } = this.props;

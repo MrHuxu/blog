@@ -1,15 +1,32 @@
 import $ from 'jquery';
 import React, { Component } from 'react';
-import { Link } from 'react-router';
 import { connect } from 'react-redux';
 
 class Search extends Component {
+  static propTypes = {
+    dispatch : React.PropTypes.func.isRequired,
+    archives : React.PropTypes.arrayOf(React.PropTypes.shape(
+      React.PropTypes.shape({
+        name      : React.PropTypes.string.isRequired,
+        sequence  : React.PropTypes.number.isRequired,
+        shortName : React.PropTypes.string.isRequired,
+        title     : React.PropTypes.string.isRequired,
+        snippet   : React.PropTypes.string.isRequired,
+        time      : React.PropTypes.shape({
+          year  : React.PropTypes.string.isRequired,
+          month : React.PropTypes.string.isRequired,
+          day   : React.PropTypes.string.isRequired
+        }).isRequired,
+        tags : React.PropTypes.arrayOf(React.PropTypes.string).isRequired
+      })
+    )).isRequired
+  };
+
   constructor (props) {
     super(props);
     this.state = {
       records : []
     };
-
     this.handleSearch = this.handleSearch.bind(this);
   }
 
@@ -19,10 +36,11 @@ class Search extends Component {
   }
 
   componentsWillUpdate (nextProps, nextState) {
-    if (nextProps.archives.length !== nextState.records.length)
+    if (nextProps.archives.length !== nextState.records.length) {
       return true;
-    else
+    } else {
       return false;
+    }
   }
 
   render () {
