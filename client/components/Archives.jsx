@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { fetchAllArticles, clearAllArticles } from '../actions/ArchiveActions';
 import { Link } from 'react-router';
 import RaisedButton from 'material-ui/RaisedButton';
-import * as Colors from 'material-ui/styles/colors';
 
 const style = {
   archives : {
@@ -45,6 +44,26 @@ const style = {
 };
 
 class Archives extends Component {
+  static propTypes = {
+    dispatch : React.PropTypes.func.isRequired,
+    params   : React.PropTypes.shape({
+      articleName : React.PropTypes.string
+    }),
+    archives : React.PropTypes.arrayOf(React.PropTypes.shape({
+      name      : React.PropTypes.string.isRequired,
+      sequence  : React.PropTypes.number.isRequired,
+      shortName : React.PropTypes.string.isRequired,
+      title     : React.PropTypes.string.isRequired,
+      snippet   : React.PropTypes.string.isRequired,
+      time      : React.PropTypes.shape({
+        year  : React.PropTypes.string.isRequired,
+        month : React.PropTypes.string.isRequired,
+        day   : React.PropTypes.string.isRequired
+      }).isRequired,
+      tags : React.PropTypes.arrayOf(React.PropTypes.string).isRequired
+    })).isRequired
+  };
+
   constructor (props) {
     super(props);
     this.state = {
@@ -61,11 +80,44 @@ class Archives extends Component {
     this.generateAllItems = this.generateAllItems.bind(this);
   }
 
+  componentWillMount () {
+    this.props.dispatch(clearAllArticles());
+  }
+
+  componentDidMount () {
+    $('.archives-loader').removeClass('inactive').addClass('active');
+    if (!this.props.params.articleName) {
+      if ('none' === $('.blog-sidebar').css('display') || $('.home-item').hasClass('animated')) {
+        this.props.dispatch(fetchAllArticles({
+          page     : 0,
+          fetchAll : true
+        }));
+      } else {
+        $('.home-item').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {
+          this.props.dispatch(fetchAllArticles({
+            page     : 0,
+            fetchAll : true
+          }));
+        });
+      }
+    }
+  }
+
+  componentDidUpdate () {
+    if (this.props.archives.length) {
+      $('.archives-loader').removeClass('active').addClass('inactive');
+    }
+  }
+
+  componentWillUnmount () {
+    this.props.dispatch(clearAllArticles());
+  }
+
   collectTags (archives) {
     var tags = [];
     archives.forEach((archive) => {
       archive.tags.forEach((tag) => {
-        if (tags.indexOf(tag) === -1) tags.push(tag);
+        if (-1 === tags.indexOf(tag)) tags.push(tag);
       });
     });
     return tags;
@@ -80,49 +132,10 @@ class Archives extends Component {
           onClick = {this.updateFilter.bind(null, tag)}
           style = {style.tagBtn}
           secondary = {this.state.selectedTags.includes(tag)}
-        >
-        </RaisedButton>
+        />
       );
     });
   }
-
-  updateFilter (tag) {
-    var index = this.state.totalTags.indexOf(tag);
-    var btn = $($('.ui.button.tagBtn')[index]);
-    var { selectedTags } = this.state;
-    var newTags;
-
-    if (selectedTags.indexOf(tag) === -1) {
-      newTags = [...selectedTags, tag];
-      btn.addClass('active');
-    } else {
-      selectedTags.splice(selectedTags.indexOf(tag), 1);
-      newTags = selectedTags;
-      btn.removeClass('active');
-    }
-
-    this.setState({
-      selectedTags : newTags
-    });
-  }
-
-  filterArchive () {
-    const { archives } = this.props;
-    const { selectedTags } = this.state;
-    if (!this.state.selectedTags.length) return archives;
-    var filteredArchives = archives.filter((archive) => {
-      var hasTag = true;
-      for (let i = 0; i < selectedTags.length; ++i) {
-        if (archive.tags.indexOf(selectedTags[i]) === -1) {
-          hasTag = false;
-          break;
-        }
-      }
-      return hasTag;
-    });
-    return filteredArchives;
-  }
-
 
   generateSingleItem (archive) {
     return (
@@ -152,7 +165,7 @@ class Archives extends Component {
     var arrByYear = {};
     archives.forEach((archive, index) => {
       var year = archive.time.year;
-      if (years.indexOf(year) === -1) years.push(year);
+      if (-1 === years.indexOf(year)) years.push(year);
       if (!arrByYear[year]) arrByYear[year] = [];
       arrByYear[year].push(this.generateSingleItem(archive));
     });
@@ -171,41 +184,44 @@ class Archives extends Component {
     return archiveItems;
   }
 
-  componentDidMount () {
-    $('.archives-loader').removeClass('inactive').addClass('active');
-    if (!this.props.params.articleName) {
-      if ($('.blog-sidebar').css('display') === 'none' || $('.home-item').hasClass('animated')) {
-        this.props.dispatch(fetchAllArticles({
-          page     : 0,
-          fetchAll : true
-        }));
-      } else {
-        $('.home-item').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {
-          this.props.dispatch(fetchAllArticles({
-            page     : 0,
-            fetchAll : true
-          }));
-        });
+  filterArchive () {
+    const { archives } = this.props;
+    const { selectedTags } = this.state;
+    if (!this.state.selectedTags.length) return archives;
+    var filteredArchives = archives.filter((archive) => {
+      var hasTag = true;
+      for (let i = 0; i < selectedTags.length; ++i) {
+        if (-1 === archive.tags.indexOf(selectedTags[i])) {
+          hasTag = false;
+          break;
+        }
       }
+      return hasTag;
+    });
+    return filteredArchives;
+  }
+
+  updateFilter (tag) {
+    var index = this.state.totalTags.indexOf(tag);
+    var btn = $($('.ui.button.tagBtn')[index]);
+    var { selectedTags } = this.state;
+    var newTags;
+
+    if (-1 === selectedTags.indexOf(tag)) {
+      newTags = [...selectedTags, tag];
+      btn.addClass('active');
+    } else {
+      selectedTags.splice(selectedTags.indexOf(tag), 1);
+      newTags = selectedTags;
+      btn.removeClass('active');
     }
-  }
 
-  componentDidUpdate () {
-    if (this.props.archives.length) {
-      $('.archives-loader').removeClass('active').addClass('inactive');
-    }
-  }
-
-  componentWillMount () {
-    this.props.dispatch(clearAllArticles());
-  }
-
-  componentWillUnmount () {
-    this.props.dispatch(clearAllArticles());
+    this.setState({
+      selectedTags : newTags
+    });
   }
 
   render () {
-    const archives = this.filterArchive(this.props.archives);
     this.state.totalTags = this.collectTags(this.props.archives);
 
     document.title = 'Life of xhu - Archives';

@@ -23,19 +23,24 @@ const style = {
 };
 
 class Post extends Component {
-  constructor (props) {
-    super(props);
-  }
-
-  _initDisqus () {
-    var d = document, s = d.createElement('script');
-    s.src = '//xhu.disqus.com/embed.js';
-    s.setAttribute('data-timestamp', +new Date());
-    (d.head || d.body).appendChild(s);
-  }
+  static propTypes = {
+    dispatch : React.PropTypes.func.isRequired,
+    params   : React.PropTypes.shape({
+      articleName : React.PropTypes.string.isRequired
+    }),
+    article : React.PropTypes.shape({
+      content : React.PropTypes.string,
+      time    : React.PropTypes.shape({
+        year  : React.PropTypes.string.isRequired,
+        month : React.PropTypes.string.isRequired,
+        day   : React.PropTypes.string.isRequired
+      }),
+      tags : React.PropTypes.arrayOf(React.PropTypes.string)
+    })
+  };
 
   componentDidMount () {
-    if ($('.blog-sidebar').css('display') === 'none' || $('.home-item').hasClass('animated')) {
+    if ('none' === $('.blog-sidebar').css('display') || $('.home-item').hasClass('animated')) {
       this.props.dispatch(fetchSingleArticle({name: this.props.params.articleName}));
     } else {
       $('.home-item').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {
@@ -50,6 +55,14 @@ class Post extends Component {
     this.props.dispatch(clearSelection());
   }
 
+  _initDisqus () {
+    var d = document;
+    var s = d.createElement('script');
+    s.src = '//xhu.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+
   render () {
     const { article } = this.props;
 
@@ -59,7 +72,7 @@ class Post extends Component {
     return (
       <div style = {style.post}>
         <div style = {style.postContent}>
-          <div dangerouslySetInnerHTML = {{__html: article ? article.content : '' }} />
+          <div dangerouslySetInnerHTML = {{ __html: article ? article.content : '' }} />
           <div style = {style.timeAndTag}>
             {article.time && article.time.month} /&nbsp;
             {article.time && article.time.day} /&nbsp;

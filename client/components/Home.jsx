@@ -1,22 +1,40 @@
 import $ from 'jquery';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
 import { fetchAllArticles } from '../actions/ArchiveActions';
 import Snippet from './Snippet.jsx';
 import PrevNextBtn from './PrevNextBtn.jsx';
 
 class Home extends Component {
-  constructor (props) {
-    super(props);
-  }
+  static propTypes = {
+    dispatch : React.PropTypes.func.isRequired,
+    params   : React.PropTypes.shape({
+      page : React.PropTypes.string.isRequired
+    }),
+    page      : React.PropTypes.number.isRequired,
+    perPage   : React.PropTypes.number.isRequired,
+    pageCount : React.PropTypes.number.isRequired,
+    archives  : React.PropTypes.arrayOf(React.PropTypes.shape({
+      name      : React.PropTypes.string.isRequired,
+      sequence  : React.PropTypes.number.isRequired,
+      shortName : React.PropTypes.string.isRequired,
+      title     : React.PropTypes.string.isRequired,
+      snippet   : React.PropTypes.string.isRequired,
+      time      : React.PropTypes.shape({
+        year  : React.PropTypes.string.isRequired,
+        month : React.PropTypes.string.isRequired,
+        day   : React.PropTypes.string.isRequired
+      }).isRequired,
+      tags : React.PropTypes.arrayOf(React.PropTypes.string).isRequired
+    })).isRequired
+  };
 
   componentDidMount () {
     const currentPage = this.props.params ? this.props.params.page : 0;
     const { archives } = this.props;
 
     if (!archives.length) {
-      if ($('.blog-sidebar').css('display') === 'none' || $('.home-item').hasClass('animated')) {
+      if ('none' === $('.blog-sidebar').css('display') || $('.home-item').hasClass('animated')) {
         this.props.dispatch(fetchAllArticles({page: currentPage}));
       } else {
         $('.home-item').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {
@@ -28,7 +46,7 @@ class Home extends Component {
 
   componentDidUpdate () {
     const currentPage = this.props.params ? this.props.params.page : 0;
-    if (currentPage != this.props.page) {
+    if (Number(currentPage) !== this.props.page) {
       $('.snippet-loader').removeClass('inactive').addClass('active');
       this.props.dispatch(fetchAllArticles({page: currentPage}));
     } else {
