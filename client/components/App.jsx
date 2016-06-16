@@ -24,6 +24,10 @@ const style = {
 };
 
 class App extends Component {
+  static propTypes = {
+    children : React.PropTypes.node
+  };
+
   render () {
     return (
       <div>
@@ -39,9 +43,5 @@ class App extends Component {
     );
   }
 }
-
-App.propTypes = {
-  children : React.PropTypes.node
-};
 
 export default App;

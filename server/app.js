@@ -22,6 +22,9 @@ app.set('view engine', 'ejs');
 logger.token('reqBody', (req) => {
   return ' request: ' + JSON.stringify(req.body);
 });
+logger.token('remote-addr', (req) => {
+  return req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+});
 if ('production' === env) {
   if (!fs.existsSync('./log')) fs.mkdirSync('./log');
   var logFile = fs.createWriteStream('./log/production.log', { flags: 'a' });
