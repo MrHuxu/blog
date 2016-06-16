@@ -36,6 +36,8 @@ module.exports = {
     poll : true
   },
 
+  devtool: 'source-map',
+
   plugins : [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
