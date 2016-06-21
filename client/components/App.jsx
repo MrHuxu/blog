@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { Style } from 'radium';
 
 import Home from './Home';
 import Footer from './Footer';
 import SideBar from './SideBar';
 import LeftNav from './LeftNav';
+import commonStyles from '../styles/common';
 
 const style = {
   sideBar : {
@@ -31,6 +33,7 @@ class App extends Component {
   render () {
     return (
       <div>
+        <Style rules = {commonStyles} />
         <LeftNav />
         <span style = {style.sideBar} className = 'blog-sidebar'>
           <SideBar />

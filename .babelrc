@@ -3,5 +3,9 @@
     "es2015",
     "react"
   ],
-  "plugins": ["transform-class-properties"]
+  "plugins": [
+    "syntax-decorators",
+    "transform-class-properties",
+    "transform-decorators-legacy"
+  ]
 }

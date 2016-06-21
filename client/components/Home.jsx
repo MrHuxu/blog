@@ -1,9 +1,12 @@
 import $ from 'jquery';
 import React, { Component } from 'react';
+import { Style } from 'radium';
 import { connect } from 'react-redux';
 import { fetchAllArticles } from '../actions/ArchiveActions';
 import Snippet from './Snippet.jsx';
 import PrevNextBtn from './PrevNextBtn.jsx';
+
+import codeStyles from '../styles/code';
 
 class Home extends Component {
   static propTypes = {
@@ -66,6 +69,7 @@ class Home extends Component {
 
     return (
       <div>
+        <Style rules = {codeStyles} />
         {snippets}
         <PrevNextBtn
           page = {page}
