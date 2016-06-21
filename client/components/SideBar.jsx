@@ -1,7 +1,10 @@
 import $ from 'jquery';
 import React, { Component } from 'react';
+import { Style } from 'radium';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
+
+import headerStyles from '../styles/header';
 
 const style = {
   sideBar : {
@@ -77,6 +80,7 @@ class Header extends Component {
 
     return (
       <div style = {style.sideBar}>
+        <Style rules = {headerStyles} />
         <div style = {style.menu}>
           {menu}
         </div>

@@ -6,7 +6,7 @@ import { fetchAllArticles } from '../actions/ArchiveActions';
 import Snippet from './Snippet.jsx';
 import PrevNextBtn from './PrevNextBtn.jsx';
 
-import codeStyles from '../styles/code';
+import postStyles from '../styles/post';
 
 class Home extends Component {
   static propTypes = {
@@ -69,7 +69,7 @@ class Home extends Component {
 
     return (
       <div>
-        <Style rules = {codeStyles} />
+        <Style rules = {postStyles} />
         {snippets}
         <PrevNextBtn
           page = {page}

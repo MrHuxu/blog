@@ -1,4 +1,32 @@
 export default {
+  blockquote : {
+    background   : '#dddddd',
+    padding      : '1px 0 1px 15px',
+    margin       : '0 0 18px',
+    borderLeft   : '5px solid #690069',
+    fontFamily   : 'Ubuntu Mono, Monaco, Menlo, "Courier New", monospace',
+    fontWeight   : 'normal',
+    lineHeight   : '28px',
+    fontSize     : '15px',
+    color        : '#696969',
+    borderRadius : '4px'
+  },
+
+  'h1, h2, h3, h4, h5, h6' : {
+    marginTop  : '14px',
+    fontWeight : '500',
+    color      : '#646464'
+  },
+
+  hr : {
+    border          : '0',
+    color           : '#ddd',
+    backgroundColor : '#ddd',
+    height          : '2px'
+  },
+
+  /* for code area in post */
+
   'p code, li > code' : {
     display                 : 'inline',
     wordWrap                : 'break-word',

@@ -1,9 +1,10 @@
-import '../styles/post.css';
-
 import $ from 'jquery';
 import React, { Component } from 'react';
+import { Style } from 'radium';
 import { connect } from 'react-redux';
 import { fetchSingleArticle, clearSelection } from '../actions/ArchiveActions';
+
+import postStyles from '../styles/post';
 
 const style = {
   post : {
@@ -71,6 +72,7 @@ class Post extends Component {
 
     return (
       <div style = {style.post}>
+        <Style rules = {postStyles} />
         <div style = {style.postContent}>
           <div dangerouslySetInnerHTML = {{ __html: article ? article.content : '' }} />
           <div style = {style.timeAndTag}>

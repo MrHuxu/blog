@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { Style } from 'radium';
 import { connect } from 'react-redux';
 import { clearAllArticles } from '../actions/ArchiveActions';
+
+import timelineStyles from '../styles/timeline';
 
 class Aboutme extends Component {
   componentWillMount () {
@@ -12,6 +15,7 @@ class Aboutme extends Component {
 
     return (
       <div>
+        <Style rules = {timelineStyles} />
         <div className = 'timeline-container aboutme-left'>
           <div className = 'timeline-title'>Me</div>
           <div className = 'timeline-item'>

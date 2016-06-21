@@ -5,7 +5,9 @@ import Home from './Home';
 import Footer from './Footer';
 import SideBar from './SideBar';
 import LeftNav from './LeftNav';
+
 import commonStyles from '../styles/common';
+import responsiveStyles from '../styles/responsive';
 
 const style = {
   sideBar : {
@@ -34,6 +36,7 @@ class App extends Component {
     return (
       <div>
         <Style rules = {commonStyles} />
+        <Style rules = {responsiveStyles} />
         <LeftNav />
         <span style = {style.sideBar} className = 'blog-sidebar'>
           <SideBar />

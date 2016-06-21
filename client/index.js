@@ -5,10 +5,6 @@ import '../node_modules/nprogress/nprogress.css';
 import $ from 'jquery';
 window.jQuery = $; // Assure it's available globally.
 
-import './styles/header.css';
-import './styles/timeline.css';
-import './styles/responsive.css';
-
 import React from 'react';
 import reactDom from 'react-dom';
 import { browserHistory, Router } from 'react-router';

@@ -1,9 +1,12 @@
 import $ from 'jquery';
 import React, { Component } from 'react';
+import { Style } from 'radium';
 import { connect } from 'react-redux';
 import { fetchAllArticles, clearAllArticles } from '../actions/ArchiveActions';
 import { Link } from 'react-router';
 import RaisedButton from 'material-ui/RaisedButton';
+
+import timelineStyles from '../styles/timeline';
 
 const style = {
   archives : {
@@ -228,6 +231,7 @@ class Archives extends Component {
 
     return (
       <div style = {style.archives}>
+        <Style rules = {timelineStyles} />
         {this.generateAllTags()}
         <div style = {style.linksArea} className = 'timeline-container'>
           {this.generateAllItems()}
