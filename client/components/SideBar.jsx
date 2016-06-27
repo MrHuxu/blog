@@ -70,7 +70,7 @@ class Header extends Component {
         <p>,&nbsp;</p><br />
         <Link to = '/projects' className = 'menu-item'>Projects</Link>
         <p>,&nbsp;</p>
-        <Link to = '/aboutme' className = 'menu-item'>Aboutme</Link>
+        <a className = 'menu-item' href = 'http://xhu.me/'>Aboutme</a>
         <div className = 'right-bracket'>
           <p>&nbsp;{'}'}&nbsp;</p>
         </div>

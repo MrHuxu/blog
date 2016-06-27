@@ -106,7 +106,7 @@ class LeftNav extends Component {
               style = {style.linkItem}
               linkButton
               onTouchTap = {this.handleClose}
-              containerElement = {<Link to = '/aboutme/' />}
+              containerElement = {<a href = 'http://xhu.me/'>Aboutme</a>}
             >
               Aboutme
             </MenuItem>
