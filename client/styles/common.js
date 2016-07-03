@@ -5,6 +5,7 @@ export default {
     fontFamily           : '"Avenir Next",Helvetica,Arial,"Lantinghei SC","Microsoft YaHei",sans-serif',
     color                : '#444!important',
     lineHeight           : '25px',
+    letterSpacing        : '.8px',
     backgroundAttachment : 'fixed',
     backgroundRepeat     : 'no-repeat',
     backgroundPosition   : 'center',
