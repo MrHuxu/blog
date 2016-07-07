@@ -83,6 +83,32 @@
 
 ### Immutable.js - List
 
+```List```对应的是JS原生的```Array```, 原生的数组操作都可以在List对象中找到对应的方法, 我们可以通过如下的方式初始化一个List:
+
+    var i = require('immutable')
+
+    var list1 = i.List.of(1, 2, 3)
+    var list2 = i.List([1, 2, 3])
+    var list3 = i.List.of(...[1, 2, 3])
+
+上面分别用```of```方法, List构造函数, 以及ES6生成数组iterator的方式够早了```List [ 1, 2, 3 ]```, 这就是一个基本的List对象了.
+
+对于这个对象, 我们可以做一些和普通数组一样的操作:
+
+    list.size   // 3
+    list.set(0, 0)               // List [ 0, 2, 3 ]
+    list.delete(0)               // List [ 2, 3 ]
+    list.push(4)                 // List [ 1, 2, 3, 4 ]
+    list.pop()                   // List [ 1, 2 ]
+    list.unshift(0)              // List [ 0, 1, 2, 3 ]
+    list.shift()                 // List [ 2, 3 ]
+    list.update(1, i => i * i)   // List [ 1, 4, 3 ]
+    list.insert(1, 4)            // List [ 1, 4, 2, 3 ]
+    list.clear()                 // List []
+
+从上面的例子我们可以看出, 每次在list上执行方法的时候, 返回的都是一个新的List对象, 而且初始的对象并没有被改变.
+
+
 ### Immutable.js - Map
 
 
