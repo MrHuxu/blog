@@ -108,7 +108,105 @@
 
 从上面的例子我们可以看出, 每次在list上执行方法的时候, 返回的都是一个新的List对象, 而且初始的对象并没有被改变.
 
+而且List对象还有一些以```In```结尾的方法, 这些方法可以对List对象里面做深层次的修改
+
+    > list = i.fromJS([[1, 2, 3], [4, 5]])
+    List [ List [ 1, 2, 3 ], List [ 4, 5 ] ]
+    > list.setIn([0, 1], 7)
+    List [ List [ 1, 7, 3 ], List [ 4, 5 ] ]
+    > list.deleteIn([0, 2])
+    List [ List [ 1, 2 ], List [ 4, 5 ] ]
+    > list.updateIn([1, 0], i => i * i)
+    List [ List [ 1, 2, 3 ], List [ 16, 5 ] ]
+    
+这样我们不用手动的去get内部的对象再操作, 直接使用带In的方法, 这样内部和外部的对象都会复制出一个新对象.
+
+当然List的操作远不止这么些, 更多的方法请看[这里](https://facebook.github.io/immutable-js/docs/#/List).
+
 
 ### Immutable.js - Map
+
+```Map```对应原生JS里的```Object```类型, 也就是键值对, 不过和原生JS不同的是, Map对键的要求比原生宽泛很多, 比如:
+
+    > a = i.Map({})
+    Map {}
+    > a.set([1], 1)
+    Map { [1]: 1 }
+
+根据官方的说法, 认识只要是```值```的对象都可以作为Map里的键, 数组当然也是一种值了, 但是这种写法还是不推荐的.
+
+首先是初始化Map, 这里的方法就比较单一了, 就是使用Map对象的构造方法, 但是这里一个有趣的点是, 在传入成对出现的数组时, 会将pair自动转成键值对:
+
+    var i = require('immtable');
+    
+    var map1 = Map({key: "value"});
+    var map2 = Map([["key", "value"]]);   // map2: Map { "key": "value" }
+    
+然后是一些常规操作:
+
+    var map = i.Map({a: 1, b: 2, c: 3})
+    map.size                          // 3
+    map.set('a', 4)                   // Map { "a": 4, "b": 2, "c": 3 }
+    map.delete('b')                   // Map { "a": 1, "c": 3 }
+    map.update('c', i => i * i)       // Map { "a": 1, "b": 2, "c": 9 }
+    map.merge(i.Map({c: 4, d: 5}))    // Map { "a": 1, "b": 2, "c": 4, "d": 5 }
+    map.clear()                       // Map {}
+
+
+当然也缺不了用```In```结尾的方法:
+
+    > var map = i.Map({a: i.Map({b: 1, c: 2}), d: i.Map({e: 3})})
+    undefined
+    > map.setIn(['a', 'c'], 4)
+    Map { "a": Map { "b": 1, "c": 4 }, "d": Map { "e": 3 } }
+    > map.deleteIn(['a', 'b'])
+    Map { "a": Map { "c": 2 }, "d": Map { "e": 3 } }
+    > map.updateIn(['d', 'e'], i => i * i)
+    Map { "a": Map { "b": 1, "c": 2 }, "d": Map { "e": 9 } }
+    
+更多的操作可以看[这里](https://facebook.github.io/immutable-js/docs/#/Map)
+
+### Immutable.js in Use
+
+在日常使用中, Immutable.js还有一个特性是我非常喜欢的, 就是每个操作的返回值都非常唯一, 而不是像原生JS那样随意, Immutable.js的除了取值之外的操作基本上都是返回新生成的对象, 这样可以方便我们写出非常好看的链式调用:
+
+    > var map = i.Map({a: i.Map({b: 1, c: 2}), d: i.Map({e: 3})})
+    undefined
+    > map.setIn(['d', 'e'], 4).deleteIn(['a', 'b'], 2).updateIn(['a', 'c'], i => --i)
+    Map { "a": Map { "c": 1 }, "d": Map { "e": 4 } }
+
+当然, 如果真要在项目中使用Immutable.js的话, 还需要进行PropTypes验证, 这时我们可以使用```react-immutable-proptypes```这个库:
+
+    import ImmutablePropTypes from 'react-immutable-proptypes';
+
+    /**
+     * props = {
+     *   ids: List [ 1, 2 ]
+     *   infos: Map {
+     *     1: {
+     *       name: 'test1'
+     *       infos: Map {1: 4, 2: 2, 3: 1, 4: 2}
+     *     },
+     *     2: {
+     *       name: 'test2'
+     *       infos: Map {1: 4, 2: 2, 3: 1, 4: 2}
+     *     }
+     *   }
+     * }
+    **/
+    class Dashboard extends Component {
+      static propTypes = {
+        ids   : ImmutablePropTypes.listOf(React.PropTypes.number).isRequired,
+        infos : ImmutablePropTypes.mapOf(ImmutablePropTypes.contains({
+          name  : React.PropTypes.string.isRequired,
+          infos : ImmutablePropTypes.mapOf(React.PropTypes.number).isRequired
+        })).isRequired
+      };
+      ...
+    }
+
+到这儿关于```Immutable.js```这个库的讲解就算完成了, 当然这里的内容还是很浅的, 如果想更进一步的了解这个强大的库, 我推荐在看完这篇文章之后, 继续深入学习[官方文档](https://facebook.github.io/immutable-js/docs/#/).
+
+
 
 
