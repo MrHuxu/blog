@@ -3,7 +3,7 @@ var webpack = require('webpack');
 
 module.exports = {
   entry : [
-    'webpack-dev-server/client?http://0.0.0.0:6789', // WebpackDevServer host and port
+    'webpack-dev-server/client?http://localhost:6789', // WebpackDevServer host and port
     'webpack/hot/dev-server', // "only" prevents reload on syntax errors
     './client/index' // Your appʼs entry point
   ],
