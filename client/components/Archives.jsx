@@ -142,7 +142,7 @@ class Archives extends Component {
 
   generateSingleItem (archive) {
     return (
-      <div className = 'timeline-item' key = {archive.sequence} style = {style.archiveItem}>
+      <div className = "timeline-item" key = {archive.sequence} style = {style.archiveItem}>
         <div style = {style.archiveTime}>{`${archive.time.month}/${archive.time.day}`}</div>
         <Link to = {`/post/${archive.name}`} style = {style.archiveTitle}>
           {archive.title}
@@ -176,7 +176,7 @@ class Archives extends Component {
     const archiveItems = years.map((year) => {
       return (
         <div key = {year}>
-          <div className = 'timeline-title' style = {style.yearItem}>{year}</div>
+          <div className = "timeline-title" style = {style.yearItem}>{year}</div>
           <div>
             {this.generateSingleYear(arrByYear[year])}
           </div>
@@ -233,7 +233,7 @@ class Archives extends Component {
       <div style = {style.archives}>
         <Style rules = {timelineStyles} />
         {this.generateAllTags()}
-        <div style = {style.linksArea} className = 'timeline-container'>
+        <div style = {style.linksArea} className = "timeline-container">
           {this.generateAllItems()}
         </div>
       </div>

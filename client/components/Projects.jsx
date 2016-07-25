@@ -52,7 +52,7 @@ class Projects extends Component {
     return (
       <Card style = {style.card} key = {key}>
         <CardHeader
-          title = {<a target = '_blank' href = {project.url} className = 'header'>{project.fullName}</a>}
+          title = {<a target = "_blank" href = {project.url} className = "header">{project.fullName}</a>}
           subtitle = {project.updatedAt}
           actAsExpander
           showExpandableButton

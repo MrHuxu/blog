@@ -17,11 +17,11 @@ const style = {
   },
 
   titleText : {
-    color: '#666',
+    color      : '#666',
     fontFamily : "Lato,'Helvetica Neue',Arial,Helvetica,sans-serif",
 
-    ':hover': {
-      color: '#444'
+    ':hover' : {
+      color : '#444'
     }
   },
 
@@ -52,10 +52,28 @@ class Snippet extends Component {
   };
 
   componentDidMount () {
-    const refs = this.refs
-    $(refs.content.children[0]).hide();
-    var re = /[a-zA-Z0-9_\.\-\_]+/g;
+    $(this.refs.content.children[0]).hide();
+    this.addSpaceToWords();
   }
+
+  addSpaceToWords = () => {
+    var $dom = $(this.refs.content);
+    var containers = $dom.find('p, li');
+    const re = /[a-zA-Z0-9_\.\-\/\\]+/g;
+    for (let i = 0; i < containers.length; ++i) {
+      console.log(containers[i]);
+      for (let j = 0; j < containers[i].childNodes.length; ++j) {
+        let node = containers[i].childNodes[j];
+        if (0 === node.childNodes.length) {
+          let words = $.unique(node.textContent.match(re) || []).filter(t => (/[a-zA-Z0-9]+/g).test(t));
+          words.forEach(word => {
+            let wordRE = new RegExp(word, 'g');
+            node.textContent = node.textContent.replace(wordRE, ` ${word} `);
+          });
+        }
+      }
+    }
+  };
 
   render () {
     const { archive } = this.props;
@@ -63,11 +81,11 @@ class Snippet extends Component {
     return (
       <div key = {archive.sequence} style = {style.snippet}>
         <div>
-          <div className = 'ui text loader'></div>
+          <div className = "ui text loader"></div>
         </div>
 
         <div
-          ref = 'title'
+          ref = "title"
           style = {style.snippetTitle}
         >
           <Link
@@ -77,7 +95,7 @@ class Snippet extends Component {
           </Link>
         </div>
         <div
-          ref = 'content'
+          ref = "content"
           dangerouslySetInnerHTML = {{__html: archive.snippet}}
         />
 

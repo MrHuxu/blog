@@ -24,13 +24,13 @@ class Footer extends Component {
       <div style = {style.footer}>
         <p style = {style.footerLabel}>
           Copyright © 2015 - xhu - Powered by&nbsp;
-          <a target = '_blank' style = {style.footerLink} href = 'https://github.com/strongloop/express'>Express</a>
+          <a target = "_blank" style = {style.footerLink} href = "https://github.com/strongloop/express">Express</a>
           ,&nbsp;
-          <a target = '_blank' style = {style.footerLink} href = 'https://github.com/facebook/react'>React</a>
+          <a target = "_blank" style = {style.footerLink} href = "https://github.com/facebook/react">React</a>
           ,&nbsp;
-          <a target = '_blank' style = {style.footerLink} href = 'https://github.com/rackt/redux'>Redux</a>
+          <a target = "_blank" style = {style.footerLink} href = "https://github.com/rackt/redux">Redux</a>
           ,&nbsp;&&nbsp;
-          <a target = '_blank' style = {style.footerLink} href = 'https://github.com/callemall/material-ui'>Material UI</a>
+          <a target = "_blank" style = {style.footerLink} href = "https://github.com/callemall/material-ui">Material UI</a>
         </p>
       </div>
     );

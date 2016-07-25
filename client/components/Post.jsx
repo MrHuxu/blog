@@ -49,20 +49,42 @@ class Post extends Component {
       });
     }
 
-    this._initDisqus();
+    this.initDisqus();
+  }
+
+  componentDidUpdate () {
+    this.addSpaceToWords();
   }
 
   componentWillUnmount () {
     this.props.dispatch(clearSelection());
   }
 
-  _initDisqus () {
+  addSpaceToWords = () => {
+    var containers = $(this.refs.content).find('p, li');
+    const re = /[a-zA-Z0-9_\.\-\/\\]+/g;
+    for (let i = 0; i < containers.length; ++i) {
+      console.log(containers[i]);
+      for (let j = 0; j < containers[i].childNodes.length; ++j) {
+        let node = containers[i].childNodes[j];
+        if (0 === node.childNodes.length) {
+          let words = $.unique(node.textContent.match(re) || []).filter(t => (/[a-zA-Z0-9]+/g).test(t));
+          words.forEach(word => {
+            let wordRE = new RegExp(word, 'g');
+            node.textContent = node.textContent.replace(wordRE, ` ${word} `);
+          });
+        }
+      }
+    }
+  };
+
+  initDisqus = () => {
     var d = document;
     var s = d.createElement('script');
     s.src = '//xhu.disqus.com/embed.js';
     s.setAttribute('data-timestamp', +new Date());
     (d.head || d.body).appendChild(s);
-  }
+  };
 
   render () {
     const { article } = this.props;
@@ -74,7 +96,10 @@ class Post extends Component {
       <div style = {style.post}>
         <Style rules = {postStyles} />
         <div style = {style.postContent}>
-          <div dangerouslySetInnerHTML = {{ __html: article ? article.content : '' }} />
+          <div
+            ref = "content"
+            dangerouslySetInnerHTML = {{ __html: article ? article.content : '' }}
+          />
           <div style = {style.timeAndTag}>
             {article.time && article.time.month} /&nbsp;
             {article.time && article.time.day} /&nbsp;
@@ -82,7 +107,7 @@ class Post extends Component {
             {article.tags && article.tags.map(tag => ' · ' + tag).join('')}
           </div>
         </div>
-        <div id = 'disqus_thread' />
+        <div id = "disqus_thread" />
       </div>
     );
   }
