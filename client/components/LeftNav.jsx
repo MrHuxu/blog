@@ -80,7 +80,6 @@ class LeftNav extends Component {
 
             <MenuItem
               style = {style.linkItem}
-              linkButton
               onTouchTap = {this.handleClose}
               containerElement = {<Link to = '/' />}
             >
@@ -88,7 +87,6 @@ class LeftNav extends Component {
             </MenuItem>
             <MenuItem
               style = {style.linkItem}
-              linkButton
               onTouchTap = {this.handleClose}
               containerElement = {<Link to = '/archives/' />}
             >
@@ -96,7 +94,6 @@ class LeftNav extends Component {
             </MenuItem>
             <MenuItem
               style = {style.linkItem}
-              linkButton
               onTouchTap = {this.handleClose}
               containerElement = {<Link to = '/projects/' />}
             >
@@ -104,7 +101,6 @@ class LeftNav extends Component {
             </MenuItem>
             <MenuItem
               style = {style.linkItem}
-              linkButton
               onTouchTap = {this.handleClose}
               containerElement = {<a href = 'http://xhu.me/'>Aboutme</a>}
             >

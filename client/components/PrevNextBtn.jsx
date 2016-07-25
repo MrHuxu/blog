@@ -35,7 +35,6 @@ class PrevNextBtn extends Component {
           <IconButton
             label = 'Newer'
             disabled = {this.props.page <= 0}
-            linkButton
             containerElement = {newerLink}
           >
             <LeftArrow />
@@ -48,7 +47,6 @@ class PrevNextBtn extends Component {
           <IconButton
             label = 'Older'
             disabled = {this.props.page >= this.props.pageCount}
-            linkButton
             containerElement = {olderLink}
           >
             <RightArror />
