@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import React, { Component } from 'react';
+import Radium from 'radium';
 import { Link } from 'react-router';
 
 const style = {
@@ -10,12 +11,18 @@ const style = {
   },
 
   snippetTitle : {
-    color      : '#666',
     margin     : '0 0 5px 0',
     minHeight  : '1rem',
-    fontSize   : '1.8rem',
-    lineHeight : '4rem',
-    fontFamily : "Lato,'Helvetica Neue',Arial,Helvetica,sans-serif"
+    lineHeight : '4rem'
+  },
+
+  titleText : {
+    color: '#666',
+    fontFamily : "Lato,'Helvetica Neue',Arial,Helvetica,sans-serif",
+
+    ':hover': {
+      color: '#444'
+    }
   },
 
   snippetTime : {
@@ -26,6 +33,7 @@ const style = {
   }
 };
 
+@Radium
 class Snippet extends Component {
   static propTypes = {
     archive : React.PropTypes.shape({
@@ -44,12 +52,9 @@ class Snippet extends Component {
   };
 
   componentDidMount () {
-    $('.snippet-content h1').hide();
-    $('.snippet-title').mouseenter((e) => {
-      $(e.target).css({color: '#444'});
-    }).mouseleave((e) => {
-      $(e.target).css({color: '#666'});
-    });
+    const refs = this.refs
+    $(refs.content.children[0]).hide();
+    var re = /[a-zA-Z0-9_\.\-\_]+/g;
   }
 
   render () {
@@ -61,10 +66,20 @@ class Snippet extends Component {
           <div className = 'ui text loader'></div>
         </div>
 
-        <Link className = 'snippet-title' to = {`/post/${archive.name}`} style = {style.snippetTitle}>
-          {archive.title}
-        </Link>
-        <div className = 'snippet-content' dangerouslySetInnerHTML = {{__html: archive.snippet}} />
+        <div
+          ref = 'title'
+          style = {style.snippetTitle}
+        >
+          <Link
+            to = {`/post/${archive.name}`}
+          >
+            <h1 style = {style.titleText}>{archive.title}</h1>
+          </Link>
+        </div>
+        <div
+          ref = 'content'
+          dangerouslySetInnerHTML = {{__html: archive.snippet}}
+        />
 
         <div style = {style.snippetTime}>
           <p>
