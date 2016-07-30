@@ -62,9 +62,8 @@ class Post extends Component {
 
   addSpaceToWords = () => {
     var containers = $(this.refs.content).find('p, li');
-    const re = /[a-zA-Z0-9_\.\-\/\\]+/g;
+    const re = /[a-zA-Z0-9_\#\.\-\/\\]+/g;
     for (let i = 0; i < containers.length; ++i) {
-      console.log(containers[i]);
       for (let j = 0; j < containers[i].childNodes.length; ++j) {
         let node = containers[i].childNodes[j];
         if (0 === node.childNodes.length) {
