@@ -60,14 +60,14 @@
     "babel-eslint": "^6.1.1",
     "chai": "^3.5.0",
     "concurrently": "^2.2.0",
-    "eslint": "^3.1.1",
+    "eslint": "^3.2.2",
     "eslint-config-standard": "^5.3.5",
     "eslint-config-standard-react": "^3.0.0",
     "eslint-plugin-babel": "^3.3.0",
     "eslint-plugin-promise": "^2.0.0",
-    "eslint-plugin-react": "^5.2.2",
+    "eslint-plugin-react": "^6.0.0",
     "eslint-plugin-standard": "^2.0.0",
-    "mocha": "^2.5.3",
+    "mocha": "^3.0.0",
     "nodemon": "^1.10.0"
   }
 }
