@@ -59,7 +59,7 @@ class Snippet extends Component {
   addSpaceToWords = () => {
     var $dom = $(this.refs.content);
     var containers = $dom.find('p, li');
-    const re = /[a-zA-Z0-9_\#\.\-\/\\]+/g;
+    const re = /[a-zA-Z0-9_\#\ \.\-\/\\]+/g;
     for (let i = 0; i < containers.length; ++i) {
       for (let j = 0; j < containers[i].childNodes.length; ++j) {
         let node = containers[i].childNodes[j];
