@@ -5,7 +5,8 @@
     "standard-react"
   ],
   "plugins": [
-    "react"
+    "react",
+    "import"
   ],
   "parserOptions": {
     "ecmaFeatures": {
@@ -47,6 +48,7 @@
         "VariableDeclarator": true
       }
     }],
+    "import/extensions": 1,
     "react/display-name": 1,
     "react/jsx-boolean-value": 1,
     "react/jsx-no-undef": 1,
@@ -57,7 +59,6 @@
     "react/no-unknown-property": 1,
     "react/prop-types": 2,
     "react/react-in-jsx-scope": 1,
-    "react/require-extension": 1,
     "react/self-closing-comp": 1,
     "react/sort-comp": [1, {
       "order": [
@@ -90,7 +91,7 @@
         ]
       }
     }],
-    "react/wrap-multilines": 1,
+    "react/jsx-wrap-multilines": 1,
     "react/jsx-equals-spacing": [1, "always"],
     "react/jsx-no-bind": [1, {
       "allowArrowFunctions": true,
