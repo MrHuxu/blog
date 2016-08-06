@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import { Style } from 'radium';
 import { connect } from 'react-redux';
 import { fetchSingleArticle, clearSelection } from '../actions/ArchiveActions';
@@ -20,6 +21,11 @@ const style = {
     letterSpacing : '1px',
     margin        : '20px 0 0 0',
     color         : '#aaa'
+  },
+
+  neighboursContainer : {
+    position : 'relative',
+    height   : 75
   }
 };
 
@@ -88,7 +94,12 @@ class Post extends Component {
   render () {
     const { article } = this.props;
 
-    var title = this.props.params.articleName.split('*')[1];
+    const prevPost = (article.neighbours && article.neighbours.prevPost) || '';
+    const prevPostTitle = prevPost.split('*')[1];
+    const nextPost = (article.neighbours && article.neighbours.nextPost) || '';
+    const nextPostTitle = nextPost.split('*')[1];
+
+    const title = this.props.params.articleName.split('*')[1];
     document.title = `Life of xhu - ${title}`;
 
     return (
@@ -104,6 +115,19 @@ class Post extends Component {
             {article.time && article.time.day} /&nbsp;
             {article.time && article.time.year}
             {article.tags && article.tags.map(tag => ' · ' + tag).join('')}
+          </div>
+        </div>
+
+        <div style = {style.neighboursContainer}>
+          <div>
+            <Link to = {`/post/${prevPost}`}>
+               {prevPostTitle}
+            </Link>
+          </div>
+          <div>
+            <Link to = {`/post/${nextPost}`}>
+              {nextPostTitle}
+            </Link>
           </div>
         </div>
         <div id = "disqus_thread" />
