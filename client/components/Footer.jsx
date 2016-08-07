@@ -23,7 +23,9 @@ class Footer extends Component {
     return (
       <div style = {style.footer}>
         <p style = {style.footerLabel}>
-          Copyright © 2015 - xhu - Powered by&nbsp;
+          Copyright © 2016 -&nbsp;
+          <a style = {style.footerLink} href = "mailto:hxtheone@gmail.com">xhu</a>
+          &nbsp;- Powered by&nbsp;
           <a target = "_blank" style = {style.footerLink} href = "https://github.com/strongloop/express">Express</a>
           ,&nbsp;
           <a target = "_blank" style = {style.footerLink} href = "https://github.com/facebook/react">React</a>
