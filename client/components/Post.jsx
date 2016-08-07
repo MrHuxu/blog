@@ -42,8 +42,11 @@ const style = {
 
 class Post extends Component {
   static propTypes = {
-    dispatch : React.PropTypes.func.isRequired,
-    params   : React.PropTypes.shape({
+    dispatch    : React.PropTypes.func.isRequired,
+    routeParams : React.PropTypes.shape({
+      articleName : React.PropTypes.string.isRequired
+    }).isRequired,
+    params : React.PropTypes.shape({
       articleName : React.PropTypes.string.isRequired
     }),
     article : React.PropTypes.shape({
@@ -62,6 +65,24 @@ class Post extends Component {
   };
 
   componentDidMount () {
+    this.fetchArticleContent();
+    // this.initDisqus();
+  }
+
+  componentDidUpdate (prevProps, prevState) {
+    if (this.props.routeParams.articleName !== prevProps.routeParams.articleName) {
+      $('html, body').animate({ scrollTop: 0 }, 400, () => {
+        setTimeout(this.fetchArticleContent, 100);
+      });
+    }
+    this.addSpaceToWords();
+  }
+
+  componentWillUnmount () {
+    this.props.dispatch(clearSelection());
+  }
+
+  fetchArticleContent = () => {
     if ('none' === $('.blog-sidebar').css('display') || $('.home-item').hasClass('animated')) {
       this.props.dispatch(fetchSingleArticle({name: this.props.params.articleName}));
     } else {
@@ -69,16 +90,6 @@ class Post extends Component {
         this.props.dispatch(fetchSingleArticle({name: this.props.params.articleName}));
       });
     }
-
-    // this.initDisqus();
-  }
-
-  componentDidUpdate () {
-    this.addSpaceToWords();
-  }
-
-  componentWillUnmount () {
-    this.props.dispatch(clearSelection());
   }
 
   addSpaceToWords = () => {
