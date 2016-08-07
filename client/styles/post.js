@@ -76,7 +76,7 @@ export default {
     width           : '30px',
     height          : '100%',
     margin          : '0',
-    padding         : '8px 2px 10px 0',
+    padding         : '8px 5px 10px 0',
     borderRadius    : '3px 0 0 3px',
     backgroundColor : '#EEE',
     textAlign       : 'right',
