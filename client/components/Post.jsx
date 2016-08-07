@@ -42,7 +42,11 @@ class Post extends Component {
         month : React.PropTypes.string.isRequired,
         day   : React.PropTypes.string.isRequired
       }),
-      tags : React.PropTypes.arrayOf(React.PropTypes.string)
+      tags       : React.PropTypes.arrayOf(React.PropTypes.string),
+      neighbours : React.PropTypes.shape({
+        prevPost : React.PropTypes.string,
+        nextPost : React.PropTypes.string
+      })
     })
   };
 
