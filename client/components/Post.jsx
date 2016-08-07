@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { Style } from 'radium';
 import { connect } from 'react-redux';
+import ArrowDropUp from 'material-ui/svg-icons/navigation/arrow-upward';
+import ArrowDropDown from 'material-ui/svg-icons/navigation/arrow-downward';
 import { fetchSingleArticle, clearSelection } from '../actions/ArchiveActions';
 
 import postStyles from '../styles/post';
@@ -25,7 +27,16 @@ const style = {
 
   neighboursContainer : {
     position : 'relative',
-    height   : 75
+    padding  : '0 0 15px 0'
+  },
+
+  neighbourIcons : {
+    margin : '0 5px 0 0'
+  },
+
+  neighbourLinks : {
+    verticalAlign : 'top',
+    color         : '#FE6C64'
   }
 };
 
@@ -59,7 +70,7 @@ class Post extends Component {
       });
     }
 
-    this.initDisqus();
+    // this.initDisqus();
   }
 
   componentDidUpdate () {
@@ -114,25 +125,34 @@ class Post extends Component {
             ref = "content"
             dangerouslySetInnerHTML = {{ __html: article ? article.content : '' }}
           />
-          <div style = {style.timeAndTag}>
-            {article.time && article.time.month} /&nbsp;
-            {article.time && article.time.day} /&nbsp;
-            {article.time && article.time.year}
-            {article.tags && article.tags.map(tag => ' · ' + tag).join('')}
-          </div>
+          {article.time ? (
+            <div style = {style.timeAndTag}>
+              {article.time && article.time.month} /&nbsp;
+              {article.time && article.time.day} /&nbsp;
+              {article.time && article.time.year}
+              {article.tags && article.tags.map(tag => ' · ' + tag).join('')}
+            </div>
+          ) : null}
         </div>
 
         <div style = {style.neighboursContainer}>
-          <div>
-            <Link to = {`/post/${prevPost}`}>
-               {prevPostTitle}
-            </Link>
-          </div>
-          <div>
-            <Link to = {`/post/${nextPost}`}>
-              {nextPostTitle}
-            </Link>
-          </div>
+          {prevPost ? (
+            <div>
+              <ArrowDropUp style = {style.neighbourIcons} />
+              <Link to = {`/post/${prevPost}`} style = {style.neighbourLinks}>
+                {prevPostTitle}
+              </Link>
+            </div>
+          ) : null}
+
+          {nextPost ? (
+            <div>
+              <ArrowDropDown style = {style.neighbourIcons} />
+              <Link to = {`/post/${nextPost}`} style = {style.neighbourLinks}>
+                {nextPostTitle}
+              </Link>
+            </div>
+          ) : null}
         </div>
         <div id = "disqus_thread" />
       </div>
