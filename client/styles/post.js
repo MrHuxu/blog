@@ -76,7 +76,7 @@ export default {
     width           : '30px',
     height          : '100%',
     margin          : '0',
-    padding         : '8px 5px 10px 0',
+    padding         : '8px 4px 10px 0',
     borderRadius    : '3px 0 0 3px',
     backgroundColor : '#EEE',
     textAlign       : 'right',
@@ -94,7 +94,7 @@ export default {
     wordWrap   : 'normal'
   },
 
-  'ul.numbering li' : {
+  'ul.numbering div' : {
     lineHeight    : '20px',
     textAlign     : 'right',
     marginRight   : '1.5px',
