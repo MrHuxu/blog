@@ -813,7 +813,7 @@ Slice:
 <a id="case22" name="case22" />
 ### log.Fatal和log.Panic可以比log做的更多
 
-一般语言的log库通常会提供各个级别的log. 和其他语言log库不一样的是, Go内建```log```的```Fatal*()```和```Panic*()```方法不仅会打印log, 而且会导致程序直接被终止.
+一般语言的log库通常会提供各个级别的log. 和其他语言log库不一样的是, Go内建```log```的```Fatal*()```和```Panic*()```方法不仅会打印log, 而且可以让程序直接终止.
 
     package main
 
