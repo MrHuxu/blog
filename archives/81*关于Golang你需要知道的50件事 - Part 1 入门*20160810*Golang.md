@@ -1291,7 +1291,7 @@ Go中对结构体进行转码(json/xml/gob等等)时中不会包含以小写字�
 <a id="case34" name="case34" />
 ### 使用nil Channel
 
-发送给一个nil Channel(也就是不通过```make```声明的Channel)会导致程死锁, 这个一个文档中明确定义的行为, 但是对Golang新手来说可能会非常疑惑.
+发送消息给一个nil Channel(也就是不通过```make```声明的Channel)会导致程序死锁, 这个一个文档中明确定义的行为, 但是对Golang新手来说可能会非常疑惑.
 
     package main
 
