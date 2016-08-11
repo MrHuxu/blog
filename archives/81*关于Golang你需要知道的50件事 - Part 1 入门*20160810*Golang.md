@@ -25,7 +25,7 @@ Go是一门简单有趣的语言, 不过和其他语言一样, 这门语言也�
 15. 访问Map中不存在的key
 16. 字符串是不可变的
 17. 字符串和字节码Slice的转换
-18. 字符串和索引操作符
+18. 字符串和索引操作
 19. 字符串并不总是UTF8编码
 20. 字符串的长度
 21. 使用多行Slice/Array/Map字面量缺少逗号
@@ -202,9 +202,6 @@ Go是一门简单有趣的语言, 不过和其他语言一样, 这门语言也�
 
 你不能在一个代码块里重复声明变量, 但是可以在```:=```左侧至少有一个新变量的情况下使用短变量声明重复声明一个已有变量.
 
-The redeclared variable has to be in the same block or you'll end up with a shadowed variable.
-重复声明变量必须是在同一个代码块里或者
-
 #### Fails:
 
     package main
@@ -295,8 +292,7 @@ The redeclared variable has to be in the same block or you'll end up with a shad
 
 #### 意外的变量覆盖
 
-The short variable declaration syntax is so convenient (especially for those coming from a dynamic language) that it's easy to treat it like a regular assignment operation. If you make this mistake in a new code block there will be no compiler error, but your app will not do what you expect.
-短变量声明是如此方便(特别是对于从动态类型语言转过来的人)以至于容易让人以为这是赋值语句, 如果你在一个新的语句块里烦了这种错误, 代码不一定会编译出错但是无法以预期的方式运行.
+短变量声明是如此方便(特别是对于从动态类型语言转过来的人)以至于容易让人以为这是赋值语句, 如果你在一个新的代码块里错误地使用了短声明语句, 其实是在一个新的闭包里声明了同名的变量, 不会对外部产生影响, 代码不一定会编译出错但是可能无法以预期的方式运行.
 
     package main
 
@@ -351,9 +347,9 @@ nil标志可以作为interface, 函数, 指针, map, slice以及channel这些类
 
 ---
 
-### 使用nil slice/map
+### 使用nil Slice/Map
 
-向nil slice中添加项目是没问题的, 但是对map进行同样的操作会导致运行时panic.
+向nil Slice中添加项目是没问题的, 但是对Map进行同样的操作会导致运行时Panic.
 
 #### Works:
 
@@ -371,7 +367,6 @@ nil标志可以作为interface, 函数, 指针, map, slice以及channel这些类
     func main() {  
         var m map[string]int
         m["one"] = 1 //error
-
     }
 
 ---
@@ -783,7 +778,7 @@ The second optimization avoids extra allocations in for range clauses where stri
 
 ### log.Fatal和log.Panic可以比log做的更多
 
-Logging库通常会提供各个级别的log. 和其他logging库不一样的是, 调用内建```log```的```Fatal*()```和```Panic*()```方法不仅会打印log, 而且会导致程序直接被终止.
+一般语言的log库通常会提供各个级别的log. 和其他语言log库不一样的是, Go内建```log```的```Fatal*()```和```Panic*()```方法不仅会打印log, 而且会导致程序直接被终止.
 
     package main
 
@@ -1042,7 +1037,7 @@ Go中对结构体进行转码(json/xml/gob等等)时中不会包含以小写字�
 
 ### 在还有活动的协程时退出程序
 
-程序并不会等待所有的Goroutine结束, 这是新手一个常见的错误.
+程序并不会等待所有的协程结束, 这是新手一个常见的错误.
 
     package main
 
@@ -1115,7 +1110,7 @@ Go中对结构体进行转码(json/xml/gob等等)时中不会包含以小写字�
 
     fatal error: all goroutines are asleep - deadlock!
 
-这看上去可不太好, 为什么会这样出现死锁呢? 看上去所有工作协程都退出了并且执行了```wg.Done()```, 程序应该可以工作猜对.
+这看上去可不太好, 为什么会这样出现死锁呢? 看上去所有工作协程都退出了并且执行了```wg.Done()```, 程序应该可以工作才对.
 
 其实这个死锁的发生是因为每个工作协程都是获得了一份原始```WaitGroup```变量的拷贝, 在工作进程中执行```wg.Done()```并没有影响到主协程中wg变量.
 
@@ -1215,7 +1210,6 @@ Go中对结构体进行转码(json/xml/gob等等)时中不会包含以小写字�
         time.Sleep(2 * time.Second)
     }
 
-Depending on your application the fix will be different. It might be a minor code change or it might require a change in your application design. Either way, you'll need to make sure your application doesn't try to send data to a closed channel.
 当然, 避免这个情况出现的工作量可大可小, 取决于具体的使用场景, 不过无论如何, 你都应该避免向关掉的Channel发送消息.
 
 上面那个有bug的示例可以通过使用一个特殊的传递结束信号的Channel来解决.
@@ -1250,7 +1244,7 @@ Depending on your application the fix will be different. It might be a minor cod
 
 ### 使用nil Channel
 
-发送给一个nil Channel(也就是不通过```make```声明的Channel)会导致程序永远被锁住, 这个一个文档中明确定义的行为, 但是对Golang新手来说可能会非常疑惑.
+发送给一个nil Channel(也就是不通过```make```声明的Channel)会导致程死锁, 这个一个文档中明确定义的行为, 但是对Golang新手来说可能会非常疑惑.
 
     package main
 
@@ -1320,7 +1314,6 @@ Depending on your application the fix will be different. It might be a minor cod
 
 ### 带有接收者的方法并不能改变初始值
 
-Method receivers are like regular function arguments. If it's declared to be a value then your function/method gets a copy of your receiver argument. This means making changes to the receiver will not affect the original value unless your receiver is a map or slice variable and you are updating the items in the collection or the fields you are updating in the receiver are pointers.
 接收者作为函数参数和常规的函数参数一样, 如果是作为一个值声明的, 那么函数作用域中会得到一份原值的拷贝, 也就是说在函数中的操作并不会改变原始值除非接收者是一个Map/Slice并且你在改变其子项, 或者你改变的接收者是指针.
 
     package main
