@@ -21,10 +21,10 @@ Go是一门简单有趣的语言, 不过和其他语言一样, 这门语言也�
 11. 字符串不能是nil
 12. 数组类型的函数参数
 13. Slice和Array使用range语句时的意外值
-14. Slice和Array是一维的
+14. 多维Array/Slice
 15. 访问Map中不存在的key
 16. 字符串是不可变的
-17. 字符串和字节码Slice的转换
+17. 字符串和字节Slice的转换
 18. 字符串和索引操作
 19. 字符串并不总是UTF8编码
 20. 字符串的长度
@@ -371,9 +371,9 @@ nil标志可以作为interface, 函数, 指针, map, slice以及channel这些类
 
 ---
 
-### map的容量
+### Map的容量
 
-你可以在创建map的时候确定气容量, 但是你并不能对一个map使用```cap()```函数.
+你可以在创建Map的时候确定气容量, 但是你并不能对一个Map使用```cap()```函数.
 
 #### Fails:
 
@@ -513,53 +513,48 @@ nil标志可以作为interface, 函数, 指针, map, slice以及channel这些类
 
 ---
 
-### Slice和Array是一维的
+### 多维Array/Slice
 
-可能看上去Go支持多维的数组和Slice, 但是其实它并不支持, 创建数组的数组或者Slice的Slice是不可能的. 对于数值计算的应用而言, 依赖动态多维数组无论是在性能还是复杂度上都是不够理想的.
+以下是创建多维数组或Slice的方法: 
 
-You can build dynamic multi-dimensional arrays using raw one-dimensional arrays, slices of "independent" slices, and slices of "shared data" slices.
-你可以通过这些方式来创建一个动态多维数组: 1. 
+Array:
 
-If you are using raw one-dimensional arrays you are responsible for indexing, bounds checking, and memory reallocations when the arrays need to grow.
+    package main
 
-Creating a dynamic multi-dimensional array using slices of "independent" slices is a two step process. First, you have to create the outer slice. Then, you have to allocate each inner slice. The inner slices are independent of each other. You can grow and shrink them without affecting other inner slices.
+    func main() {  
+        x := 2
+        y := 4
 
-package main
+        table := make([][]int,x)
+        for i:= range table {
+            table[i] = make([]int,y)
+        }
+    }  
 
-func main() {  
-    x := 2
-    y := 4
+Slice:
 
-    table := make([][]int,x)
-    for i:= range table {
-        table[i] = make([]int,y)
+    package main
+
+    import "fmt"
+
+    func main() {  
+        h, w := 2, 4
+
+        raw := make([]int,h*w)
+        for i := range raw {
+            raw[i] = i
+        }
+        fmt.Println(raw,&raw[4])
+        //prints: [0 1 2 3 4 5 6 7] <ptr_addr_x>
+
+        table := make([][]int,h)
+        for i:= range table {
+            table[i] = raw[i*w:i*w + w]
+        }
+
+        fmt.Println(table,&table[1][0])
+        //prints: [[0 1 2 3] [4 5 6 7]] <ptr_addr_x>
     }
-}
-Creating a dynamic multi-dimensional array using slices of "shared data" slices is a three step process. First, you have to create the data "container" slice that will hold raw data. Then, you create the outer slice. Finally, you initialize each inner slice by reslicing the raw data slice.
-
-package main
-
-import "fmt"
-
-func main() {  
-    h, w := 2, 4
-
-    raw := make([]int,h*w)
-    for i := range raw {
-        raw[i] = i
-    }
-    fmt.Println(raw,&raw[4])
-    //prints: [0 1 2 3 4 5 6 7] <ptr_addr_x>
-
-    table := make([][]int,h)
-    for i:= range table {
-        table[i] = raw[i*w:i*w + w]
-    }
-
-    fmt.Println(table,&table[1][0])
-    //prints: [[0 1 2 3] [4 5 6 7]] <ptr_addr_x>
-}
-There's a spec/proposal for multi-dimensional arrays and slices, but it looks like it's a low priority feature at this point in time.
 
 ---
 
@@ -599,51 +594,67 @@ There's a spec/proposal for multi-dimensional arrays and slices, but it looks li
 
 ### 字符串是不可变的
 
-Trying to update an individual character in a string variable using the index operator will result in a failure. Strings are read-only byte slices (with a few extra properties). If you do need to update a string then use a byte slice instead converting it to a string type when necessary.
+不要尝试去改变一个字符串中独立的字符, 结果必然是失败的, 因为字符串其实是一个只读的带有一些额外特性字节Slice, 如果真的需要修改的话, 请先将其转换成字节Slice再进行处理.
 
+#### Fails:
 
-Fails:
+    package main
 
-package main
+    import "fmt"
 
-import "fmt"
+    func main() {  
+        x := "text"
+        x[0] = 'T'
 
-func main() {  
-    x := "text"
-    x[0] = 'T'
+        fmt.Println(x)
+    }
 
-    fmt.Println(x)
-}
-Compile Error:
+#### Compile Error:
 
-/tmp/sandbox305565531/main.go:7: cannot assign to x[0]
+> /tmp/sandbox305565531/main.go:7: cannot assign to x[0]
 
-Works:
+#### Works:
 
-package main
+    package main
 
-import "fmt"
+    import "fmt"
 
-func main() {  
-    x := "text"
-    xbytes := []byte(x)
-    xbytes[0] = 'T'
+    func main() {  
+        x := "text"
+        xbytes := []byte(x)
+        xbytes[0] = 'T'
 
-    fmt.Println(string(xbytes)) //prints Text
-}
-Note that this isn't really the right way to update characters in a text string because a given character could be stored in multiple bytes. If you do need to make updates to a text string convert it to a rune sclice first. Even with rune slices a single character might span multiple runes, which can happen if you have characters with grave accent, for example. This complicated and ambiguous nature of "characters" is the reason why Go strings are represented as byte sequences.
+        fmt.Println(string(xbytes)) //prints Text
+    }
+
+注意这并不是真正意义上的修改字符串中字符的方式, 因为一个字符可能被存在多个字节中. 如果你的确需要修改一个字符串, 可以先把它转换成符号Slice, 当然即使这样一个字符也可能跨越多个符号, 比如一个带有音调的字符. 这些复杂以及可能存在歧义才使得Go语言的字符串表现为一个字节序列.
 
 ---
 
-### 字符串和字节码Slice的转换
+### 字符串和字节Slice的转换
 
-当你把一个字符串转换成字节码Slice或者反过来时, 你会得到一份原始数据的拷贝, 这个不同于别的语言里的转换操作, 也不是基于同样的底层原始数据产生新的Slice和数组.
+当你把一个字符串转换成字节Slice或者反过来时, 一般你会得到一份原始数据的拷贝, 这个不同于别的语言里的转换操作, 并不是基于同样的底层原始数据产生新的Slice和数组.
 
-Go已经对字符串和字节码Slice互转提供了一些优化操作以避免额外的内存分配.
+当然Go已经对字符串和字节Slice互转提供了一些优化操作以避免额外的内存分配.
 
-The first optimization avoids extra allocations when []byte keys are used to lookup entries in map[string] collections: m[string(key)].
+其中一个优化是在将字节Slice转换成字符串作为Map的索引的时候, 另一个则是将字符串转换成字节Slice使用```for range```的时候, 这两个情况并没有进行复制数据以避免额外的内存分配.
 
-The second optimization avoids extra allocations in for range clauses where strings are converted to []byte: for i,v := range []byte(str) {...}.
+    package main
+
+    import "fmt"
+
+    func main() {
+        data := make(map[string]int)
+        data["test"] = 3
+
+        str := "test"
+        sbytes := []byte(str)
+        fmt.Println(data[string(sbytes[0])])
+
+        for i, v := range []byte(str) {
+            fmt.Println("key: ", i, "value: ", v)
+        }
+    }
 
 ---
 
