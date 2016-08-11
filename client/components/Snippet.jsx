@@ -57,18 +57,19 @@ class Snippet extends Component {
   }
 
   addSpaceToWords = () => {
-    var $dom = $(this.refs.content);
-    var containers = $dom.find('p, li');
+    var containers = $(this.refs.content).find('p, li');
     const re = /[a-zA-Z0-9_# \.\-\/\\]+/g;
     for (let i = 0; i < containers.length; ++i) {
-      for (let j = 0; j < containers[i].childNodes.length; ++j) {
-        let node = containers[i].childNodes[j];
-        if (0 === node.childNodes.length) {
-          let words = $.unique(node.textContent.match(re) || []).filter(t => (/[a-zA-Z0-9]+/g).test(t));
-          words.forEach(word => {
-            let wordRE = new RegExp(word, 'g');
-            node.textContent = node.textContent.replace(wordRE, ` ${word} `);
-          });
+      if ('BLOCKQUOTE' !== containers[i].parentElement.tagName) {
+        for (let j = 0; j < containers[i].childNodes.length; ++j) {
+          let node = containers[i].childNodes[j];
+          if (0 === node.childNodes.length) {
+            let words = $.unique(node.textContent.match(re) || []).filter(t => (/[a-zA-Z0-9]+/g).test(t));
+            words.forEach(word => {
+              let wordRE = new RegExp(word, 'g');
+              node.textContent = node.textContent.replace(wordRE, ` ${word} `);
+            });
+          }
         }
       }
     }

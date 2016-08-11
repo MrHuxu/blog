@@ -1058,7 +1058,7 @@ Go中对结构体进行转码(json/xml/gob等等)时中不会包含以小写字�
 
     package main
 
-    import (  
+    import (
         "fmt"
         "encoding/json"
     )
@@ -1086,7 +1086,7 @@ Go中对结构体进行转码(json/xml/gob等等)时中不会包含以小写字�
 <a id="case31" name="case31" />
 ### 在还有活动的协程时退出程序
 
-程序并不会等待所有的协程结束, 这是新手一个常见的错误.
+主协程并不会等待所有的协程结束, 这是新手一个常见的错误.
 
     package main
 

@@ -9,6 +9,8 @@ import { fetchSingleArticle, clearSelection } from '../actions/ArchiveActions';
 
 import postStyles from '../styles/post';
 
+import BackToTop from './BackToTop';
+
 const style = {
   post : {
     padding : '40px 2.5% 0 2.5%'
@@ -96,14 +98,16 @@ class Post extends Component {
     var containers = $(this.refs.content).find('p, li');
     const re = /[a-zA-Z0-9_# \.\-\/\\]+/g;
     for (let i = 0; i < containers.length; ++i) {
-      for (let j = 0; j < containers[i].childNodes.length; ++j) {
-        let node = containers[i].childNodes[j];
-        if (0 === node.childNodes.length) {
-          let words = $.unique(node.textContent.match(re) || []).filter(t => (/[a-zA-Z0-9]+/g).test(t));
-          words.forEach(word => {
-            let wordRE = new RegExp(word, 'g');
-            node.textContent = node.textContent.replace(wordRE, ` ${word} `);
-          });
+      if ('BLOCKQUOTE' !== containers[i].parentElement.tagName) {
+        for (let j = 0; j < containers[i].childNodes.length; ++j) {
+          let node = containers[i].childNodes[j];
+          if (0 === node.childNodes.length) {
+            let words = $.unique(node.textContent.match(re) || []).filter(t => (/[a-zA-Z0-9]+/g).test(t));
+            words.forEach(word => {
+              let wordRE = new RegExp(word, 'g');
+              node.textContent = node.textContent.replace(wordRE, ` ${word} `);
+            });
+          }
         }
       }
     }
@@ -165,6 +169,7 @@ class Post extends Component {
             </div>
           ) : null}
         </div>
+        <BackToTop />
         <div id = "disqus_thread" />
       </div>
     );
