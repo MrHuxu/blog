@@ -35,11 +35,11 @@ Go是一门简单有趣的语言, 不过和其他语言一样, 这门语言也�
 25. 使用for range语句来遍历一个Map
 26. switch语句中的Fallthrough行为
 27. 自增和自减
-28. '否'位操作符
+28. '非'位操作符
 29. 运算符优先级
 30. 未导出的字段不进行编码
 31. 在还有活动的协程时退出程序
-32. 发送到没有buffer的Channel的消息会在接收目标准备好的时候立刻被返回
+32. 给没有buffer的Channel发送消息
 33. 向已经关闭的Channel发送消息会导致Panic
 34. 使用nil Channel
 35. 带有消息接收方的方法并不能改变消息的初始值
@@ -926,79 +926,435 @@ Logging库通常会提供各个级别的log. 和其他logging库不一样的是,
 
 ---
 
-### '否'位操作
+### '非'位操作符
 
-Many languages use ~ as the unary NOT operator (aka bitwise complement), but Go reuses the XOR operator (^) for that.
+很多语言使用```~```作为'非'位操作符, 但是Go重用了异或操作符```^```来达到这个目的.
 
-Fails:
+#### Fails:
 
-package main
+    package main
 
-import "fmt"
+    import "fmt"
 
-func main() {  
-    fmt.Println(~2) //error
-}
-Compile Error:
+    func main() {  
+        fmt.Println(~2) //error
+    }
 
-/tmp/sandbox965529189/main.go:6: the bitwise complement operator is ^
+#### Compile Error:
 
-Works:
+> /tmp/sandbox965529189/main.go:6: the bitwise complement operator is ^
 
-package main
+#### Works:
 
-import "fmt"
+    package main
 
-func main() {  
-    var d uint8 = 2
-    fmt.Printf("%08b\n",^d)
-}
-Go still uses ^ as the XOR operator, which may be confusing for some people.
+    import "fmt"
 
-If you want you can represent a unary NOT operation (e.g, NOT 0x02) with a binary XOR operation (e.g., 0x02 XOR 0xff). This could explain why ^ is reused to represent unary NOT operations.
+    func main() {  
+        var d uint8 = 2
+        fmt.Printf("%08b\n",^d)
+    }
 
-Go also has a special 'AND NOT' bitwise operator (&^), which adds to the NOT operator confusion. It looks like a special feature/hack to support A AND (NOT B) without requiring parentheses.
+Go仍然使用了```^```作为异或操作符, 这可能会让一些人迷惑.
 
-package main
+如果你愿意的话, 你可以使用一个异或操作符来实现一元的非操作符(比如0x02 XOR 0xff => NOT 0x02), 这也可以解释为什么重用异或操作符来表示取非操作.
 
-import "fmt"
+Go还有一个特殊的AND NOT位操作符```&^```, 这让非操作符更让人困惑了, 这可以看作是为了不用括号实现```A AND (NOT B)```的一个hack.
 
-func main() {  
-    var a uint8 = 0x82
-    var b uint8 = 0x02
-    fmt.Printf("%08b [A]\n",a)
-    fmt.Printf("%08b [B]\n",b)
+    package main
 
-    fmt.Printf("%08b (NOT B)\n",^b)
-    fmt.Printf("%08b ^ %08b = %08b [B XOR 0xff]\n",b,0xff,b ^ 0xff)
+    import "fmt"
 
-    fmt.Printf("%08b ^ %08b = %08b [A XOR B]\n",a,b,a ^ b)
-    fmt.Printf("%08b & %08b = %08b [A AND B]\n",a,b,a & b)
-    fmt.Printf("%08b &^%08b = %08b [A 'AND NOT' B]\n",a,b,a &^ b)
-    fmt.Printf("%08b&(^%08b)= %08b [A AND (NOT B)]\n",a,b,a & (^b))
-}
-Operator Precedence Differences
+    func main() {  
+        var a uint8 = 0x82
+        var b uint8 = 0x02
+        fmt.Printf("%08b [A]\n",a)
+        fmt.Printf("%08b [B]\n",b)
 
-level: beginner
-Aside from the "bit clear" operators (&^) Go has a set of standard operators shared by many other languages. The operator precedence is not always the same though.
+        fmt.Printf("%08b (NOT B)\n",^b)
+        fmt.Printf("%08b ^ %08b = %08b [B XOR 0xff]\n",b,0xff,b ^ 0xff)
 
-package main
+        fmt.Printf("%08b ^ %08b = %08b [A XOR B]\n",a,b,a ^ b)
+        fmt.Printf("%08b & %08b = %08b [A AND B]\n",a,b,a & b)
+        fmt.Printf("%08b &^%08b = %08b [A 'AND NOT' B]\n",a,b,a &^ b)
+        fmt.Printf("%08b&(^%08b)= %08b [A AND (NOT B)]\n",a,b,a & (^b))
+    }
 
-import "fmt"
+---
 
-func main() {  
-    fmt.Printf("0x2 & 0x2 + 0x4 -> %#x\n",0x2 & 0x2 + 0x4)
-    //prints: 0x2 & 0x2 + 0x4 -> 0x6
-    //Go:    (0x2 & 0x2) + 0x4
-    //C++:    0x2 & (0x2 + 0x4) -> 0x2
+### 运算符优先级
 
-    fmt.Printf("0x2 + 0x2 << 0x1 -> %#x\n",0x2 + 0x2 << 0x1)
-    //prints: 0x2 + 0x2 << 0x1 -> 0x6
-    //Go:     0x2 + (0x2 << 0x1)
-    //C++:   (0x2 + 0x2) << 0x1 -> 0x8
+包括位擦除操作符(&^)在内, Go和别的语言一样拥有很多标准操作符, 但是操作符的优先级却不尽相同.
 
-    fmt.Printf("0xf | 0x2 ^ 0x2 -> %#x\n",0xf | 0x2 ^ 0x2)
-    //prints: 0xf | 0x2 ^ 0x2 -> 0xd
-    //Go:    (0xf | 0x2) ^ 0x2
-    //C++:    0xf | (0x2 ^ 0x2) -> 0xf
-}
+    package main
+
+    import "fmt"
+
+    func main() {  
+        fmt.Printf("0x2 & 0x2 + 0x4 -> %#x\n",0x2 & 0x2 + 0x4)
+        //prints: 0x2 & 0x2 + 0x4 -> 0x6
+        //Go:    (0x2 & 0x2) + 0x4
+        //C++:    0x2 & (0x2 + 0x4) -> 0x2
+
+        fmt.Printf("0x2 + 0x2 << 0x1 -> %#x\n",0x2 + 0x2 << 0x1)
+        //prints: 0x2 + 0x2 << 0x1 -> 0x6
+        //Go:     0x2 + (0x2 << 0x1)
+        //C++:   (0x2 + 0x2) << 0x1 -> 0x8
+
+        fmt.Printf("0xf | 0x2 ^ 0x2 -> %#x\n",0xf | 0x2 ^ 0x2)
+        //prints: 0xf | 0x2 ^ 0x2 -> 0xd
+        //Go:    (0xf | 0x2) ^ 0x2
+        //C++:    0xf | (0x2 ^ 0x2) -> 0xf
+    }
+
+---
+
+### 未导出的字段不进行编码
+
+Go中对结构体进行转码(json/xml/gob等等)时中不会包含以小写字母开头的字段, 所以重新解码的时候也会缺失这些字段的内容.
+
+    package main
+
+    import (  
+        "fmt"
+        "encoding/json"
+    )
+
+    type MyData struct {  
+        One int
+        two string
+    }
+
+    func main() {  
+        in := MyData{1,"two"}
+        fmt.Printf("%#v\n",in) //prints main.MyData{One:1, two:"two"}
+
+        encoded,_ := json.Marshal(in)
+        fmt.Println(string(encoded)) //prints {"One":1}
+
+        var out MyData
+        json.Unmarshal(encoded,&out)
+
+        fmt.Printf("%#v\n",out) //prints main.MyData{One:1, two:""}
+    }
+
+---
+
+### 在还有活动的协程时退出程序
+
+程序并不会等待所有的Goroutine结束, 这是新手一个常见的错误.
+
+    package main
+
+    import (  
+        "fmt"
+        "time"
+    )
+
+    func main() {  
+        workerCount := 2
+
+        for i := 0; i < workerCount; i++ {
+            go doit(i)
+        }
+        time.Sleep(1 * time.Second)
+        fmt.Println("all done!")
+    }
+
+    func doit(workerId int) {  
+        fmt.Printf("[%v] is running\n",workerId)
+        time.Sleep(3 * time.Second)
+        fmt.Printf("[%v] is done\n",workerId)
+    }
+
+你将会看到:
+
+    [0] is running 
+    [1] is running 
+    all done!
+
+一个比较通用的解决方案是使用一个```WaitGroup```变量, 它将允许主协程等待所有工作协程完成, 如果你有一些带有信号处理机制的一些耗时很长的工作协程, 那么你最好手动给他们发送终止的信号. 另一个方案是关闭在工作协程中接收消息的Channel, 这可以把所有协程一次性全都结束. 
+
+    package main
+
+    import (  
+        "fmt"
+        "sync"
+    )
+
+    func main() {  
+        var wg sync.WaitGroup
+        done := make(chan struct{})
+        workerCount := 2
+
+        for i := 0; i < workerCount; i++ {
+            wg.Add(1)
+            go doit(i,done,wg)
+        }
+
+        close(done)
+        wg.Wait()
+        fmt.Println("all done!")
+    }
+
+    func doit(workerId int,done <-chan struct{},wg sync.WaitGroup) {  
+        fmt.Printf("[%v] is running\n",workerId)
+        defer wg.Done()
+        <- done
+        fmt.Printf("[%v] is done\n",workerId)
+    }
+
+运行结果将是这样:
+
+    [0] is running 
+    [0] is done 
+    [1] is running 
+    [1] is done
+
+看上去主协程实在所有工作协程完成之后退出的, 然而你同时会看到这样的结果:
+
+    fatal error: all goroutines are asleep - deadlock!
+
+这看上去可不太好, 为什么会这样出现死锁呢? 看上去所有工作协程都退出了并且执行了```wg.Done()```, 程序应该可以工作猜对.
+
+其实这个死锁的发生是因为每个工作协程都是获得了一份原始```WaitGroup```变量的拷贝, 在工作进程中执行```wg.Done()```并没有影响到主协程中wg变量.
+
+    package main
+
+    import (  
+        "fmt"
+        "sync"
+    )
+
+    func main() {  
+        var wg sync.WaitGroup
+        done := make(chan struct{})
+        wq := make(chan interface{})
+        workerCount := 2
+
+        for i := 0; i < workerCount; i++ {
+            wg.Add(1)
+            go doit(i,wq,done,&wg)
+        }
+
+        for i := 0; i < workerCount; i++ {
+            wq <- i
+        }
+
+        close(done)
+        wg.Wait()
+        fmt.Println("all done!")
+    }
+
+    func doit(workerId int, wq <-chan interface{},done <-chan struct{},wg *sync.WaitGroup) {  
+        fmt.Printf("[%v] is running\n",workerId)
+        defer wg.Done()
+        for {
+            select {
+            case m := <- wq:
+                fmt.Printf("[%v] m => %v\n",workerId,m)
+            case <- done:
+                fmt.Printf("[%v] is done\n",workerId)
+                return
+            }
+        }
+    }
+
+这样一来程序就能如预期的一般工作了.
+
+---
+
+### 给没有buffer的Channel发送消息
+
+当我们声明一个Channel同时不带长度时, 也就是一个不带缓冲的Channel, 这时当消息被接收方处理时发送方并不会被阻塞住, 接收放可能并没有足够的时间来处理发送方接下来发送进来的信息, 当然这取决于你的程度里Channel的具体运行环境.
+
+    package main
+
+    import "fmt"
+
+    func main() {  
+        ch := make(chan string)
+
+        go func() {
+            for m := range ch {
+                fmt.Println("processed:",m)
+            }
+        }()
+
+        ch <- "cmd.1"
+        ch <- "cmd.2" //won't be processed
+    }
+
+---
+
+### 向已经关闭的Channel发送消息会导致Panic
+
+从一个已经关掉的Channel接收消息是安全的, 当从一个Channel接收的值是```false```代表已经没有数据可以接收了, 如果这个Channel带缓冲的话, 那么首先你会接收到缓冲好的数据, 知道Channel里为空才会接收到```false```.
+
+但是向一个关掉的Channel发送消息是会导致Panic的, 这是新手常犯的一个错误, 他们可能认为发送消息和接收消息的行为应该一致.
+
+    package main
+
+    import (  
+        "fmt"
+        "time"
+    )
+
+    func main() {  
+        ch := make(chan int)
+        for i := 0; i < 3; i++ {
+            go func(idx int) {
+                ch <- (idx + 1) * 2
+            }(i)
+        }
+
+        //get the first result
+        fmt.Println(<-ch)
+        close(ch) //not ok (you still have other senders)
+        //do other work
+        time.Sleep(2 * time.Second)
+    }
+
+Depending on your application the fix will be different. It might be a minor code change or it might require a change in your application design. Either way, you'll need to make sure your application doesn't try to send data to a closed channel.
+当然, 避免这个情况出现的工作量可大可小, 取决于具体的使用场景, 不过无论如何, 你都应该避免向关掉的Channel发送消息.
+
+上面那个有bug的示例可以通过使用一个特殊的传递结束信号的Channel来解决.
+
+    package main
+
+    import (  
+        "fmt"
+        "time"
+    )
+
+    func main() {  
+        ch := make(chan int)
+        done := make(chan struct{})
+        for i := 0; i < 3; i++ {
+            go func(idx int) {
+                select {
+                case ch <- (idx + 1) * 2: fmt.Println(idx,"sent result")
+                case <- done: fmt.Println(idx,"exiting")
+                }
+            }(i)
+        }
+
+        //get first result
+        fmt.Println("result:",<-ch)
+        close(done)
+        //do other work
+        time.Sleep(3 * time.Second)
+    }
+
+---
+
+### 使用nil Channel
+
+发送给一个nil Channel(也就是不通过```make```声明的Channel)会导致程序永远被锁住, 这个一个文档中明确定义的行为, 但是对Golang新手来说可能会非常疑惑.
+
+    package main
+
+    import (  
+        "fmt"
+        "time"
+    )
+
+    func main() {  
+        var ch chan int
+        for i := 0; i < 3; i++ {
+            go func(idx int) {
+                ch <- (idx + 1) * 2
+            }(i)
+        }
+
+        //get first result
+        fmt.Println("result:",<-ch)
+        //do other work
+        time.Sleep(2 * time.Second)
+    }
+
+运行这个代码将会导致如下的错误:
+
+> This behavior can be used as a way to dynamically enable and disable case blocks in a select statement.
+
+不过这个方法的一个用处是可以动态的决定一个select里的case语句是否被执行.
+
+    package main
+
+    import "fmt"  
+    import "time"
+
+    func main() {  
+        inch := make(chan int)
+        outch := make(chan int)
+
+        go func() {
+            var in <- chan int = inch
+            var out chan <- int
+            var val int
+            for {
+                select {
+                case out <- val:
+                    out = nil
+                    in = inch
+                case val = <- in:
+                    out = outch
+                    in = nil
+                }
+            }
+        }()
+
+        go func() {
+            for r := range outch {
+                fmt.Println("result:",r)
+            }
+        }()
+
+        time.Sleep(0)
+        inch <- 1
+        inch <- 2
+        time.Sleep(3 * time.Second)
+    }
+
+---
+
+### 带有接收者的方法并不能改变初始值
+
+Method receivers are like regular function arguments. If it's declared to be a value then your function/method gets a copy of your receiver argument. This means making changes to the receiver will not affect the original value unless your receiver is a map or slice variable and you are updating the items in the collection or the fields you are updating in the receiver are pointers.
+接收者作为函数参数和常规的函数参数一样, 如果是作为一个值声明的, 那么函数作用域中会得到一份原值的拷贝, 也就是说在函数中的操作并不会改变原始值除非接收者是一个Map/Slice并且你在改变其子项, 或者你改变的接收者是指针.
+
+    package main
+
+    import "fmt"
+
+    type data struct {  
+        num int
+        key *string
+        items map[string]bool
+    }
+
+    func (this *data) pmethod() {  
+        this.num = 7
+    }
+
+    func (this data) vmethod() {  
+        this.num = 8
+        *this.key = "v.key"
+        this.items["vmethod"] = true
+    }
+
+    func main() {  
+        key := "key.1"
+        d := data{1,&key,make(map[string]bool)}
+
+        fmt.Printf("num=%v key=%v items=%v\n",d.num,*d.key,d.items)
+        //prints num=1 key=key.1 items=map[]
+
+        d.pmethod()
+        fmt.Printf("num=%v key=%v items=%v\n",d.num,*d.key,d.items) 
+        //prints num=7 key=key.1 items=map[]
+
+        d.vmethod()
+        fmt.Printf("num=%v key=%v items=%v\n",d.num,*d.key,d.items)
+        //prints num=7 key=v.key items=map[vmethod:true]
+    }
