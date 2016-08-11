@@ -15,10 +15,10 @@ const styles = {
     overflow     : 'hidden',
     textIndent   : '100%',
     whiteSpace   : 'nowrap',
-    background   : 'rgba(232, 98, 86, 0.8) url(/imgs/cd-top-arrow.svg) no-repeat center 50%',
+    background   : 'rgba(87, 218, 178, 0.8) url(/imgs/cd-top-arrow.svg) no-repeat center 50%',
 
     ':hover' : {
-      background : 'rgba(232, 98, 86, 0.7) url(/imgs/cd-top-arrow.svg) no-repeat center 50%'
+      background : 'rgba(87, 218, 178, 0.6) url(/imgs/cd-top-arrow.svg) no-repeat center 50%'
     },
 
     '@media only screen and (max-width: 1023px)' : {
