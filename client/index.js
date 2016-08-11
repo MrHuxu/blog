@@ -6,7 +6,8 @@ import $ from 'jquery';
 window.jQuery = $; // Assure it's available globally.
 
 import React from 'react';
-import reactDom from 'react-dom';
+import { StyleRoot } from 'radium';
+import { render } from 'react-dom';
 import { browserHistory, Router } from 'react-router';
 import { Provider } from 'react-redux';
 import { rootStore } from './store';
@@ -18,11 +19,13 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 injectTapEventPlugin();
 
-reactDom.render(
-  <MuiThemeProvider muiTheme = {getMuiTheme()}>
-    <Provider store = {rootStore}>
-      <Router routes = {routes} history = {browserHistory} />
-    </Provider>
-  </MuiThemeProvider>,
+render(
+  <StyleRoot>
+    <MuiThemeProvider muiTheme = {getMuiTheme()}>
+      <Provider store = {rootStore}>
+        <Router routes = {routes} history = {browserHistory} />
+      </Provider>
+    </MuiThemeProvider>
+  </StyleRoot>,
   document.getElementById('blog')
 );

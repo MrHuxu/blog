@@ -7,7 +7,7 @@ const styles = {
     display      : 'inline-block',
     height       : '60px',
     width        : '60px',
-    borderRadius : '5',
+    borderRadius : '5px',
     position     : 'fixed',
     bottom       : '40px',
     right        : '10px',
@@ -19,6 +19,13 @@ const styles = {
 
     ':hover' : {
       background : 'rgba(232, 98, 86, 0.7) url(/imgs/cd-top-arrow.svg) no-repeat center 50%'
+    },
+
+    '@media only screen and (max-width: 1023px)' : {
+      height : '40px',
+      width  : '40px',
+      right  : '30px',
+      bottom : '30px'
     }
   }
 };
