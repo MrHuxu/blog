@@ -1,10 +1,10 @@
-# 50个Golang新手常见的'坑' - Part 1 入门
+# 关于Golang你需要知道的50件事 - Part 1 入门
 
 Go是一门简单有趣的语言, 不过和其他语言一样, 这门语言也有一些所谓的'坑'...大部分这些'坑'并不完全是Go的错, 有些'坑'是你从别的语言转换到Go时必然会遇到的陷阱, 而其他的则一般是因为你在写代码进行了错误的假设或者没有注意到细节.
 
 如果你花了时间去学习这门语言的官方spec, wiki, mailing list讨论, 以及以及Rob Pike的一些非常好的文章和源码, 那么其实这些'坑'都是显而易见的. 不过不是每个人开始学习的道路都是一样的, 如果你是一个Go新手, 那么这里的内容将能大大减少你调试代码的时间.
 
-这篇文章涵盖了Go 1.5及一下版本.
+这篇文章涵盖了Go 1.5及以下版本.
 
 目录:
 
@@ -32,7 +32,7 @@ Go是一门简单有趣的语言, 不过和其他语言一样, 这门语言也�
 22. log.Fatal和log.Panic可以比log做的更多
 23. 内置数据结构的操作并不是同步的
 24. 字符串使用range语句时的迭代值
-25. 使用for range语句来迭代一个Map
+25. 使用for range语句来遍历一个Map
 26. switch语句中的Fallthrough行为
 27. 自增和自减
 28. '否'位操作符
@@ -638,268 +638,296 @@ func main() {
 }
 Note that this isn't really the right way to update characters in a text string because a given character could be stored in multiple bytes. If you do need to make updates to a text string convert it to a rune sclice first. Even with rune slices a single character might span multiple runes, which can happen if you have characters with grave accent, for example. This complicated and ambiguous nature of "characters" is the reason why Go strings are represented as byte sequences.
 
-Conversions Between Strings and Byte Slices
+---
 
-level: beginner
-When you convert a string to a byte slice (and vice versa) you get a complete copy of the orginal data. It's not like a cast operation in other languages and it's not like reslicing where the new slice variable points to the same underlying array used by the original byte slice.
+### 字符串和字节码Slice的转换
 
-Go does have a couple of optimizations for []byte to string and string to []byte conversions to avoid extra allocations (with more optimizations on the todo list).
+当你把一个字符串转换成字节码Slice或者反过来时, 你会得到一份原始数据的拷贝, 这个不同于别的语言里的转换操作, 也不是基于同样的底层原始数据产生新的Slice和数组.
+
+Go已经对字符串和字节码Slice互转提供了一些优化操作以避免额外的内存分配.
 
 The first optimization avoids extra allocations when []byte keys are used to lookup entries in map[string] collections: m[string(key)].
 
 The second optimization avoids extra allocations in for range clauses where strings are converted to []byte: for i,v := range []byte(str) {...}.
 
-Strings and Index Operator
+---
 
-level: beginner
-The index operator on a string returns a byte value, not a character (like it's done in other languages).
+### 字符串和索引操作
 
-package main
+给一个字符串使用索引取值得到的是一个字节值, 而不是像很多别的语言那样得到一个字符.
 
-import "fmt"
+    package main
 
-func main() {  
-    x := "text"
-    fmt.Println(x[0]) //print 116
-    fmt.Printf("%T",x[0]) //prints uint8
-}
-If you need to access specific string "characters" (unicode code points/runes) use the for range clause. The official "unicode/utf8" package and the experimental utf8string package (golang.org/x/exp/utf8string) are also useful. The utf8string package includes a convenient At() method. Converting the string to a slice of runes is an option too.
+    import "fmt"
 
-Strings Are Not Always UTF8 Text
-
-level: beginner
-String values are not required to be UTF8 text. They can contain arbitrary bytes. The only time strings are UTF8 is when string literals are used. Even then they can include other data using escape sequences.
-
-To know if you have a UTF8 text string use the ValidString() function from the "unicode/utf8" package.
-
-package main
-
-import (  
-    "fmt"
-    "unicode/utf8"
-)
-
-func main() {  
-    data1 := "ABC"
-    fmt.Println(utf8.ValidString(data1)) //prints: true
-
-    data2 := "A\xfeC"
-    fmt.Println(utf8.ValidString(data2)) //prints: false
-}
-String Length
-
-level: beginner
-Let's say you are a python developer and you have the following piece of code:
-
-data = u'♥'  
-print(len(data)) #prints: 1  
-When you convert it to a similar Go code snippet you might be surprised.
-
-package main
-
-import "fmt"
-
-func main() {  
-    data := "♥"
-    fmt.Println(len(data)) //prints: 3
-}
-The built-in len() function returns the number of bytes instead of the number of characters like it's done for unicode strings in Python.
-
-To get the same results in Go use the RuneCountInString() function from the "unicode/utf8" package.
-
-package main
-
-import (  
-    "fmt"
-    "unicode/utf8"
-)
-
-func main() {  
-    data := "♥"
-    fmt.Println(utf8.RuneCountInString(data)) //prints: 1
-Technically the RuneCountInString() function doesn't return the number of characters because a single character may span multiple runes.
-
-package main
-
-import (  
-    "fmt"
-    "unicode/utf8"
-)
-
-func main() {  
-    data := "é"
-    fmt.Println(len(data))                    //prints: 3
-    fmt.Println(utf8.RuneCountInString(data)) //prints: 2
-}
-Missing Comma In Multi-Line Slice, Array, and Map Literals
-
-level: beginner
-Fails:
-
-package main
-
-func main() {  
-    x := []int{
-    1,
-    2 //error
+    func main() {  
+        x := "text"
+        fmt.Println(x[0]) //print 116
+        fmt.Printf("%T",x[0]) //prints uint8
     }
-    _ = x
-}
-Compile Errors:
 
-/tmp/sandbox367520156/main.go:6: syntax error: need trailing comma before newline in composite literal /tmp/sandbox367520156/main.go:8: non-declaration statement outside function body /tmp/sandbox367520156/main.go:9: syntax error: unexpected }
+如果你需要访问字符串中的特殊字符(比如Unicode符号), 可以使用for range语句, 官方的```unicode/utf8```以及```utf8string(golang.org/x/exp/utf8string)```包都是非常有用的, utf8string这个包甚至包含一个非常方便的```At()```方法, 当然另一个方案就是把字符串转换成字符Slice.
 
-Works:
+---
 
-package main
+### 字符串并不总是UTF8编码
 
-func main() {  
-    x := []int{
-    1,
-    2,
+字符串的值并不是必须得是UTF8文本, 它们可以包含任意的字节, 唯一可以确定字符串是UTF8编码就是当时用字符串字面量的时候, 当然即使这样字符串里也可以通过escape的方式包含别的编码的文本.
+
+可以通过```unicode/utf8```的```ValidString()```方法来判断一个字符串是否是UTF8格式的文本.
+
+    package main
+
+    import (  
+        "fmt"
+        "unicode/utf8"
+    )
+
+    func main() {  
+        data1 := "ABC"
+        fmt.Println(utf8.ValidString(data1)) //prints: true
+
+        data2 := "A\xfeC"
+        fmt.Println(utf8.ValidString(data2)) //prints: false
     }
-    x = x
 
-    y := []int{3,4,} //no error
-    y = y
-}
-You won't get a compiler error if you leave the trailing comma when you collapse the declaration to be on a single line.
+---
 
-log.Fatal and log.Panic Do More Than Log
+### 字符串的长度
 
-level: beginner
-Logging libraries often provide different log levels. Unlike those logging libraries, the log package in Go does more than log if you call its Fatal*() and Panic*() functions. When your app calls those functions Go will also terminate your app :-)
+假设你是一个Python程序员, 那么你肯定会写下面这样一段代码:
 
-package main
+    data = u'♥'  
+    print(len(data)) #prints: 1  
 
-import "log"
+当你把它转换成Go代码的时候结果可能让你惊讶:
 
-func main() {  
-    log.Fatalln("Fatal Level: log entry") //app exits here
-    log.Println("Normal Level: log entry")
-}
-Built-in Data Structure Operations Are Not Synchronized
+    package main
 
-level: beginner
-Even though Go has a number of features to support concurrency natively, concurrency safe data collections are not one them :-) It's your responsibility to ensure the data collection updates are atomic. Goroutines and channels are the recommended way to implement those atomic operations, but you can also leverage the "sync" package if it makes sense for your application.
+    import "fmt"
 
-Iteration Values For Strings in "range" Clauses
-
-level: beginner
-The index value (the first value returned by the "range" operation) is the index of the first byte for the current "character" (unicode code point/rune) returned in the second value. It's not the index for the current "character" like it's done in other languages. Note that an actual character might be represented by multiple runes. Make sure to check out the "norm" package (golang.org/x/text/unicode/norm) if you need to work with characters.
-
-The for range clauses with string variables will try to interpret the data as UTF8 text. For any byte sequences it doesn't understand it will return 0xfffd runes (aka unicode replacement characters) instead of the actual data. If you have arbitrary (non-UTF8 text) data stored in your string variables, make sure to convert them to byte slices to get all stored data as is.
-
-package main
-
-import "fmt"
-
-func main() {  
-    data := "A\xfe\x02\xff\x04"
-    for _,v := range data {
-        fmt.Printf("%#x ",v)
+    func main() {  
+        data := "♥"
+        fmt.Println(len(data)) //prints: 3
     }
-    //prints: 0x41 0xfffd 0x2 0xfffd 0x4 (not ok)
 
-    fmt.Println()
-    for _,v := range []byte(data) {
-        fmt.Printf("%#x ",v)
+内建的```len()```函数返回的是一个字符串里的字节数, 而不是像别的语言处理Unicode字符串一样返回的字符数量.
+
+如果需要打到这样的效果请使用```unicode/utf8```包里的```RuneCountInString()```函数.
+
+    package main
+
+    import (  
+        "fmt"
+        "unicode/utf8"
+    )
+
+    func main() {  
+        data := "♥"
+        fmt.Println(utf8.RuneCountInString(data)) //prints: 1
     }
-    //prints: 0x41 0xfe 0x2 0xff 0x4 (good)
-}
-Iterating Through a Map Using a "for range" Clause
 
-level: beginner
-This is a gotcha if you expect the items to be in a certain order (e.g., ordered by the key value). Each map iteration will produce different results. The Go runtime tries to go an extra mile randomizing the iteration order, but it doesn't always succeed so you may get several identical map iterations. Don't be surprised to see 5 identical iterations in a row.
+当然从技术层面来讲```RuneCountInString()```函数返回的并不是字符的数量因为一个字符可能跨越多个符号.
 
-package main
+    package main
 
-import "fmt"
+    import (  
+        "fmt"
+        "unicode/utf8"
+    )
 
-func main() {  
-    m := map[string]int{"one":1,"two":2,"three":3,"four":4}
-    for k,v := range m {
-        fmt.Println(k,v)
+    func main() {  
+        data := "é"
+        fmt.Println(len(data))                    //prints: 3
+        fmt.Println(utf8.RuneCountInString(data)) //prints: 2
     }
-}
-And if you use the Go Playground (https://play.golang.org/) you'll always get the same results because it doesn't recompile the code unless you make a change.
 
-Fallthrough Behavior in "switch" Statements
+---
 
-level: beginner
-The "case" blocks in "switch" statements break by default. This is different from other languages where the default behavior is to fall through to the next "case" block.
+### 使用多行Slice/Array/Map字面量缺少逗号
 
-package main
+#### Fails:
 
-import "fmt"
+    package main
 
-func main() {  
-    isSpace := func(ch byte) bool {
-        switch(ch) {
-        case ' ': //error
-        case '\t':
-            return true
+    func main() {  
+        x := []int{
+        1,
+        2 //error
         }
-        return false
+        _ = x
     }
 
-    fmt.Println(isSpace('\t')) //prints true (ok)
-    fmt.Println(isSpace(' '))  //prints false (not ok)
-}
-You can force the "case" blocks to fall through by using the "fallthrough" statement at the end of each "case" block. You can also rewrite your switch statement to use expression lists in the "case" blocks.
+#### Compile Errors:
 
-package main
+> /tmp/sandbox367520156/main.go:6: syntax error: need trailing comma before newline in composite literal /tmp/sandbox367520156/main.go:8: non-declaration statement outside function body /tmp/sandbox367520156/main.go:9: syntax error: unexpected }
 
-import "fmt"
+#### Works:
 
-func main() {  
-    isSpace := func(ch byte) bool {
-        switch(ch) {
-        case ' ', '\t':
-            return true
+    package main
+
+    func main() {  
+        x := []int{
+        1,
+        2,
         }
-        return false
+        x = x
+
+        y := []int{3,4,} //no error
+        y = y
     }
 
-    fmt.Println(isSpace('\t')) //prints true (ok)
-    fmt.Println(isSpace(' '))  //prints true (ok)
-}
-Increments and Decrements
+这里注意到, 使用多行声明时, 最后一个元素也要带上逗号, 当然, 使用单行声明时这个逗号是可以省略的.
 
-level: beginner
-Many languages have increment and decrement operators. Unlike other languages, Go doesn't support the prefix version of the operations. You also can't use these two operators in expressions.
+---
 
-Fails:
+### log.Fatal和log.Panic可以比log做的更多
 
-package main
+Logging库通常会提供各个级别的log. 和其他logging库不一样的是, 调用内建```log```的```Fatal*()```和```Panic*()```方法不仅会打印log, 而且会导致程序直接被终止.
 
-import "fmt"
+    package main
 
-func main() {  
-    data := []int{1,2,3}
-    i := 0
-    ++i //error
-    fmt.Println(data[i++]) //error
-}
-Compile Errors:
+    import "log"
 
-/tmp/sandbox101231828/main.go:8: syntax error: unexpected ++ /tmp/sandbox101231828/main.go:9: syntax error: unexpected ++, expecting :
+    func main() {  
+        log.Fatalln("Fatal Level: log entry") //app exits here
+        log.Println("Normal Level: log entry")
+    }
 
-Works:
+---
 
-package main
+### 内置数据结构的操作并不是同步的
 
-import "fmt"
+虽然Go已经有很多内建功能来原生地支持并发, 但是却并没有一个并发安全的数据结构. 所以你需要确保数据的改动是原子性的, 推荐使用Goroutine和Channel来实现原子操作, 当然你也可以使用```sync```包如果它的确对你的应用有所裨益.
 
-func main() {  
-    data := []int{1,2,3}
-    i := 0
-    i++
-    fmt.Println(data[i])
-}
-Bitwise NOT Operator
+---
 
-level: beginner
+### 字符串使用range语句时的迭代值
+
+索引值是第二个返回值中字符第一个字节的索引, 这并不是这个字符在字符串中的位置, 注意一个实际的字符可能又多个UTF8 rune组成, 当然如果你真的需要操作字符, 那么可以使用```norm(golang.org/x/text/unicode/norm)```包.
+
+对字符串使用```for range```会尝试将字符串解释成UTF8文本, 这时所有无法被理解的内容会被转换成0xfffd rune(也就是Unicode replacement characters)而不是实际的值, 如果你有任意类型的数据存储在字符串变量里, 可以事先将其转换成字节Slice以获得真正被存储的值.
+
+    package main
+
+    import "fmt"
+
+    func main() {  
+        data := "A\xfe\x02\xff\x04"
+        for _,v := range data {
+            fmt.Printf("%#x ",v)
+        }
+        //prints: 0x41 0xfffd 0x2 0xfffd 0x4 (not ok)
+
+        fmt.Println()
+        for _,v := range []byte(data) {
+            fmt.Printf("%#x ",v)
+        }
+        //prints: 0x41 0xfe 0x2 0xff 0x4 (good)
+    }
+
+---
+
+### 使用for range语句来遍历一个Map
+
+简单的说, 使用```for range```语句来遍历一个Map, 重新编译之后顺序是不确定的.
+
+    package main
+
+    import "fmt"
+
+    func main() {  
+        m := map[string]int{"one":1,"two":2,"three":3,"four":4}
+        for k,v := range m {
+            fmt.Println(k,v)
+        }
+    }
+
+不过如果你使用[Go Playground](https://play.golang.org/), 你一般都会得到相同的结果, 因为除非有所改动, 不然你的代码并不会被重新编译.
+
+---
+
+### switch语句中的Fallthrough行为
+
+```switch```语句中的```case```会默认执行完结束, 而不像其他一些语言会执行到下一个case条件.
+
+    package main
+
+    import "fmt"
+
+    func main() {  
+        isSpace := func(ch byte) bool {
+            switch(ch) {
+            case ' ': //error
+            case '\t':
+                return true
+            }
+            return false
+        }
+
+        fmt.Println(isSpace('\t')) //prints true (ok)
+        fmt.Println(isSpace(' '))  //prints false (not ok)
+    }
+
+当然你可以在```case```中最后使用```fallthrough```语句来实现Fallthrough操作, 或者将若干条件写在一个case里以获得类似的效果. 
+
+    package main
+
+    import "fmt"
+
+    func main() {  
+        isSpace := func(ch byte) bool {
+            switch(ch) {
+            case ' ', '\t':
+                return true
+            }
+            return false
+        }
+
+        fmt.Println(isSpace('\t')) //prints true (ok)
+        fmt.Println(isSpace(' '))  //prints true (ok)
+    }
+
+---
+
+### 自增和自减
+
+很多语言都有自增自减操作符, 但是和别的语言不同的是, Go并没有操作符前置的版本, 而且不能把这两个操作符混用在别的语句中.
+
+#### Fails:
+
+    package main
+
+    import "fmt"
+
+    func main() {  
+        data := []int{1,2,3}
+        i := 0
+        ++i //error
+        fmt.Println(data[i++]) //error
+    }
+
+#### Compile Errors:
+
+> /tmp/sandbox101231828/main.go:8: syntax error: unexpected ++ /tmp/sandbox101231828/main.go:9: syntax error: unexpected ++, expecting :
+
+#### Works:
+
+    package main
+
+    import "fmt"
+
+    func main() {  
+        data := []int{1,2,3}
+        i := 0
+        i++
+        fmt.Println(data[i])
+    }
+
+---
+
+### '否'位操作
+
 Many languages use ~ as the unary NOT operator (aka bitwise complement), but Go reuses the XOR operator (^) for that.
 
 Fails:
