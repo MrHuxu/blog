@@ -1,5 +1,10 @@
 # 关于Golang你需要知道的50件事 - Part 1 入门
 
+### Source
+- [50 Shades of Go: Traps, Gotchas, and Common Mistakes for New Golang Devs](http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/)
+
+---
+
 Go是一门简单有趣的语言, 不过和其他语言一样, 这门语言也有一些所谓的'坑'...大部分这些'坑'并不完全是Go的错, 有些'坑'是你从别的语言转换到Go时必然会遇到的陷阱, 而其他的则一般是因为你在写代码进行了错误的假设或者没有注意到细节.
 
 如果你花了时间去学习这门语言的官方spec, wiki, mailing list讨论, 以及以及Rob Pike的一些非常好的文章和源码, 那么其实这些'坑'都是显而易见的. 不过不是每个人开始学习的道路都是一样的, 如果你是一个Go新手, 那么这里的内容将能大大减少你调试代码的时间.
@@ -1399,6 +1404,3 @@ Go中对结构体进行转码(json/xml/gob等等)时中不会包含以小写字�
         fmt.Printf("num=%v key=%v items=%v\n",d.num,*d.key,d.items)
         //prints num=7 key=v.key items=map[vmethod:true]
     }
-
-### Source
-- [50 Shades of Go: Traps, Gotchas, and Common Mistakes for New Golang Devs](http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/)
