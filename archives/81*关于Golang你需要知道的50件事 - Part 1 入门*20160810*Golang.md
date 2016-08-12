@@ -728,7 +728,7 @@ Slice:
 <a id="case20" name="case20" />
 ### 字符串的长度
 
-假设你是一个Python程序员, 那么你肯定会写下面这样一段代码:
+假设你是一个Python程序员, 那么你肯定写过像下面这样的代码:
 
     data = u'♥'  
     print(len(data)) #prints: 1  
@@ -744,9 +744,9 @@ Slice:
         fmt.Println(len(data)) //prints: 3
     }
 
-内建的```len()```函数返回的是一个字符串里的字节数, 而不是像别的语言处理Unicode字符串一样返回的字符数量.
+这是因为内建的```len()```函数返回的是一个字符串里的字节数, 而不是像别的语言处理Unicode字符串一样返回的字符数量.
 
-如果需要打到这样的效果请使用```unicode/utf8```包里的```RuneCountInString()```函数.
+如果需要达到这样的效果请使用```unicode/utf8```包里的```RuneCountInString()```函数, 这个函数返回的字符串里Unicode符号的数量.
 
     package main
 
@@ -760,7 +760,7 @@ Slice:
         fmt.Println(utf8.RuneCountInString(data)) //prints: 1
     }
 
-当然从技术层面来讲```RuneCountInString()```函数返回的并不是字符的数量因为一个字符可能跨越多个Unicode符号.
+当然从技术层面来讲```RuneCountInString()```函数返回的也并不是字符的数量因为一个字符可能跨越多个Unicode符号.
 
     package main
 
