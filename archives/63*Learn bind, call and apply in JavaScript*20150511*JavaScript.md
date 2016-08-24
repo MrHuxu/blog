@@ -2,7 +2,7 @@
 
 学习这三个方法之前, 首先我们需要明确这三个方法的作用是什么, 排开冗长的定义不谈, 这三个方法在实际中的作用主要是为了改变JS代码中的```this```变量.
 
-我们先看看官方关于this变量一个的定义:
+我们先看看官方关于this变量的一个定义:
 
 > In most cases, the value of this is determined by how a function is called. It can't be set by assignment during execution, and it may be different each time the function is called.
 
