@@ -1,7 +1,7 @@
 export default {
   '.blog-menu *' : {
     display       : 'inline-block',
-    color         : '#eee',
+    color         : '#FFFEFE',
     fontFamily    : '"Open Sans", sans-serif',
     fontSize      : '23px',
     fontWeight    : '600',
@@ -9,6 +9,7 @@ export default {
   },
 
   '.menu-item' : {
-    visibility : 'hidden'
+    visibility : 'hidden',
+    color      : '#FF5A5F'
   }
 };
