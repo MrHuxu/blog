@@ -8,11 +8,13 @@ import headerStyles from '../styles/header';
 
 const style = {
   sideBar : {
-    margin : '38% 0 0 10%'
+    padding : '38% 0 0 0'
   },
 
   menu : {
-    width : '100%'
+    padding         : '1% 0 2% 10%',
+    backgroundColor : 'rgba(238, 238, 238, 0.4)',
+    width           : '90%'
   },
 
   menuItem : {
@@ -83,17 +85,17 @@ class Header extends Component {
         <Style rules = {headerStyles} />
         <div style = {style.menu}>
           {menu}
-        </div>
-        <div style = {style.icons}>
-          <a target = "_blank" href = "http://github.com/MrHuxu" style = {style.iconLink}>
-            <img style = {style.iconLink} src = "/imgs/github.svg" />
-          </a>
-          <a target = "_blank" href = "http://weibo.com/2058722335" style = {style.iconLink}>
-            <img style = {style.iconLink} src = "/imgs/weibo.svg" />
-          </a>
-          <a href = "mailto:hxtheone@gmail.com" style = {style.iconLink}>
-            <img style = {style.iconLink} src = "/imgs/email.svg" />
-          </a>
+          <div style = {style.icons}>
+            <a target = "_blank" href = "http://github.com/MrHuxu" style = {style.iconLink}>
+              <img style = {style.iconLink} src = "/imgs/github.svg" />
+            </a>
+            <a target = "_blank" href = "http://weibo.com/2058722335" style = {style.iconLink}>
+              <img style = {style.iconLink} src = "/imgs/weibo.svg" />
+            </a>
+            <a href = "mailto:hxtheone@gmail.com" style = {style.iconLink}>
+              <img style = {style.iconLink} src = "/imgs/email.svg" />
+            </a>
+          </div>
         </div>
       </div>
     );

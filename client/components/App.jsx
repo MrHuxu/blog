@@ -13,7 +13,7 @@ const style = {
   sideBar : {
     height             : '110%',
     position           : 'fixed',
-    backgroundImage    : "url('/imgs/background-sea.jpg')",
+    backgroundImage    : `url('/imgs/WechatIMG${parseInt(Math.random() * 100) % 21}.jpg')`,
     backgroundRepeat   : 'no-repeat',
     backgroundPosition : 'center',
     backgroundSize     : 'cover'
