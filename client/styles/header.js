@@ -1,7 +1,7 @@
 export default {
   '.blog-menu *' : {
     display       : 'inline-block',
-    color         : '#FFFEFE',
+    color         : '#F4F4F4',
     fontFamily    : '"Open Sans", sans-serif',
     fontSize      : '23px',
     fontWeight    : '600',
