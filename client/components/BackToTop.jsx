@@ -54,8 +54,8 @@ class BackToTop extends Component {
   render () {
     return (
       <a
-        href = "#0"
-        ref = "backToTopBtn"
+        href = '#0'
+        ref = 'backToTopBtn'
         style = {styles.container}
         onClick = {this.backToTop}
       >

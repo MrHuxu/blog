@@ -137,7 +137,7 @@ class Post extends Component {
         <Style rules = {postStyles} />
         <div style = {style.postContent}>
           <div
-            ref = "content"
+            ref = 'content'
             dangerouslySetInnerHTML = {{ __html: article ? article.content : '' }}
           />
           {article.time ? (
@@ -170,7 +170,7 @@ class Post extends Component {
           ) : null}
         </div>
         <BackToTop />
-        <div id = "disqus_thread" />
+        <div id = 'disqus_thread' />
       </div>
     );
   }

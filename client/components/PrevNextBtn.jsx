@@ -33,7 +33,7 @@ class PrevNextBtn extends Component {
       <div style = {style.prevNextBtn}>
         <div style = {{display: 'inline-block'}}>
           <IconButton
-            label = "Newer"
+            label = 'Newer'
             disabled = {this.props.page <= 0}
             containerElement = {newerLink}
           >
@@ -45,7 +45,7 @@ class PrevNextBtn extends Component {
 
         <div style = {{display: 'inline-block'}}>
           <IconButton
-            label = "Older"
+            label = 'Older'
             disabled = {this.props.page >= this.props.pageCount}
             containerElement = {olderLink}
           >

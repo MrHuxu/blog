@@ -38,10 +38,10 @@ class App extends Component {
         <Style rules = {commonStyles} />
         <Style rules = {responsiveStyles} />
         <LeftNav />
-        <span style = {style.sideBar} className = "blog-sidebar">
+        <span style = {style.sideBar} className = 'blog-sidebar'>
           <SideBar />
         </span>
-        <span style = {style.content} className = "blog-content">
+        <span style = {style.content} className = 'blog-content'>
           {this.props.children || <Home />}
           <Footer />
         </span>

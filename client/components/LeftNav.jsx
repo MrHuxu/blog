@@ -59,7 +59,7 @@ class LeftNav extends Component {
 
   render () {
     return (
-      <div className = "left-nav">
+      <div className = 'left-nav'>
         <IconButton
           style = {style.navBtn}
           onTouchTap = {this.handleToggle}
@@ -81,28 +81,28 @@ class LeftNav extends Component {
             <MenuItem
               style = {style.linkItem}
               onTouchTap = {this.handleClose}
-              containerElement = {<Link to = "/" />}
+              containerElement = {<Link to = '/' />}
             >
               Home ,
             </MenuItem>
             <MenuItem
               style = {style.linkItem}
               onTouchTap = {this.handleClose}
-              containerElement = {<Link to = "/archives/" />}
+              containerElement = {<Link to = '/archives/' />}
             >
               Archives ,
             </MenuItem>
             <MenuItem
               style = {style.linkItem}
               onTouchTap = {this.handleClose}
-              containerElement = {<Link to = "/projects/" />}
+              containerElement = {<Link to = '/projects/' />}
             >
               Projects ,
             </MenuItem>
             <MenuItem
               style = {style.linkItem}
               onTouchTap = {this.handleClose}
-              containerElement = {<a href = "http://xhu.me/">Aboutme</a>}
+              containerElement = {<a href = 'http://xhu.me/'>Aboutme</a>}
             >
               Aboutme
             </MenuItem>
@@ -112,14 +112,14 @@ class LeftNav extends Component {
             </div>
 
             <div style = {style.icons}>
-              <a target = "_blank" href = "http://github.com/MrHuxu" style = {style.iconLink}>
-                <img style = {style.iconLink} src = "/imgs/github.svg" />
+              <a target = '_blank' href = 'http://github.com/MrHuxu' style = {style.iconLink}>
+                <img style = {style.iconLink} src = '/imgs/github.svg' />
               </a>
-              <a target = "_blank" href = "http://weibo.com/2058722335" style = {style.iconLink}>
-                <img style = {style.iconLink} src = "/imgs/weibo.svg" />
+              <a target = '_blank' href = 'http://weibo.com/2058722335' style = {style.iconLink}>
+                <img style = {style.iconLink} src = '/imgs/weibo.svg' />
               </a>
-              <a href = "mailto:hxtheone@gmail.com" style = {style.iconLink}>
-                <img style = {style.iconLink} src = "/imgs/email.svg" />
+              <a href = 'mailto:hxtheone@gmail.com' style = {style.iconLink}>
+                <img style = {style.iconLink} src = '/imgs/email.svg' />
               </a>
             </div>
           </div>

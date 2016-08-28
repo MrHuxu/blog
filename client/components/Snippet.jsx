@@ -81,11 +81,11 @@ class Snippet extends Component {
     return (
       <div key = {archive.sequence} style = {style.snippet}>
         <div>
-          <div className = "ui text loader" />
+          <div className = 'ui text loader' />
         </div>
 
         <div
-          ref = "title"
+          ref = 'title'
           style = {style.snippetTitle}
         >
           <Link
@@ -95,7 +95,7 @@ class Snippet extends Component {
           </Link>
         </div>
         <div
-          ref = "content"
+          ref = 'content'
           dangerouslySetInnerHTML = {{__html: archive.snippet}}
         />
 
