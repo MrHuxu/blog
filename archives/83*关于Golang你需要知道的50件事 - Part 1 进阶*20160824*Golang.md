@@ -43,65 +43,66 @@
         fmt.Println(string(body))
     }
 
-This code works for successful requests, but if the http request fails the resp variable might be nil, which will cause a runtime panic.
+如果请求正确的话, 这份代码没有问题, 但是如果这个http请求失败了, 那么变量```resp```是nil, 这会导致运行时Panic.
 
-The most common why to close the response body is by using a defer call after the http response error check.
+当然更通用的方式是在检查http响应是否有错误之后使用defer语句.
 
-package main
+    package main
 
-import (  
-    "fmt"
-    "net/http"
-    "io/ioutil"
-)
+    import (  
+        "fmt"
+        "net/http"
+        "io/ioutil"
+    )
 
-func main() {  
-    resp, err := http.Get("https://api.ipify.org?format=json")
-    if err != nil {
-        fmt.Println(err)
-        return
+    func main() {  
+        resp, err := http.Get("https://api.ipify.org?format=json")
+        if err != nil {
+            fmt.Println(err)
+            return
+        }
+
+        defer resp.Body.Close()//ok, most of the time :-)
+        body, err := ioutil.ReadAll(resp.Body)
+        if err != nil {
+            fmt.Println(err)
+            return
+        }
+
+        fmt.Println(string(body))
     }
 
-    defer resp.Body.Close()//ok, most of the time :-)
-    body, err := ioutil.ReadAll(resp.Body)
-    if err != nil {
-        fmt.Println(err)
-        return
+大部分情况下, 变量```resp```和```err```不会同时不为空. 然而, 当请求得到一个重定向错误的时候, 这两个变量都不为空, 这时这段代码仍然会掉坑里.
+
+你可以通过在http错误处理语句中关闭非空响应体来避免这个坑, 另一个方案是不论在成功还是在失败的情况下都使用defer语句来关闭响应体.
+
+    package main
+
+    import (  
+        "fmt"
+        "net/http"
+        "io/ioutil"
+    )
+
+    func main() {  
+        resp, err := http.Get("https://api.ipify.org?format=json")
+        if resp != nil {
+            defer resp.Body.Close()
+        }
+
+        if err != nil {
+            fmt.Println(err)
+            return
+        }
+
+        body, err := ioutil.ReadAll(resp.Body)
+        if err != nil {
+            fmt.Println(err)
+            return
+        }
+
+        fmt.Println(string(body))
     }
-
-    fmt.Println(string(body))
-}
-Most of the time when your http request fails the resp variable will be nil and the err variable will be non-nil. However, when you get a redirection failure both variables will be non-nil. This means you can still end up with a leak.
-
-You can fix this leak by adding a call to close non-nil response bodies in the http response error handling block. Another option is to use one defer call to close response bodies for all failed and successful requests.
-
-package main
-
-import (  
-    "fmt"
-    "net/http"
-    "io/ioutil"
-)
-
-func main() {  
-    resp, err := http.Get("https://api.ipify.org?format=json")
-    if resp != nil {
-        defer resp.Body.Close()
-    }
-
-    if err != nil {
-        fmt.Println(err)
-        return
-    }
-
-    body, err := ioutil.ReadAll(resp.Body)
-    if err != nil {
-        fmt.Println(err)
-        return
-    }
-
-    fmt.Println(string(body))
-}
 The orignal implementation for resp.Body.Close() also reads and discards the remaining response body data. This ensured that the http connection could be reused for another request if the keepalive http connection behavior is enabled. The latest http client behavior is different. Now it's your responsibility to read and discard the remaining response data. If you don't do it the http connection might be closed instead of being reused. This little gotcha is supposed to be documented in Go 1.5.
 
 If reusing the http connection is important for your application you might need to add something like this at the end of your response processing logic:
