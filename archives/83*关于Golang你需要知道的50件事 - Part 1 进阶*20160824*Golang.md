@@ -8,6 +8,7 @@
 目录:
 
 1. [关闭HTTP响应体](#case1)
+2. [关闭HTTP连接](#case2)
 
 ---
 
@@ -103,149 +104,160 @@
 
         fmt.Println(string(body))
     }
-The orignal implementation for resp.Body.Close() also reads and discards the remaining response body data. This ensured that the http connection could be reused for another request if the keepalive http connection behavior is enabled. The latest http client behavior is different. Now it's your responsibility to read and discard the remaining response data. If you don't do it the http connection might be closed instead of being reused. This little gotcha is supposed to be documented in Go 1.5.
 
-If reusing the http connection is important for your application you might need to add something like this at the end of your response processing logic:
+```resp.Body.Close()```最初的实现会读取和销毁响应体的数据, 这个确保了http连接在keepalive被启用的情况下可以被其他的请求复用. 但是最新的http连接行为却有不同, 现在你需要亲自去读取和销毁响应体的数据. 如果不这么做的花, 那么http连接可能会被关闭而无法复用, 这一点应该在go1.5的文档里了.
 
-_, err = io.Copy(ioutil.Discard, resp.Body)  
-It will be necessary if you don't read the entire response body right away, which might happen if you are processing json API responses with code like this:
+如果复用http连接对你的应用很重要, 也许你需要在处理响应的最后添加如下的语句:
 
-json.NewDecoder(resp.Body).Decode(&data)  
-Closing HTTP Connections
+    _, err = io.Copy(ioutil.Discard, resp.Body)
 
-level: intermediate
-Some HTTP servers keep network connections open for a while (based on the HTTP 1.1 spec and the server "keep-alive" configurations). By default, the standard http library will close the network connections only when the target HTTP server asks for it. This means your app may run out of sockets/file descriptors under certain conditions.
+如果你没有用正确的方式读取整个响应体, 比如通过下面这样来处理JSON数据, 那么上面这行代码就是有必要的:
 
-You can ask the http library to close the connection after your request is done by setting the Close field in the request variable to true.
+    json.NewDecoder(resp.Body).Decode(&data)
 
-Another option is to add a Connection request header and set it to close. The target HTTP server should respond with a Connection: close header too. When the http library sees this response header it will also close the connection.
+---
 
-package main
+<a id="case2" name="case2"/>
+### 关闭HTTP连接
 
-import (  
-    "fmt"
-    "net/http"
-    "io/ioutil"
-)
+一些HTTP服务器会保持网络连接一段时间(取决于HTTP 1.1规范以及服务器的```keep-alive```配置). 默认情况下, 标准http库只有在目标服务器请求关闭的时候踩关闭网络连接. 这意味着你的应用会在这样的情况下消耗完socket/file描述符.
 
-func main() {  
-    req, err := http.NewRequest("GET","http://golang.org",nil)
-    if err != nil {
-        fmt.Println(err)
-        return
+你可以通过设置请求中```Close```字段为```true```来使http标准库在请求完成后关闭连接.
+
+另一个方案是在请求头中添加```Connection```项并将它的值设为```close```, 目标HTTP服务器应该在响应头中也包含```Connection: close```. 当http标准库看到这样的响应头, 就会立刻关闭连接.
+
+    package main
+
+    import (  
+        "fmt"
+        "net/http"
+        "io/ioutil"
+    )
+
+    func main() {  
+        req, err := http.NewRequest("GET","http://golang.org",nil)
+        if err != nil {
+            fmt.Println(err)
+            return
+        }
+
+        req.Close = true
+        //or do this:
+        //req.Header.Add("Connection", "close")
+
+        resp, err := http.DefaultClient.Do(req)
+        if resp != nil {
+            defer resp.Body.Close()
+        }
+
+        if err != nil {
+            fmt.Println(err)
+            return
+        }
+
+        body, err := ioutil.ReadAll(resp.Body)
+        if err != nil {
+            fmt.Println(err)
+            return
+        }
+
+        fmt.Println(len(string(body)))
     }
 
-    req.Close = true
-    //or do this:
-    //req.Header.Add("Connection", "close")
+你也可以全局地关掉HTTP连接的复用, 这时你需要创建一个自定义的HTTP传输配置来完成这个任务.
 
-    resp, err := http.DefaultClient.Do(req)
-    if resp != nil {
-        defer resp.Body.Close()
+    package main
+
+    import (  
+        "fmt"
+        "net/http"
+        "io/ioutil"
+    )
+
+    func main() {  
+        tr := &http.Transport{DisableKeepAlives: true}
+        client := &http.Client{Transport: tr}
+
+        resp, err := client.Get("http://golang.org")
+        if resp != nil {
+            defer resp.Body.Close()
+        }
+
+        if err != nil {
+            fmt.Println(err)
+            return
+        }
+
+        fmt.Println(resp.StatusCode)
+
+        body, err := ioutil.ReadAll(resp.Body)
+        if err != nil {
+            fmt.Println(err)
+            return
+        }
+
+        fmt.Println(len(string(body)))
     }
 
-    if err != nil {
-        fmt.Println(err)
-        return
+当你需要经常地往同样的HTTP服务器发送请求的时候可以保持连接打开, 然而, 当你的应用往很多不同的HTTP服务器发送一两个请求的的时候, 最好是在接受到响应之后就关掉连接, 当然, 提高并发限制也许也是个好方法, 不过到底哪个合适就看你的应用场景了.
+
+---
+
+<a id="case3" name="case3"/>
+### 获取JSON中的数字
+
+默认情况下, 当你解码并把JSON中数据灌入对象的时候, Go把JSON中的数组字看作是```float64```类型, 这以为着下面的这段代码会失败并导致panic:
+
+    package main
+
+    import (  
+        "encoding/json"
+        "fmt"
+    )
+
+    func main() {  
+        var data = []byte(`{"status": 200}`)
+
+        var result map[string]interface{}
+        if err := json.Unmarshal(data, &result); err != nil {
+            fmt.Println("error:", err)
+            return
+        }
+
+        var status = result["status"].(int) //error
+        fmt.Println("status value:",status)
     }
 
-    body, err := ioutil.ReadAll(resp.Body)
-    if err != nil {
-        fmt.Println(err)
-        return
+#### Runtime Panic:
+
+> panic: interface conversion: interface is float64, not int 
+
+如果你试图解码一个JSON中的整数, 那么你有几个方案.
+
+方案1: 直接使用```float```类型
+方案2: 将float类型的值转换成你需要的int类型
+
+    package main
+
+    import (  
+        "encoding/json"
+        "fmt"
+    )
+
+    func main() {  
+        var data = []byte(`{"status": 200}`)
+
+        var result map[string]interface{}
+        if err := json.Unmarshal(data, &result); err != nil {
+            fmt.Println("error:", err)
+            return
+        }
+
+        var status = uint64(result["status"].(float64)) //ok
+        fmt.Println("status value:",status)
     }
 
-    fmt.Println(len(string(body)))
-}
-You can also disable http connection reuse globally. You'll need to create a custom http transport configuration for it.
 
-package main
-
-import (  
-    "fmt"
-    "net/http"
-    "io/ioutil"
-)
-
-func main() {  
-    tr := &http.Transport{DisableKeepAlives: true}
-    client := &http.Client{Transport: tr}
-
-    resp, err := client.Get("http://golang.org")
-    if resp != nil {
-        defer resp.Body.Close()
-    }
-
-    if err != nil {
-        fmt.Println(err)
-        return
-    }
-
-    fmt.Println(resp.StatusCode)
-
-    body, err := ioutil.ReadAll(resp.Body)
-    if err != nil {
-        fmt.Println(err)
-        return
-    }
-
-    fmt.Println(len(string(body)))
-}
-If you send a lot of requests to the same HTTP server it's ok to keep the network connection open. However, if your app sends one or two requests to many different HTTP servers in a short period of time it's a good idea to close the network connections right after your app receives the responses. Increasing the open file limit might be a good idea too. The correct solution depends on your application though.
-
-Unmarshalling JSON Numbers into Interface Values
-
-level: intermediate
-By default, Go treats numeric values in JSON as float64 numbers when you decode/unmarshal JSON data into an interface. This means the following code will fail with a panic:
-
-package main
-
-import (  
-  "encoding/json"
-  "fmt"
-)
-
-func main() {  
-  var data = []byte(`{"status": 200}`)
-
-  var result map[string]interface{}
-  if err := json.Unmarshal(data, &result); err != nil {
-    fmt.Println("error:", err)
-    return
-  }
-
-  var status = result["status"].(int) //error
-  fmt.Println("status value:",status)
-}
-Runtime Panic:
-
-panic: interface conversion: interface is float64, not int 
-
-If the JSON value you are trying to decode is an integer you have serveral options.
-
-Option one: use the float value as-is :-)
-
-Option two: convert the float value to the integer type you need.
-
-package main
-
-import (  
-  "encoding/json"
-  "fmt"
-)
-
-func main() {  
-  var data = []byte(`{"status": 200}`)
-
-  var result map[string]interface{}
-  if err := json.Unmarshal(data, &result); err != nil {
-    fmt.Println("error:", err)
-    return
-  }
-
-  var status = uint64(result["status"].(float64)) //ok
-  fmt.Println("status value:",status)
-}
 Option three: use a Decoder type to unmarshal JSON and tell it to represent JSON numbers using the Number interface type.
 
 package main
